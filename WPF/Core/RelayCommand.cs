@@ -32,7 +32,7 @@ namespace WPF.Core
 
         public void Execute(object parameter)
         {
-            _canExecute(parameter);
+            _execute(parameter);
         }
     }
 }
