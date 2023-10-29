@@ -22,8 +22,9 @@ namespace DAL.Annotations
             ModelBuilder.Property(u => u.CreatedDate).ValueGeneratedOnAdd().IsRequired().HasColumnName("created_date");
             ModelBuilder.Property(u => u.ModifiedDate).HasColumnName("modified_date");
             ModelBuilder.HasMany(u => u.Industries).WithMany(i => i.Users);
-            ModelBuilder.HasMany(u => u.Messages).WithOne(m => m.Sender);
+            ModelBuilder.HasMany(u => u.Messages).WithOne(m => m.Sender).HasForeignKey(s => s.SenderId);
             ModelBuilder.HasMany(u => u.Chats).WithMany(c => c.Users);
+            ModelBuilder.HasMany(u => u.Projects).WithMany(p => p.Users);
             ModelBuilder.ToTable("Person");
         }
     }

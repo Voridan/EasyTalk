@@ -8,15 +8,9 @@ namespace DAL.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private EasyTalkContext _context;
+        private readonly EasyTalkContext _context;
 
-        private DbSet<T> _table = default;
-
-        public GenericRepository()
-        {
-            _context = new EasyTalkContext();
-            _table = _context.Set<T>();
-        }
+        private readonly DbSet<T> _table;
 
         public GenericRepository(EasyTalkContext _context)
         {
@@ -37,7 +31,7 @@ namespace DAL.Repositories
         public virtual async Task<IEnumerable<T>> GetAsync(
             Expression<Func<T, bool>> filter,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
-            string includeProperties = "")
+            string includeProperties)
         {
             IQueryable<T> query = _table;
 

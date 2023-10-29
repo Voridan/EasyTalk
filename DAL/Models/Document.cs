@@ -5,6 +5,8 @@ namespace DAL.Models
     {
         public string StoragePath { get; set; } = null!;
 
+        public string Name { get; set; } = null!;
+
         public Message? Message { get; set; }
     }
 }

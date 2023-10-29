@@ -15,13 +15,11 @@ namespace DAL.Annotations
                 .IsRequired()
                 .HasMaxLength(40);
             ModelBuilder.Property(c => c.Description);
-            ModelBuilder.Property(c => c.CreatedDate).ValueGeneratedOnAdd();
-            ModelBuilder.Property(c => c.ModifiedDate);
+            ModelBuilder.Property(c => c.CreatedDate).ValueGeneratedOnAdd().HasColumnName("created_date");
+            ModelBuilder.Property(c => c.ModifiedDate).HasColumnName("modified_date");
             ModelBuilder.HasMany(c => c.Messages)
                 .WithOne(m => m.Chat)
                 .HasForeignKey(m => m.ChatId);
-            ModelBuilder.HasMany(c => c.Users).WithMany(u => u.Chats);
-            
         }
     }
 }

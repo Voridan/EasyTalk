@@ -1,8 +1,8 @@
 ﻿namespace DAL.Models
 {
-    public class Industries
+    public class IndustriesList
     {
-        public static readonly List<string> IndustriesList = new()
+        public static readonly List<string> Industries = new()
         {
             "Aerospace",
             "Agricultural",

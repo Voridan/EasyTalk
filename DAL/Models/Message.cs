@@ -5,7 +5,7 @@ namespace DAL.Models
     {
         public string? Text { get; set; }
         
-        public Guid FromId { get; set; }
+        public Guid SenderId { get; set; }
 
         public User Sender { get; set; } = null!;
         
