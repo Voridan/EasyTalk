@@ -12,7 +12,7 @@ namespace DAL.Data
             optionsBuilder.UseNpgsql("connection string");
         }
 
-        public DbSet<Person> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         
         public DbSet<Chat> Chats { get; set; }
 

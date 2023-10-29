@@ -10,7 +10,7 @@ namespace DAL.Repositories
     {
         private EasyTalkContext _context;
 
-        private DbSet<T> _table = default!;
+        private DbSet<T> _table = default;
 
         public GenericRepository()
         {

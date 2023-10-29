@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace DAL.Models
 {
-    public class Timepoint
+    public class Timepoint : BaseEntity
     {
+        public Guid TopicId { get; set; }
+
+        public Topic Topic { get; set; } = null!;
     }
 }

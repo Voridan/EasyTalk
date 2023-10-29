@@ -1,10 +1,7 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
-
 namespace DAL.Models
 {
-    //[Index(nameof(NickName))]
-    public class Person : BaseEntity
+    public class User : BaseEntity
     {
         public string? FirstName { get; set; }
         
@@ -20,8 +17,12 @@ namespace DAL.Models
         
         public byte[]? Photo { get; set; }
         
-        public virtual Industry? Industry { get; set; }
+        public ICollection<Industry> Industries { get; set; } = null!;
         
-        public virtual ICollection<Message>? Messages { get; }
+        public ICollection<Message> Messages { get; } = null!;
+
+        public ICollection<Chat> Chats { get; } = null!;
+
+        public ICollection<Project> Projects { get; } = null!;
     }
 }
