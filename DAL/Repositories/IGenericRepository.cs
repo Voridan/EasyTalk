@@ -13,7 +13,7 @@ namespace DAL.Repositories
 
         Task<T?> GetByIdAsync(Guid id);
 
-        Task InsertAsync(T obj);
+        Task AddAsync(T obj);
 
         void Update(T obj);
 

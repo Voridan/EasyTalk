@@ -56,7 +56,7 @@ namespace DAL.Repositories
             }
         }
 
-        public virtual async Task InsertAsync(T obj)
+        public virtual async Task AddAsync(T obj)
         {
             await _table.AddAsync(obj);
         }
