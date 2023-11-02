@@ -1,12 +1,9 @@
 ﻿using BLL.Services.Interfaces;
+using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace BLL.Services.Implementations
 {
@@ -19,9 +16,30 @@ namespace BLL.Services.Implementations
             _userRepo = userRepo;
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task RegisterUserAsync(User user)
         {
-            await _userRepo.AddAsync(user);
+            if (IsValidRegistrationData(user))
+            {
+                string hashedPassword = PasswordUtil.HashPassword(user.Password!);
+                user.Password = hashedPassword;
+
+                await _userRepo.AddAsync(user);
+            }
+
+            throw new Exception("Invalid Data");
+        }
+
+        public async Task LoginUserAsync(User user)
+        {
+            if (IsValidRegistrationData(user))
+            {
+                string hashedPassword = PasswordUtil.HashPassword(user.Password!);
+                user.Password = hashedPassword;
+
+                await _userRepo.AddAsync(user);
+            }
+
+            throw new Exception("Invalid Data");
         }
 
         public async Task DeleteUserAsync(Guid id)
@@ -55,6 +73,43 @@ namespace BLL.Services.Implementations
         public void UpdateUser(User user)
         {
             _userRepo.Update(user);
+        }
+
+        private bool IsValidRegistrationData(User user)
+        {
+            bool passwordValidity = user.Password != null
+                && new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$").IsMatch(user.Password);
+
+            bool emailValidity = user.Email != null && new Regex("^\\S+@\\S+\\.\\S+$").IsMatch(user.Email);
+
+            bool requiredFieldsPresent = user.NickName != null && user.FirstName != null && user.LastName != null;
+
+            return passwordValidity && emailValidity && requiredFieldsPresent;
+        }
+
+        private async Task<bool> IsValidLoginData(LoginUser user)
+        {
+            if (user.Password != null && user.NickName != null)
+            {
+                var password = user.Password;
+                try
+                {
+                    var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == user.NickName);
+                    var hashedPassword = user.Password;
+
+                    return PasswordUtil.IsValidPassword(password, hashedPassword);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new Exception("User with provided nickname not found");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+
+            throw new Exception("Nickname and password field were not provided");
         }
     }
 }

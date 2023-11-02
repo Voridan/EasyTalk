@@ -19,7 +19,7 @@ namespace BLL.Services.Interfaces
 
         Task<User?> GetUserByIdAsync(Guid id);
 
-        Task AddUserAsync(User user);
+        Task RegisterUserAsync(User user);
 
         void UpdateUser(User user);
 

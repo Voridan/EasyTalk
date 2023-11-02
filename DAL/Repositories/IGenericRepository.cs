@@ -7,9 +7,9 @@ namespace DAL.Repositories
         Task<IEnumerable<T>> GetAllAsync();
 
         Task<IEnumerable<T>> GetAsync(
-             Expression<Func<T, bool>> filter,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
-            string includeProperties);
+             Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            string includeProperties = "");
 
         Task<T?> GetByIdAsync(Guid id);
 

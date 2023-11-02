@@ -1,6 +1,5 @@
 ﻿using DAL.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 
@@ -10,7 +9,7 @@ namespace DAL.Repositories
     {
         private readonly EasyTalkContext _context;
 
-        private readonly DbSet<T> _table;
+        protected readonly DbSet<T> _table;
 
         public GenericRepository(EasyTalkContext _context)
         {
@@ -28,10 +27,15 @@ namespace DAL.Repositories
             return await _table.FindAsync(id);
         }
 
+        public virtual async Task<T> GetOneAsync(Expression<Func<T, bool>> filter)
+        {
+            return await _table.FirstAsync(filter);
+        }
+
         public virtual async Task<IEnumerable<T>> GetAsync(
-            Expression<Func<T, bool>> filter,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
-            string includeProperties)
+            Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            string includeProperties="")
         {
             IQueryable<T> query = _table;
 
@@ -59,6 +63,7 @@ namespace DAL.Repositories
         public virtual async Task AddAsync(T obj)
         {
             await _table.AddAsync(obj);
+            await SaveAsync();
         }
 
         public virtual void Update(T obj)
@@ -67,7 +72,7 @@ namespace DAL.Repositories
             _context.Entry(obj).State = EntityState.Modified;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public virtual async Task DeleteAsync(Guid id)
         {
             T existing = await _table.FindAsync(id);
             if (existing != null)
