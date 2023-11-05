@@ -5,9 +5,12 @@ namespace WPF.MVVM.View
 {
     public partial class LoginView : Window
     {
-        public LoginView()
+        private readonly MainWindow _mainwindow;
+
+        public LoginView(MainWindow mainwindow)
         {
             InitializeComponent();
+            _mainwindow = mainwindow;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -28,7 +31,8 @@ namespace WPF.MVVM.View
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            _mainwindow.Show();
+            this.Close();
         }
     }
 }
