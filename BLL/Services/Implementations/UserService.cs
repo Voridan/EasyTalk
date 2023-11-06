@@ -16,30 +16,30 @@ namespace BLL.Services.Implementations
             _userRepo = userRepo;
         }
 
-        public async Task RegisterUserAsync(User user)
+        public async Task<Result> RegisterUserAsync(User user)
         {
-            if (IsValidRegistrationData(user))
+            Result registerResult = IsValidRegistrationData(user);
+            if (!registerResult.IsError)
             {
                 string hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
 
                 await _userRepo.AddAsync(user);
+                return new Result(registerResult.IsError, "Register succeded.");
             }
 
-            throw new Exception("Invalid Data");
+            return registerResult;
         }
 
-        public async Task LoginUserAsync(User user)
+        public async Task<Result> LoginUserAsync(LoginUser user)
         {
-            if (IsValidRegistrationData(user))
+            Result loginResult = await IsValidLoginData(user);
+            if (loginResult.IsError)
             {
-                string hashedPassword = PasswordUtil.HashPassword(user.Password!);
-                user.Password = hashedPassword;
-
-                await _userRepo.AddAsync(user);
+                return new Result(loginResult.IsError, loginResult.Message);
             }
 
-            throw new Exception("Invalid Data");
+            return loginResult;
         }
 
         public async Task DeleteUserAsync(Guid id)
@@ -75,20 +75,25 @@ namespace BLL.Services.Implementations
             _userRepo.Update(user);
         }
 
-        private bool IsValidRegistrationData(User user)
+        private Result IsValidRegistrationData(User user)
         {
+            string message="";
             bool passwordValidity = user.Password != null
                 && new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$").IsMatch(user.Password);
+            message += passwordValidity ? "" : "Invalid password.\t"; 
 
             bool emailValidity = user.Email != null && new Regex("^\\S+@\\S+\\.\\S+$").IsMatch(user.Email);
+            message += emailValidity ? "" : "Invalid email.\t";
 
             bool requiredFieldsPresent = user.NickName != null && user.FirstName != null && user.LastName != null;
+            message += requiredFieldsPresent ? "" : "Required fields are missing.";
 
-            return passwordValidity && emailValidity && requiredFieldsPresent;
+            return new Result(passwordValidity  && emailValidity && requiredFieldsPresent,message);
         }
 
-        private async Task<bool> IsValidLoginData(LoginUser user)
+        private async Task<Result> IsValidLoginData(LoginUser user)
         {
+
             if (user.Password != null && user.NickName != null)
             {
                 var password = user.Password;
@@ -96,20 +101,20 @@ namespace BLL.Services.Implementations
                 {
                     var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == user.NickName);
                     var hashedPassword = user.Password;
-
-                    return PasswordUtil.IsValidPassword(password, hashedPassword);
+                    bool res = PasswordUtil.IsValidPassword(password, hashedPassword);
+                    return new Result(!res);
                 }
                 catch (InvalidOperationException)
                 {
-                    throw new Exception("User with provided nickname not found");
+                    return new Result(true, "User with provided nickname not found");
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message);
+                    return new Result(true, "Something gone wrong!");
                 }
             }
 
-            throw new Exception("Nickname and password field were not provided");
+            return new Result(true, "Nickname and password field were not provided");
         }
     }
 }

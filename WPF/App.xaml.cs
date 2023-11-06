@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BLL.Services.Implementations;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
 using WPF.MVVM.View;
@@ -15,8 +16,9 @@ public partial class App : Application
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((HostBuilderContext, services) =>
             {
-                services.AddSingleton<LoginView>();
-                services.AddTransient<MainWindow>();
+                services.AddSingleton<MainWindow>();
+                services.AddTransient<LoginView>();
+                services.AddSingleton<UserService>();
             })
             .Build();
     }
@@ -24,7 +26,7 @@ public partial class App : Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         await AppHost.StartAsync();
-        var startupForm = AppHost.Services.GetRequiredService<LoginView>();
+        var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
         startupForm.Show();
 
         base.OnStartup(e);
