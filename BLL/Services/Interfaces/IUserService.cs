@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using BLL.Utils;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace BLL.Services.Interfaces
 
         Task<User?> GetUserByIdAsync(Guid id);
 
-        Task AddUserAsync(User user);
-
+        Task<Result> RegisterUserAsync(User user);
+        Task<Result> LoginUserAsync(LoginUser user);
         void UpdateUser(User user);
 
         Task DeleteUserAsync(Guid id);
