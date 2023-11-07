@@ -1,11 +1,8 @@
-﻿using System.ComponentModel;
-
-namespace DAL.Models
+﻿namespace DAL.Models
 {
     public enum UserRole
     {
         Admin,
-
         User
     }
 }

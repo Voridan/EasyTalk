@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interfaces;
+﻿using BLL.Models;
+using BLL.Services.Interfaces;
 using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
@@ -16,22 +17,31 @@ namespace BLL.Services.Implementations
             _userRepo = userRepo;
         }
 
-        public async Task<Result> RegisterUserAsync(User user)
+        public async Task<Result> RegisterUserAsync(UserModel user)
         {
             Result registerResult = IsValidRegistrationData(user);
             if (!registerResult.IsError)
             {
-                string hashedPassword = PasswordUtil.HashPassword(user.Password!);
+                var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
+                
+                var dalUser = new User();
 
-                await _userRepo.AddAsync(user);
+                foreach (var property in typeof(User).GetProperties())
+                {
+                    var value = property.GetValue(user);
+                    property.SetValue(dalUser, value);
+                }
+
+                await _userRepo.AddAsync(dalUser);
+                
                 return new Result(registerResult.IsError, "Register succeded.");
             }
 
             return registerResult;
         }
 
-        public async Task<Result> LoginUserAsync(LoginUser user)
+        public async Task<Result> LoginUserAsync(LoginUserModel user)
         {
             Result loginResult = await IsValidLoginData(user);
             if (loginResult.IsError)
@@ -75,7 +85,7 @@ namespace BLL.Services.Implementations
             _userRepo.Update(user);
         }
 
-        private Result IsValidRegistrationData(User user)
+        private Result IsValidRegistrationData(UserModel user)
         {
             string message="";
             bool passwordValidity = user.Password != null
@@ -91,7 +101,7 @@ namespace BLL.Services.Implementations
             return new Result(passwordValidity  && emailValidity && requiredFieldsPresent,message);
         }
 
-        private async Task<Result> IsValidLoginData(LoginUser user)
+        private async Task<Result> IsValidLoginData(LoginUserModel user)
         {
 
             if (user.Password != null && user.NickName != null)
@@ -108,7 +118,7 @@ namespace BLL.Services.Implementations
                 {
                     return new Result(true, "User with provided nickname not found");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return new Result(true, "Something gone wrong!");
                 }
