@@ -4,7 +4,7 @@ namespace BLL.Models
 {
     public class MessageModel
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         public string? Text { get; set; }
 

@@ -124,13 +124,25 @@ namespace BLL.Services.Implementations
 
         private static User BLLUserToDALUser(UserModel user)
         {
-            var dalUser = new User();
-
-            foreach (var property in typeof(User).GetProperties())
+            var dalUser = new User() 
             {
-                var value = property.GetValue(user);
-                property.SetValue(dalUser, value);
-            }
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NickName = user.NickName,
+                Email = user.Email,
+                Password = user.Password
+            };
+
+            //foreach (var property in typeof(UserModel).GetProperties())
+            //{
+            //    if (property.Name == "Id") continue;
+
+            //    var value = property.GetValue(user);
+            //    if (value != null)
+            //    {
+            //        property.SetValue(dalUser, value);
+            //    }
+            //}
 
             return dalUser;
         }

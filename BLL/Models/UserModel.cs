@@ -4,7 +4,7 @@ namespace BLL.Models
 {
     public class UserModel
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -19,7 +19,7 @@ namespace BLL.Models
 
         public byte[]? Photo { get; set; }
 
-        public UserModel(string nickname, string firstName, string lastName, string email, string password, UserRole role, byte[]? photo)
+        public UserModel(string nickname, string firstName, string lastName, string email, string password, UserRole role = UserRole.User, byte[]? photo=null)
         {
             FirstName = firstName;
             LastName = lastName;
