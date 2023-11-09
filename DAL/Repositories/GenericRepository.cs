@@ -66,10 +66,11 @@ namespace DAL.Repositories
             await SaveAsync();
         }
 
-        public virtual void Update(T obj)
+        public virtual async Task Update(T obj)
         {
             _table.Attach(obj);
             _context.Entry(obj).State = EntityState.Modified;
+            await SaveAsync();
         }
 
         public virtual async Task DeleteAsync(Guid id)
@@ -79,15 +80,19 @@ namespace DAL.Repositories
             {
                 _table.Remove(existing);
             }
+
+            await SaveAsync();
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task Delete(T entity)
         {
             if (_context.Entry(entity).State == EntityState.Detached)
             {
                 _table.Attach(entity);
             }
             _table.Remove(entity);
+            
+            await SaveAsync();
         }
 
         public virtual async Task SaveAsync()

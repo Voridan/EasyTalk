@@ -25,7 +25,7 @@ public partial class App : Application
 
     protected override async void OnStartup(StartupEventArgs e)
     {
-        await AppHost.StartAsync();
+        await AppHost!.StartAsync();
         var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
         startupForm.Show();
 

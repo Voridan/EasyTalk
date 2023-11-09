@@ -1,12 +1,12 @@
 ﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace DAL.Data
 {
     public class EasyTalkContext : DbContext
     {
+        public EasyTalkContext() { }
+
         public EasyTalkContext(DbContextOptions options) : base(options) 
         {
             Database.Migrate();

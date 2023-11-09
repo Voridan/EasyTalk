@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interfaces;
+﻿using BLL.Models;
+using BLL.Services.Interfaces;
 using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
@@ -16,22 +17,25 @@ namespace BLL.Services.Implementations
             _userRepo = userRepo;
         }
 
-        public async Task<Result> RegisterUserAsync(User user)
+        public async Task<Result> RegisterUserAsync(UserModel user)
         {
             Result registerResult = IsValidRegistrationData(user);
             if (!registerResult.IsError)
             {
-                string hashedPassword = PasswordUtil.HashPassword(user.Password!);
+                var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
 
-                await _userRepo.AddAsync(user);
+                var dalUser = BLLUserToDALUser(user);
+
+                await _userRepo.AddAsync(dalUser);
+                
                 return new Result(registerResult.IsError, "Register succeded.");
             }
 
             return registerResult;
         }
 
-        public async Task<Result> LoginUserAsync(LoginUser user)
+        public async Task<Result> LoginUserAsync(LoginUserModel user)
         {
             Result loginResult = await IsValidLoginData(user);
             if (loginResult.IsError)
@@ -40,16 +44,6 @@ namespace BLL.Services.Implementations
             }
 
             return loginResult;
-        }
-
-        public async Task DeleteUserAsync(Guid id)
-        {
-            await _userRepo.DeleteAsync(id);
-        }
-
-        public void DeleteUser(User user)
-        {
-            _userRepo.Delete(user);
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -70,12 +64,24 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetByIdAsync(id);
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(UserModel user)
         {
-            _userRepo.Update(user);
+            var dalUser = BLLUserToDALUser(user);
+            await _userRepo.Update(dalUser);
         }
 
-        private Result IsValidRegistrationData(User user)
+        public async Task DeleteUserAsync(Guid id)
+        {
+            await _userRepo.DeleteAsync(id);
+        }
+
+        public async Task DeleteUser(UserModel user)
+        {
+            var dalUser = BLLUserToDALUser(user);
+            await _userRepo.Delete(dalUser);
+        }
+
+        private Result IsValidRegistrationData(UserModel user)
         {
             string message="";
             bool passwordValidity = user.Password != null
@@ -91,9 +97,8 @@ namespace BLL.Services.Implementations
             return new Result(passwordValidity  && emailValidity && requiredFieldsPresent,message);
         }
 
-        private async Task<Result> IsValidLoginData(LoginUser user)
+        private async Task<Result> IsValidLoginData(LoginUserModel user)
         {
-
             if (user.Password != null && user.NickName != null)
             {
                 var password = user.Password;
@@ -108,13 +113,26 @@ namespace BLL.Services.Implementations
                 {
                     return new Result(true, "User with provided nickname not found");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return new Result(true, "Something gone wrong!");
                 }
             }
 
             return new Result(true, "Nickname and password field were not provided");
+        }
+
+        private static User BLLUserToDALUser(UserModel user)
+        {
+            var dalUser = new User();
+
+            foreach (var property in typeof(User).GetProperties())
+            {
+                var value = property.GetValue(user);
+                property.SetValue(dalUser, value);
+            }
+
+            return dalUser;
         }
     }
 }

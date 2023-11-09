@@ -1,11 +1,7 @@
 ﻿using BLL.Utils;
+using BLL.Models;
 using DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services.Interfaces
 {
@@ -20,12 +16,14 @@ namespace BLL.Services.Interfaces
 
         Task<User?> GetUserByIdAsync(Guid id);
 
-        Task<Result> RegisterUserAsync(User user);
-        Task<Result> LoginUserAsync(LoginUser user);
-        void UpdateUser(User user);
+        Task<Result> RegisterUserAsync(UserModel user);
+        
+        Task<Result> LoginUserAsync(LoginUserModel user);
+        
+        Task UpdateUser(UserModel user);
 
         Task DeleteUserAsync(Guid id);
 
-        void DeleteUser(User user);
+        Task DeleteUser(UserModel user);
     }
 }
