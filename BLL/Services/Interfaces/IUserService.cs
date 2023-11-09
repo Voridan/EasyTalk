@@ -17,11 +17,13 @@ namespace BLL.Services.Interfaces
         Task<User?> GetUserByIdAsync(Guid id);
 
         Task<Result> RegisterUserAsync(UserModel user);
+        
         Task<Result> LoginUserAsync(LoginUserModel user);
-        void UpdateUser(User user);
+        
+        Task UpdateUser(UserModel user);
 
         Task DeleteUserAsync(Guid id);
 
-        void DeleteUser(User user);
+        Task DeleteUser(UserModel user);
     }
 }

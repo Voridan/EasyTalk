@@ -24,14 +24,8 @@ namespace BLL.Services.Implementations
             {
                 var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
-                
-                var dalUser = new User();
 
-                foreach (var property in typeof(User).GetProperties())
-                {
-                    var value = property.GetValue(user);
-                    property.SetValue(dalUser, value);
-                }
+                var dalUser = BLLUserToDALUser(user);
 
                 await _userRepo.AddAsync(dalUser);
                 
@@ -52,16 +46,6 @@ namespace BLL.Services.Implementations
             return loginResult;
         }
 
-        public async Task DeleteUserAsync(Guid id)
-        {
-            await _userRepo.DeleteAsync(id);
-        }
-
-        public void DeleteUser(User user)
-        {
-            _userRepo.Delete(user);
-        }
-
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _userRepo.GetAllAsync();
@@ -80,9 +64,21 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetByIdAsync(id);
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(UserModel user)
         {
-            _userRepo.Update(user);
+            var dalUser = BLLUserToDALUser(user);
+            await _userRepo.Update(dalUser);
+        }
+
+        public async Task DeleteUserAsync(Guid id)
+        {
+            await _userRepo.DeleteAsync(id);
+        }
+
+        public async Task DeleteUser(UserModel user)
+        {
+            var dalUser = BLLUserToDALUser(user);
+            await _userRepo.Delete(dalUser);
         }
 
         private Result IsValidRegistrationData(UserModel user)
@@ -103,7 +99,6 @@ namespace BLL.Services.Implementations
 
         private async Task<Result> IsValidLoginData(LoginUserModel user)
         {
-
             if (user.Password != null && user.NickName != null)
             {
                 var password = user.Password;
@@ -125,6 +120,19 @@ namespace BLL.Services.Implementations
             }
 
             return new Result(true, "Nickname and password field were not provided");
+        }
+
+        private static User BLLUserToDALUser(UserModel user)
+        {
+            var dalUser = new User();
+
+            foreach (var property in typeof(User).GetProperties())
+            {
+                var value = property.GetValue(user);
+                property.SetValue(dalUser, value);
+            }
+
+            return dalUser;
         }
     }
 }

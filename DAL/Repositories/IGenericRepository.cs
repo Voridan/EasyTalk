@@ -15,11 +15,11 @@ namespace DAL.Repositories
 
         Task AddAsync(T obj);
 
-        void Update(T obj);
+        Task Update(T obj);
 
         Task DeleteAsync(Guid id);
 
-        void Delete(T entity);
+        Task Delete(T entity);
 
         Task SaveAsync();
     }
