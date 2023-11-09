@@ -28,10 +28,10 @@ namespace Wpfnew
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
-                    services.AddSingleton<RegisterView>();
-                    services.AddSingleton<UserService>();
-                    services.AddSingleton<UserRepository>();
-                    services.AddSingleton<EasyTalkContext>();   
+                    services.AddSingleton<RegistrationView>();
+                    //services.AddSingleton<UserService>();
+                    //services.AddSingleton<UserRepository>();
+                    //services.AddSingleton<EasyTalkContext>();   
                     
                 })
                 .Build();
@@ -40,7 +40,7 @@ namespace Wpfnew
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost.StartAsync();
-            var startupForm = AppHost.Services.GetRequiredService<RegisterView>();
+            var startupForm = AppHost.Services.GetRequiredService<RegistrationView>();
             startupForm.Show();
 
             base.OnStartup(e);
