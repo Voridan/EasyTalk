@@ -8,7 +8,7 @@ namespace DAL.Data
     {
         public EasyTalkContext CreateDbContext(string[] args)
         {
-            
+
             var optionsBuilder = new DbContextOptionsBuilder<EasyTalkContext>();
             optionsBuilder.UseNpgsql(EnvUtils.GetConnectionString(),
                     options => options.EnableRetryOnFailure());

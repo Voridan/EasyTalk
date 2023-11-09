@@ -7,7 +7,7 @@ namespace DAL.Data
 {
     public class EasyTalkContext : DbContext
     {
-        public EasyTalkContext(DbContextOptions options) : base(options) 
+        public EasyTalkContext(DbContextOptions options) : base(options)
         {
             Database.Migrate();
         }

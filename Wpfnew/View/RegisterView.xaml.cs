@@ -28,6 +28,7 @@ namespace Wpfnew.View
             InitializeComponent();
             _userService = userservice;
         }
+       
         //private void Login_Click(object sender, RoutedEventArgs e)
         //{
         //    Login login = new Login();

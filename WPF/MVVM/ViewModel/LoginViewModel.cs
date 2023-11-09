@@ -65,11 +65,11 @@ namespace WPF.MVVM.ViewModel
         public ICommand RememberPasswordCommand { get; }
 
 
-        public LoginViewModel(UserService userService)
+        public LoginViewModel()
         {
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoverPassCommand("",""));
-            _userService = userService;
+          
         }
 
         private  async void ExecuteLoginCommand(object obj)
