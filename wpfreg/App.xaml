@@ -7,11 +7,16 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source=" ModernButton.xaml"/>
+                <ResourceDictionary Source="Styles/Page.xaml" />
+                <ResourceDictionary Source="Styles/Image.xaml" />
+                <ResourceDictionary Source="Styles/Text.xaml" />
+                <ResourceDictionary Source="Styles/Button.xaml" />
+                <ResourceDictionary Source="Utilities/DateTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
 
-
+      
     </Application.Resources>
 
 </Application>

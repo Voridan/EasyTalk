@@ -16,6 +16,7 @@ using DAL.Models;
 using BLL.Services.Implementations;
 using BLL.Utils;
 using BLL.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace wpfreg.View
 {
@@ -30,13 +31,15 @@ namespace wpfreg.View
 
         private UserService _userService;
         private readonly MainWindow _mainwindow;
+        private readonly RegisterView _registerView;
 
-       
+
         public LoginView(UserService userservice, MainWindow mainwindow)
         {
             InitializeComponent();
             _userService = userservice;
             _mainwindow = mainwindow;
+            _registerView = App.AppHost.Services.GetRequiredService<RegisterView>();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -54,25 +57,39 @@ namespace wpfreg.View
         {
             textBoxNickname.Text = " ";
         }
-        private void Login(object sender, RoutedEventArgs e)
+        private async void Login(object sender, RoutedEventArgs e)
         {
             string password = passwordBox.Password;
             string nickname = textBoxNickname.Text;
+            if (nickname == "")
+            {
+                errormessage.Text = "Enter a nickname.";
+                textBoxNickname.Focus();
+            }
+            else if (password == "")
+            {
+                errormessage.Text = "Enter a password.";
+                passwordBox.Focus();
+            }
             LoginUserModel userLogin = new LoginUserModel(nickname, password);
-            Task<Result> res = _userService.LoginUserAsync(userLogin);
-            if(!res.Result.IsError)
+            Result resLogin = await _userService.LoginUserAsync(userLogin);
+            if (!resLogin.IsError)
             {
                 this.Close();
                 _mainwindow.ShowDialog();
-
+                return;
             }
+           
+
+
+
 
         }
 
-        //private void Signup_btn(object sender, RoutedEventArgs e)
-        //{
-        //    this.Close();
-        //    _registrationview.ShowDialog();
-        //}
+        private void Signup_btn(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            _registerView.ShowDialog();
+        }
     }
 }

@@ -28,9 +28,9 @@ namespace wpfreg
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
+                    services.AddSingleton<RegistrationView>();
                     services.AddSingleton<LoginView>();
-                    services.AddTransient<RegistrationView>();
-                    services.AddTransient<MainWindow>();
+                    services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
