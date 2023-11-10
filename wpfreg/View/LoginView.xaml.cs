@@ -34,12 +34,12 @@ namespace wpfreg.View
         private readonly RegisterView _registerView;
 
 
-        public LoginView(UserService userservice, MainWindow mainwindow)
+        public LoginView(UserService userservice, MainWindow mainwindow, RegisterView registerView)
         {
             InitializeComponent();
             _userService = userservice;
             _mainwindow = mainwindow;
-            _registerView = App.AppHost.Services.GetRequiredService<RegisterView>();
+            _registerView = registerView;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
