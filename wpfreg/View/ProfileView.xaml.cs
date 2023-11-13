@@ -18,23 +18,22 @@ using System.IO;
 
 namespace wpfreg.View
 {
-    /// <summary>
-    /// Interaction logic for ProfileView.xaml
-    /// </summary>
     public partial class ProfileView : UserControl
     {
         public ProfileView()
         {
+            
             InitializeComponent();
             DataContext = new UserProfile
             {
-                UserName = "Ім'я Користувача",
+                UserName = App.CurrentUser.NickName,
                 UserLastName = "Прізвище Користувача",
                 UserEmail = "user@example.com",
                 UserNickname = "user123",
                 // Зображення користувача можна ініціалізувати з файлу або іншим шляхом
-                
+
             };
+
 
         }
         private void UploadPhoto_Click(object sender, RoutedEventArgs e)

@@ -20,20 +20,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace wpfreg.View
 {
-    /// <summary>
-    /// Interaction logic for LoginView.xaml
-    /// </summary>
-    /// 
-
   
     public partial class LoginView : Window
     {
 
         private UserService _userService;
         private readonly MainWindow _mainwindow;
-       
-
-
+      
         public LoginView(UserService userservice, MainWindow mainwindow)
         {
             InitializeComponent();
@@ -72,18 +65,14 @@ namespace wpfreg.View
                 passwordBox.Focus();
             }
             LoginUserModel userLogin = new LoginUserModel(nickname, password);
-            Result resLogin = await _userService.LoginUserAsync(userLogin);
+            Result<UserModel> resLogin = await _userService.LoginUserAsync(userLogin);
             if (!resLogin.IsError)
             {
+                App.CurrentUser = resLogin.Value;
                 this.Close();
                 _mainwindow.ShowDialog();
                 return;
             }
-           
-
-
-
-
         }
 
         private void Signup_btn(object sender, RoutedEventArgs e)

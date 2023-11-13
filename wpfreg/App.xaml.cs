@@ -13,6 +13,7 @@ using DAL.Data;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BLL.Models;
 
 namespace wpfreg
 {
@@ -20,7 +21,9 @@ namespace wpfreg
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
+
     {
+        public static UserModel CurrentUser { get; set; }
         public static IHost? AppHost { get; private set; }
 
         public App()

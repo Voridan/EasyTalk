@@ -111,11 +111,11 @@ namespace BLL.Services.Implementations
             {
                 var password = user.Password;
                 User existingUser = await UserExists(user.NickName);
-                if (existingUser != null)
+                if (existingUser == null)
                 {
-                    return new Result<UserModel>(true, "User with provided nickname already exists");
+                    return new Result<UserModel>(true, "User doesn`t exist.");
                 }
-                var hashedPassword = user.Password;
+                var hashedPassword = PasswordUtil.HashPassword(user.Password);
                 bool res = PasswordUtil.IsValidPassword(password, hashedPassword);
                 if (res)
                 {
@@ -123,7 +123,7 @@ namespace BLL.Services.Implementations
                     return new Result<UserModel>(!res, "Login Success", bllUser);
                 }
 
-                return new Result<UserModel>(!res, "Invalid Password");
+                return new Result<UserModel>(res, "Invalid Password");
             }
 
             return new Result<UserModel>(true, "Nickname and password field were not provided");
@@ -158,7 +158,7 @@ namespace BLL.Services.Implementations
         {
             if (user != null)
             {
-                var bllUser = new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
+                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
             }
 
             return null;

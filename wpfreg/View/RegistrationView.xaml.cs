@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using DAL.Models;
 using BLL.Services.Implementations;
 using BLL.Models;
+using BLL.Utils;
+
 namespace wpfreg.View
 {
 
@@ -143,10 +145,14 @@ namespace wpfreg.View
                 //}
                 else
                 {
-                    await _userService.RegisterUserAsync(user);
-                    this.Close();
-                    _mainwindow.ShowDialog();
-
+                    Result<UserModel> resRegister = await _userService.RegisterUserAsync(user);
+                    if(!resRegister.IsError)
+                    {
+                        App.CurrentUser = resRegister.Value;
+                        this.Close();
+                        _mainwindow.ShowDialog();
+                        return;
+                    }
                 }
             }
         }
