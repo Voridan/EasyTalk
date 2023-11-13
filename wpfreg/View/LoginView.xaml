@@ -129,7 +129,7 @@
                          Opacity="0.5"
                          Height="25">
                     </TextBlock>
-                    <Button Style="{StaticResource MyButton}" Background="Transparent" Foreground="LightBlue"   Width="100"  Height="40" Content="SING UP" Margin="0,0,60,0"/>
+                    <Button Style="{StaticResource MyButton}" Background="Transparent" Foreground="LightBlue"   Width="100"  Height="40" Content="SING UP" Margin="0,0,60,0" Click="Signup_btn"/>
                 </StackPanel>
             </StackPanel>
 

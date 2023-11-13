@@ -31,15 +31,15 @@ namespace wpfreg.View
 
         private UserService _userService;
         private readonly MainWindow _mainwindow;
-        private readonly RegisterView _registerView;
+       
 
 
-        public LoginView(UserService userservice, MainWindow mainwindow, RegisterView registerView)
+        public LoginView(UserService userservice, MainWindow mainwindow)
         {
             InitializeComponent();
             _userService = userservice;
             _mainwindow = mainwindow;
-            _registerView = registerView;
+            
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -89,7 +89,10 @@ namespace wpfreg.View
         private void Signup_btn(object sender, RoutedEventArgs e)
         {
             this.Close();
-            _registerView.ShowDialog();
+            var registerForm = App.AppHost.Services.GetRequiredService<RegistrationView>();
+             registerForm.ShowDialog();
         }
+
+       
     }
 }

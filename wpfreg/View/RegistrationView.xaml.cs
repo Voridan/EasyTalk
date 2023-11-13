@@ -23,12 +23,14 @@ namespace wpfreg.View
     {
         private UserService _userService;
         private readonly LoginView _loginView;
+        private readonly MainWindow _mainwindow;
         private bool handle = true;
-        public RegistrationView(UserService userservice, LoginView loginView)
+        public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
         {
             InitializeComponent();
             _userService = userservice;
             _loginView = loginView;
+            _mainwindow = mainwindow;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -142,6 +144,9 @@ namespace wpfreg.View
                 else
                 {
                     await _userService.RegisterUserAsync(user);
+                    this.Close();
+                    _mainwindow.ShowDialog();
+
                 }
             }
         }

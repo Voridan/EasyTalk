@@ -43,6 +43,7 @@ namespace wpfreg
         {
             await AppHost.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<LoginView>();
+           
             startupForm.Show();
 
             base.OnStartup(e);
