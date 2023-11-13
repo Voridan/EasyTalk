@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="wpfreg.View.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:wpfreg.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:ProfileViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="white">
+        <Grid>
+            <!-- Фото користувача -->
+            <Image x:Name="UserImage" Source="{Binding UserPhoto}" Width="100" Height="100" Margin="10"/>
+
+            <!-- Ім'я -->
+            <TextBlock Text="Ім'я:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0"/>
+            <TextBlock x:Name="UserNameText" Text="{Binding UserName}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,120,0,0"/>
+
+            <!-- Прізвище -->
+            <TextBlock Text="Прізвище:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,150,0,0"/>
+            <TextBlock x:Name="UserLastNameText" Text="{Binding UserLastName}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,150,0,0"/>
+
+            <!-- Пошта -->
+            <TextBlock Text="Пошта:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,180,0,0"/>
+            <TextBlock x:Name="UserEmailText" Text="{Binding UserEmail}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,180,0,0"/>
+
+            <!-- Нікнейм -->
+            <TextBlock Text="Нікнейм:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,210,0,0"/>
+            <TextBlock x:Name="UserNicknameText" Text="{Binding UserNickname}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,210,0,0"/>
+
+            <!-- Кнопка для завантаження фото -->
+            <Button Content="Завантажити фото" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,240,0,0" Click="UploadPhoto_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>
+

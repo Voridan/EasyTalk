@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:wpfreg.ViewModel"
+                    xmlns:view="clr-namespace:wpfreg.View">
+    <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+        <view:HomeView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+        <view:ProfileView />
+    </DataTemplate>
+</ResourceDictionary>

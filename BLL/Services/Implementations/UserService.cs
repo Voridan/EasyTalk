@@ -17,9 +17,9 @@ namespace BLL.Services.Implementations
             _userRepo = userRepo;
         }
 
-        public async Task<Result> RegisterUserAsync(UserModel user)
+        public async Task<Result<UserModel>> RegisterUserAsync(UserModel user)
         {
-            Result registerResult = IsValidRegistrationData(user);
+            Result<UserModel> registerResult = await IsValidRegistrationData(user);
             if (!registerResult.IsError)
             {
                 var hashedPassword = PasswordUtil.HashPassword(user.Password!);
@@ -28,19 +28,21 @@ namespace BLL.Services.Implementations
                 var dalUser = BLLUserToDALUser(user);
 
                 await _userRepo.AddAsync(dalUser);
-                
-                return new Result(registerResult.IsError, "Register succeded.");
+
+                dalUser = await _userRepo.GetOneAsync(u => u.NickName == user.NickName);
+
+                return new Result<UserModel>(registerResult.IsError, "Register succeded.", DALUserToBLLUser(dalUser));
             }
 
             return registerResult;
         }
 
-        public async Task<Result> LoginUserAsync(LoginUserModel user)
+        public async Task<Result<UserModel>> LoginUserAsync(LoginUserModel user)
         {
-            Result loginResult = await IsValidLoginData(user);
+            Result<UserModel> loginResult = await IsValidLoginData(user);
             if (loginResult.IsError)
             {
-                return new Result(loginResult.IsError, loginResult.Message);
+                return new Result<UserModel>(loginResult.IsError, loginResult.Message);
             }
 
             return loginResult;
@@ -81,12 +83,12 @@ namespace BLL.Services.Implementations
             await _userRepo.Delete(dalUser);
         }
 
-        private Result IsValidRegistrationData(UserModel user)
+        private async Task<Result<UserModel>> IsValidRegistrationData(UserModel user)
         {
-            string message="";
+            string message = "";
             bool passwordValidity = user.Password != null
                 && new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$").IsMatch(user.Password);
-            message += passwordValidity ? "" : "Invalid password.\t"; 
+            message += passwordValidity ? "" : "Invalid password.\t";
 
             bool emailValidity = user.Email != null && new Regex("^\\S+@\\S+\\.\\S+$").IsMatch(user.Email);
             message += emailValidity ? "" : "Invalid email.\t";
@@ -94,45 +96,85 @@ namespace BLL.Services.Implementations
             bool requiredFieldsPresent = user.NickName != null && user.FirstName != null && user.LastName != null;
             message += requiredFieldsPresent ? "" : "Required fields are missing.";
 
-            return new Result(passwordValidity  && emailValidity && requiredFieldsPresent,message);
+            User existingUser = await UserExists(user.NickName);
+            if (existingUser != null)
+            {
+                return new Result<UserModel>(true, "User with provided nickname already exists");
+            }
+
+            return new Result<UserModel>(passwordValidity && emailValidity && requiredFieldsPresent, message);
         }
 
-        private async Task<Result> IsValidLoginData(LoginUserModel user)
+        private async Task<Result<UserModel>> IsValidLoginData(LoginUserModel user)
         {
             if (user.Password != null && user.NickName != null)
             {
                 var password = user.Password;
-                try
+                User existingUser = await UserExists(user.NickName);
+                if (existingUser == null)
                 {
-                    var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == user.NickName);
-                    var hashedPassword = user.Password;
-                    bool res = PasswordUtil.IsValidPassword(password, hashedPassword);
-                    return new Result(!res);
+                    return new Result<UserModel>(true, "User doesn`t exist.");
                 }
-                catch (InvalidOperationException)
+                var hashedPassword = PasswordUtil.HashPassword(user.Password);
+                bool res = PasswordUtil.IsValidPassword(password, hashedPassword);
+                if (res)
                 {
-                    return new Result(true, "User with provided nickname not found");
+                    var bllUser = DALUserToBLLUser(existingUser);
+                    return new Result<UserModel>(!res, "Login Success", bllUser);
                 }
-                catch (Exception)
-                {
-                    return new Result(true, "Something gone wrong!");
-                }
+
+                return new Result<UserModel>(res, "Invalid Password");
             }
 
-            return new Result(true, "Nickname and password field were not provided");
+            return new Result<UserModel>(true, "Nickname and password field were not provided");
         }
 
         private static User BLLUserToDALUser(UserModel user)
         {
-            var dalUser = new User();
-
-            foreach (var property in typeof(User).GetProperties())
+            var dalUser = new User()
             {
-                var value = property.GetValue(user);
-                property.SetValue(dalUser, value);
-            }
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NickName = user.NickName,
+                Email = user.Email,
+                Password = user.Password
+            };
+
+            //foreach (var property in typeof(UserModel).GetProperties())
+            //{
+            //    if (property.Name == "Id") continue;
+
+            //    var value = property.GetValue(user);
+            //    if (value != null)
+            //    {
+            //        property.SetValue(dalUser, value);
+            //    }
+            //}
 
             return dalUser;
+        }
+
+        private static UserModel? DALUserToBLLUser(User user)
+        {
+            if (user != null)
+            {
+                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
+            }
+
+            return null;
+        }
+
+        private async Task<User?> UserExists(string nickname)
+        {
+            try
+            {
+                var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == nickname);
+                return userData;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
