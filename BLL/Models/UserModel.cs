@@ -19,6 +19,10 @@ namespace BLL.Models
 
         public byte[]? Photo { get; set; }
 
+        public UserModel()
+        {
+        }
+
         public UserModel(string nickname, string firstName, string lastName, string email, string password, UserRole role = UserRole.User, byte[]? photo=null)
         {
             FirstName = firstName;
@@ -29,5 +33,6 @@ namespace BLL.Models
             Photo = photo;
             Role = role;
         }
+
     }
 }
