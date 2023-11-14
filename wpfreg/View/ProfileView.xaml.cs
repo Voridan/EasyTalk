@@ -15,27 +15,31 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLL.Models;
 using System.IO;
+using System.Data;
 
 namespace wpfreg.View
 {
     public partial class ProfileView : UserControl
     {
+       
         public ProfileView()
         {
-            
             InitializeComponent();
-            DataContext = new UserProfile
+            DataContext = new UserProfile()
             {
-                UserName = App.CurrentUser.NickName,
-                UserLastName = "Прізвище Користувача",
-                UserEmail = "user@example.com",
-                UserNickname = "user123",
-                // Зображення користувача можна ініціалізувати з файлу або іншим шляхом
-
+                UserNickname = curUser.NickName,
+                UserName = curUser.FirstName,
+                UserLastName = curUser.LastName,
+                UserEmail = curUser.Email,
+                UserPhoto = curUser.Photo
             };
 
-
+                
         }
+            
+        
+        UserModel curUser = App.CurrentUser;
+
         private void UploadPhoto_Click(object sender, RoutedEventArgs e)
         {
             // Діалог вибору файлу для вибору фотографії
@@ -49,8 +53,10 @@ namespace wpfreg.View
             {
                 // Отримання вибраного файлу та оновлення фотографії користувача
                 string selectedImagePath = openFileDialog.FileName;
-                ((UserProfile)DataContext).Photo = File.ReadAllBytes(selectedImagePath);
-                UserImage.Source = LoadImageFromBytes(((UserProfile)DataContext).Photo);
+                curUser.Photo = File.ReadAllBytes(selectedImagePath);
+                App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
+                UserImage.Source = LoadImageFromBytes((curUser.Photo));
+
             }
         }
         private ImageSource LoadImageFromBytes(byte[] imageData)
@@ -72,6 +78,7 @@ namespace wpfreg.View
         public string UserLastName { get; set; }
         public string UserEmail { get; set; }
         public string UserNickname { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[] UserPhoto { get; set; }
     }
+
 }
