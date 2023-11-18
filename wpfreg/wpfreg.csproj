@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Fonts\" />
-    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>
