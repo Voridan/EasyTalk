@@ -8,7 +8,7 @@
             var dbUserName = Environment.GetEnvironmentVariable("PostgresUserName");
             var dbPassword = Environment.GetEnvironmentVariable("PostgresPassword");
 
-            return $"Host=localhost;Port=5432;Username=postgres;Password=12345678;Database=EasyTalk";
+            return $"Host=localhost;Port=5432;Username=postgres;Password=87vordan10;Database=EasyTalk";
         }
     }
 }

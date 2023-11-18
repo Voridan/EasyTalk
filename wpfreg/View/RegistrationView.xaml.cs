@@ -17,6 +17,7 @@ using DAL.Models;
 using BLL.Services.Implementations;
 using BLL.Models;
 using BLL.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace wpfreg.View
 {
@@ -27,6 +28,7 @@ namespace wpfreg.View
         private readonly LoginView _loginView;
         private readonly MainWindow _mainwindow;
         private bool handle = true;
+        
         public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
         {
             InitializeComponent();

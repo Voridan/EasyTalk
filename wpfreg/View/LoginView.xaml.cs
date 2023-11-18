@@ -17,6 +17,7 @@ using BLL.Services.Implementations;
 using BLL.Utils;
 using BLL.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace wpfreg.View
 {
@@ -26,13 +27,13 @@ namespace wpfreg.View
 
         private UserService _userService;
         private readonly MainWindow _mainwindow;
-      
+        //private readonly ILogger logger;
+
         public LoginView(UserService userservice, MainWindow mainwindow)
         {
             InitializeComponent();
             _userService = userservice;
             _mainwindow = mainwindow;
-            
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -78,10 +79,10 @@ namespace wpfreg.View
         private void Signup_btn(object sender, RoutedEventArgs e)
         {
             this.Close();
+            var logger = App.AppHost.Services.GetRequiredService<ILogger>();
+            logger.LogInformation($"User redirected to register view");
             var registerForm = App.AppHost.Services.GetRequiredService<RegistrationView>();
-             registerForm.ShowDialog();
+            registerForm.ShowDialog();
         }
-
-       
     }
 }

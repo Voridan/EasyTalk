@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using wpfreg.View;
-using DAL.Models;
-using System.Collections;
+﻿using BLL.Models;
 using BLL.Services.Implementations;
 using DAL.Data;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BLL.Models;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using System;
+using System.IO;
+using System.Windows;
+using wpfreg.View;
 
 namespace wpfreg
 {
@@ -28,7 +24,15 @@ namespace wpfreg
 
         public App()
         {
+            string logsDirectory = Path.Combine(Environment.CurrentDirectory, "logs");
+
             AppHost = Host.CreateDefaultBuilder()
+                .UseSerilog((host, loggerConfiguration) =>
+                {
+                    loggerConfiguration
+                    .WriteTo.File(Path.Combine(logsDirectory, "TestRegistrationLogic.txt"), rollingInterval: RollingInterval.Day)
+                    .MinimumLevel.Error();
+                })
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
                     services.AddSingleton<RegistrationView>();
@@ -44,9 +48,9 @@ namespace wpfreg
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await AppHost.StartAsync();
+           await AppHost!.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<LoginView>();
-           
+
             startupForm.Show();
 
             base.OnStartup(e);
