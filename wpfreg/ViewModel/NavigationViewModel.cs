@@ -20,14 +20,17 @@ namespace wpfreg.ViewModel
         public ICommand HomeCommand { get; set; }
       
         public ICommand ProfileCommand { get; set; }
+        public ICommand ChatCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeViewModel();
+        private void Chat(object obj) => CurrentView = new ChatViewModel();
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
 
         public NavigationViewModel()
         {
             HomeCommand = new RelayCommand(Home);
             ProfileCommand = new RelayCommand(Profile);
+            ChatCommand = new RelayCommand(Chat);
       
 
             // Startup Page

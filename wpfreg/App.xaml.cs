@@ -35,6 +35,7 @@ namespace wpfreg
                     services.AddSingleton<LoginView>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
+                    services.AddSingleton<ChatView>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
 
@@ -45,8 +46,8 @@ namespace wpfreg
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost.StartAsync();
-            var startupForm = AppHost.Services.GetRequiredService<LoginView>();
-           
+            var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
+
             startupForm.Show();
 
             base.OnStartup(e);
