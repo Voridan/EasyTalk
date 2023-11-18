@@ -1,6 +1,7 @@
 ﻿using BLL.ChatServer;
 using System.Net;
 using System.Net.Sockets;
+using wpfreg.Net.IO;
 
 namespace ChatServer
 {
@@ -20,7 +21,21 @@ namespace ChatServer
                 clients.Add(client);
 
                 /* connect users */
+                BroadcastConnection();
+            }
+        }
 
+        static void BroadcastConnection()
+        {
+            foreach (var notifiedClient in clients)
+            {
+                foreach (var client in clients)
+                {
+                    var broadcastPacket = new PacketBuilder();
+                    broadcastPacket.WriteOpCode(1);
+                    broadcastPacket.WriteMessage(client.Username);
+                    notifiedClient.ClientSocket.Client.Send(broadcastPacket.GetPackageBytes());
+                }
             }
         }
     }
