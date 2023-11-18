@@ -31,9 +31,9 @@ namespace wpfreg.ViewModel
             var user = new UserModel
             {
                 UserName = _server.PacketReader.ReadMessage(),
-                UID = _server.PacketReader.ReadMessage()
+                //UID = _server.PacketReader.ReadMessage()
             };
-            if(!Users.Any(x => x.UID == user.UID))
+            if(!Users.Any(x => x.UserName == user.UserName))
             {
                 Application.Current.Dispatcher.Invoke(()=> Users.Add(user));
             }
