@@ -129,7 +129,7 @@ namespace BLL.Services.Implementations
             return new Result<UserModel>(true, "Nickname and password field were not provided");
         }
 
-        private static User BLLUserToDALUser(UserModel user)
+        public static User BLLUserToDALUser(UserModel user)
         {
             var dalUser = new User()
             {
@@ -154,7 +154,7 @@ namespace BLL.Services.Implementations
             return dalUser;
         }
 
-        private static UserModel? DALUserToBLLUser(User user)
+        public static UserModel? DALUserToBLLUser(User user)
         {
             if (user != null)
             {
