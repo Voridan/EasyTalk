@@ -4,12 +4,12 @@ using DAL.Data;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
-using wpfreg.Utilities.Logging.Commands;
 using wpfreg.View;
 
 namespace wpfreg
@@ -40,13 +40,13 @@ namespace wpfreg
                 })
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
-                    services.AddSingleton<ICommand, SwitchToRegister>();
                     services.AddSingleton<RegistrationView>();
                     services.AddSingleton<LoginView>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
+                    services.AddSingleton<ILogger<LoginView>, Logger<LoginView>>();
 
                 })
                 .Build();
