@@ -4,11 +4,12 @@ using DAL.Data;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
+using wpfreg.Utilities.Logging.Commands;
 using wpfreg.View;
 
 namespace wpfreg
@@ -31,10 +32,15 @@ namespace wpfreg
                 {
                     loggerConfiguration
                     .WriteTo.File(Path.Combine(logsDirectory, "TestRegistrationLogic.txt"), rollingInterval: RollingInterval.Day)
-                    .MinimumLevel.Error();
+                    .MinimumLevel.Information();
+                })
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.AddSerilog();
                 })
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
+                    services.AddSingleton<ICommand, SwitchToRegister>();
                     services.AddSingleton<RegistrationView>();
                     services.AddSingleton<LoginView>();
                     services.AddSingleton<MainWindow>();
