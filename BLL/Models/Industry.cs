@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-
-namespace BLL.Models
+﻿namespace BLL.Models
 {
     public class Industry
     {

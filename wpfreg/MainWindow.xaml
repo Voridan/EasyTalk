@@ -29,6 +29,7 @@
                   Width="228">
                 <Border Background="#272B2F"
                         CornerRadius="20,0,0,20"/>
+                <TextBlock Text="EASYTALK" Foreground="White" FontSize="36" HorizontalAlignment="Center" Margin="0,25,0,0"/>
                 <StackPanel Height="400"
                             Width="228">
 
@@ -43,7 +44,7 @@
                             <Image Source="Images/img_home.png"
                                    Style="{StaticResource Image_Style}" />
 
-                            <TextBlock Text="Home"
+                            <TextBlock Text="My projects"
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>
@@ -60,7 +61,7 @@
                             <Image Source="Images/img_customer.png"
                                    Style="{StaticResource Image_Style}" />
 
-                            <TextBlock Text="Customer"
+                            <TextBlock Text="My profile"
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>

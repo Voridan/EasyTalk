@@ -5,34 +5,110 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:wpfreg.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="622">
     <UserControl.DataContext>
         <vm:ProfileViewModel/>
     </UserControl.DataContext>
-    <Grid Background="white">
-        <Grid>
-            <!-- Фото користувача -->
-            <Image x:Name="UserImage" Source="{Binding UserPhoto}" Width="100" Height="100" Margin="10"/>
+    <UserControl.Resources>
+        <BitmapImage x:Key="DefaultImage" UriSource="\Images\account.png"/>
+    </UserControl.Resources>
 
-            <!-- Ім'я -->
-            <TextBlock Text="Ім'я:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0"/>
-            <TextBlock x:Name="UserNameText" Text="{Binding UserName}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,120,0,0"/>
+    <Grid Background="#212529">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+       
 
-            <!-- Прізвище -->
-            <TextBlock Text="Прізвище:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,150,0,0"/>
-            <TextBlock x:Name="UserLastNameText" Text="{Binding UserLastName}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,150,0,0"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+            <Image x:Name="UserImage"
+                   Source="{Binding UserPhoto, FallbackValue={StaticResource DefaultImage}}" 
+                   
+                   Width="200" 
+                   Height="150"
+                   Margin="0,40,0,0"
+                   />
+            <Button Content="Завантажити фото" Background="Transparent" Margin="0,10,0,0" Click="UploadPhoto_Click" Style="{StaticResource MyButton}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            <TextBlock Text="Nickname : "
+                        Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                       />
+            <TextBlock Text="First name :"
+                        Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                           Margin="0,10,0,0"/>
+            <TextBlock Text="Last name : "
+                        Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                        Margin="0,10,0,0"/>
+            <TextBlock Text="Email : "
+                        Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                        Margin="0,10,0,0"/>
+          
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
 
-            <!-- Пошта -->
-            <TextBlock Text="Пошта:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,180,0,0"/>
-            <TextBlock x:Name="UserEmailText" Text="{Binding UserEmail}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,180,0,0"/>
+            <TextBlock x:Name="UserNicknameText" 
+                       Text="{Binding UserNickname}" 
+                       Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                       />
+            <TextBlock x:Name="UserNameText" 
+                       Text="{Binding UserName}"
+                       Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                        Margin="0,10,0,0"/>
 
-            <!-- Нікнейм -->
-            <TextBlock Text="Нікнейм:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,210,0,0"/>
-            <TextBlock x:Name="UserNicknameText" Text="{Binding UserNickname}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,210,0,0"/>
 
-            <!-- Кнопка для завантаження фото -->
-            <Button Content="Завантажити фото" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,240,0,0" Click="UploadPhoto_Click"/>
-        </Grid>
+          
+            <TextBlock x:Name="UserLastNameText" 
+                       Text="{Binding UserLastName}"
+                        Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                        Margin="0,10,0,0"/>
+
+             
+            <TextBlock x:Name="UserEmailText"
+                       Text="{Binding UserEmail}" 
+                       Foreground="White" 
+                           FontSize="18" 
+                           FontFamily="Montserrat"
+                           FontWeight="Light"
+                        Margin="0,10,0,0"/>
+           
+            
+        </StackPanel>
+        
+        
+
+
+
+
+      
+       
     </Grid>
 </UserControl>
 
