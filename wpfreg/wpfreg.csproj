@@ -23,9 +23,5 @@
     <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
+   
 </Project>

@@ -9,4 +9,7 @@
     <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
         <view:ProfileView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+        <view:ChatView />
+    </DataTemplate>
 </ResourceDictionary>

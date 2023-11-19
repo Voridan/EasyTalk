@@ -14,6 +14,7 @@ using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BLL.Models;
+using wpfreg.Net;
 
 namespace wpfreg
 {
@@ -24,6 +25,7 @@ namespace wpfreg
 
     {
         public static UserModel CurrentUser { get; set; }
+        public static Server Server { get; private set; }
         public static IHost? AppHost { get; private set; }
 
         public App()
@@ -35,8 +37,10 @@ namespace wpfreg
                     services.AddSingleton<LoginView>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
+                    services.AddSingleton<ChatView>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
+                    services.AddSingleton<Server>();
 
                 })
                 .Build();
@@ -45,10 +49,9 @@ namespace wpfreg
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost.StartAsync();
-            var startupForm = AppHost.Services.GetRequiredService<LoginView>();
-           
+            var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
             startupForm.Show();
-
+            Server = new Server();
             base.OnStartup(e);
         }
 

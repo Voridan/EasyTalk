@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{EBFF7110-0FD9-4A97-919E-B2EDF26640A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfreg", "wpfreg\wpfreg.csproj", "{F115B566-33EF-4161-BB24-963B2DAF8A5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfreg", "wpfreg\wpfreg.csproj", "{F115B566-33EF-4161-BB24-963B2DAF8A5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F115B566-33EF-4161-BB24-963B2DAF8A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F115B566-33EF-4161-BB24-963B2DAF8A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F115B566-33EF-4161-BB24-963B2DAF8A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
