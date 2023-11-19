@@ -8,7 +8,7 @@ using wpfreg.Net.IO;
 
 namespace wpfreg.Net
 {
-     class Server
+     public class Server
     {
         TcpClient _client;
         PacketBuilder _packetBuilder;

@@ -28,7 +28,7 @@
             <ListView ItemsSource="{Binding Users}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding UserName}" Foreground="black" />
+                        <TextBlock Text="{Binding NickName}" Foreground="black" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 

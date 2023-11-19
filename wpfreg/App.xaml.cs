@@ -14,6 +14,7 @@ using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BLL.Models;
+using wpfreg.Net;
 
 namespace wpfreg
 {
@@ -24,6 +25,7 @@ namespace wpfreg
 
     {
         public static UserModel CurrentUser { get; set; }
+        public static Server Server { get; private set; }
         public static IHost? AppHost { get; private set; }
 
         public App()
@@ -38,6 +40,7 @@ namespace wpfreg
                     services.AddSingleton<ChatView>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
+                    services.AddSingleton<Server>();
 
                 })
                 .Build();
@@ -47,9 +50,8 @@ namespace wpfreg
         {
             await AppHost.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
-
             startupForm.Show();
-
+            Server = new Server();
             base.OnStartup(e);
         }
 

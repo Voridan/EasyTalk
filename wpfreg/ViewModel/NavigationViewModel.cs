@@ -11,6 +11,7 @@ namespace wpfreg.ViewModel
     internal class NavigationViewModel : ViewModelBase
     {
         private object _currentView;
+        
         public object CurrentView
         {
             get { return _currentView; }
@@ -23,7 +24,12 @@ namespace wpfreg.ViewModel
         public ICommand ChatCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeViewModel();
-        private void Chat(object obj) => CurrentView = new ChatViewModel();
+        private void Chat(object obj)
+        {
+            CurrentView = new ChatViewModel();
+            string? username = App.CurrentUser?.NickName?? "tyler";
+            if (username != null) App.Server.ConnectToServer(username);
+        }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
 
         public NavigationViewModel()
