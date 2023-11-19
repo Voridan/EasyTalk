@@ -14,6 +14,8 @@ namespace wpfreg.Net
         PacketBuilder _packetBuilder;
         public PacketReader PacketReader;
         public event Action connectedEvent;
+        public event Action msgRecieveEvent;
+        public event Action userDisconectEvent;
 
         public Server()
         {
@@ -50,12 +52,26 @@ namespace wpfreg.Net
                         case 1:
                             connectedEvent?.Invoke();
                             break;
+                        case 5:
+                            msgRecieveEvent.Invoke();
+                            break;
+                        case 10:
+                            userDisconectEvent?.Invoke();
+                            break;
                         default:
                             Console.WriteLine("ah yes...");
                             break;
                     }
                 }
             });
+        }
+
+        public void SendMessageToServer(string message)
+        {
+            var messagePacket = new PacketBuilder();
+            messagePacket.WriteOpCode(5);
+            messagePacket.WriteString(message);
+            _client.Client.Send(messagePacket.GetPackageBytes());
         }
     }
 }
