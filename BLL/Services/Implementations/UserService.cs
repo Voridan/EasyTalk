@@ -48,9 +48,16 @@ namespace BLL.Services.Implementations
             return loginResult;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
         {
-            return await _userRepo.GetAllAsync();
+            var users = await _userRepo.GetAllAsync();
+            var bllUsers = new List<UserModel>();
+            foreach(var user in users)
+            {
+                bllUsers.Add(DALUserToBLLUser(user));
+            }
+
+            return bllUsers;
         }
 
         public async Task<IEnumerable<User>> GetUserAsync(

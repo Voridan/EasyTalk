@@ -7,7 +7,7 @@ namespace BLL.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<IEnumerable<UserModel>> GetAllUsersAsync();
 
         Task<IEnumerable<User>> GetUserAsync(
             Expression<Func<User, bool>> filter,
