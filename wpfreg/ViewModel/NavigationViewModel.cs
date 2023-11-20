@@ -19,11 +19,15 @@ namespace wpfreg.ViewModel
         }
 
         public ICommand HomeCommand { get; set; }
-      
+        public ICommand SearchCommand { get; set; }
+        public ICommand testCommand { get; set; }
+
         public ICommand ProfileCommand { get; set; }
         public ICommand ChatCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeViewModel();
+        private void Search(object obj) => CurrentView = new SearchViewModel();
+        private void Test(object obj) => CurrentView = new testviewmodel();
         private void Chat(object obj)
         {
             CurrentView = new ChatViewModel();
@@ -37,8 +41,9 @@ namespace wpfreg.ViewModel
             HomeCommand = new RelayCommand(Home);
             ProfileCommand = new RelayCommand(Profile);
             ChatCommand = new RelayCommand(Chat);
-      
 
+            testCommand= new RelayCommand(Test);
+            SearchCommand = new RelayCommand(Search);
             // Startup Page
             CurrentView = new HomeViewModel();
         }

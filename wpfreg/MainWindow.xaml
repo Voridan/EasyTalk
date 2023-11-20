@@ -81,6 +81,20 @@
                         </Grid>
 
                     </Menu:Btn>
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding testCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_order.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Chat"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
                 </StackPanel>
             </Grid>
 

@@ -9,10 +9,12 @@
     <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
         <view:ProfileView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:testviewmodel}">
-        <view:testview />
-    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ChatViewModel}">
         <view:ChatView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SearchViewModel}">
+        <view:SearchView />
     </DataTemplate>
 </ResourceDictionary>
