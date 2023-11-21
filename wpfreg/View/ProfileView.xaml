@@ -10,7 +10,7 @@
         <vm:ProfileViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <BitmapImage x:Key="DefaultImage" UriSource="\Images\account.png"/>
+        <BitmapImage x:Key="DefaultImage" UriSource="Images/account.png"/>
     </UserControl.Resources>
 
     <Grid Background="#212529">
@@ -27,13 +27,15 @@
        
 
         <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-            <Image x:Name="UserImage"
-                   Source="{Binding UserPhoto, FallbackValue={StaticResource DefaultImage}}" 
+            <Ellipse   Width="150" 
+                       Height="150"
+                       Margin="0,40,0,0">
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="UserImage" ImageSource="{Binding UserPhoto, FallbackValue={StaticResource DefaultImage}}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            
                    
-                   Width="200" 
-                   Height="150"
-                   Margin="0,40,0,0"
-                   />
             <Button Content="Завантажити фото" Background="Transparent" Margin="0,10,0,0" Click="UploadPhoto_Click" Style="{StaticResource MyButton}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">

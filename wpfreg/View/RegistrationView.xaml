@@ -4,12 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfreg.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="RegistrationView" Height="650" Width="400" AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
         ResizeMode="NoResize"
-        MouseDown="Window_MouseDown">
+        MouseDown="Window_MouseDown"
+        >
+    <Window.Resources>
+        <!--<ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:Status"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>-->
+    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -211,6 +220,7 @@
                          DropDownClosed="ComboBox_DropDownClosed">
                     <ComboBoxItem>Creative</ComboBoxItem>
                     <ComboBoxItem>Education</ComboBoxItem>
+                    
 
                 </ComboBox>
                 <StackPanel Orientation="Horizontal" Margin="0,40,0,0">

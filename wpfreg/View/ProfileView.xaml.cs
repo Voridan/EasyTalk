@@ -55,7 +55,7 @@ namespace wpfreg.View
                 string selectedImagePath = openFileDialog.FileName;
                 curUser.Photo = File.ReadAllBytes(selectedImagePath);
                 App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
-                UserImage.Source = LoadImageFromBytes((curUser.Photo));
+                UserImage.ImageSource = LoadImageFromBytes((curUser.Photo));
 
             }
         }

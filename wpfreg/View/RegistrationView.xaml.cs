@@ -17,6 +17,7 @@ using DAL.Models;
 using BLL.Services.Implementations;
 using BLL.Models;
 using BLL.Utils;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace wpfreg.View
 {
@@ -68,8 +69,9 @@ namespace wpfreg.View
         private void Login(object sender, RoutedEventArgs e)
         {
             this.Close();
-            _loginView.ShowDialog();
-                
+            var lg = App.AppHost.Services.GetRequiredService<LoginView>();
+            lg.ShowDialog();
+
         }
 
         private void Register(object sender, RoutedEventArgs e)
@@ -79,7 +81,7 @@ namespace wpfreg.View
 
         private void textBoxNickName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxNickName.Text = " ";
+            textBoxNickName.Text = "";
         }
         private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
@@ -109,9 +111,10 @@ namespace wpfreg.View
         }
         private async void Submit_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxEmailId.Text.Length == 0)
+            if (textBoxEmailId.Text.Length == 0 || textBoxEmailId.Text == "Email")
             {
                 errormessage.Text = "Enter an email.";
+                errormessage.Visibility = Visibility.Visible;
                 textBoxEmailId.Focus();
             }
             //else if (!Regex.IsMatch(textBoxEmailId.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
@@ -128,7 +131,7 @@ namespace wpfreg.View
                 string email = textBoxEmailId.Text;
                 string password = passwordBox.Password;
                 UserModel user = new UserModel(nickname, firstname, lastname, email, password);
-                if (passwordBox.Password.Length == 0)
+                if (passwordBox.Password.Length == 0 || passwordBox.Password.ToString()=="Password")
                 {
                     errormessage.Text = "Enter password.";
                     passwordBox.Focus();

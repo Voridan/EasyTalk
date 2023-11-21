@@ -89,7 +89,7 @@
                             <Image Source="Images/img_order.png"
                                    Style="{StaticResource Image_Style}" />
 
-                            <TextBlock Text="Chat"
+                            <TextBlock Text="Search"
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>
