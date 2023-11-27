@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpfreg.View" xmlns:viewmodel="clr-namespace:wpfreg.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="722">
 
     <UserControl.DataContext>
         <viewmodel:ChatViewModel/>
@@ -13,7 +13,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="622"/>
         </Grid.ColumnDefinitions>
 
         <DockPanel>
@@ -36,16 +36,20 @@
         </DockPanel>
         
         <StackPanel Grid.Column="1" >
-            <ListView Height="400"
-                      ItemsSource="{Binding Messages}"/>
-            <StackPanel Orientation="Horizontal">
+            <ListView Height="545"
+                      ItemsSource="{Binding Messages}"
+                      Background="#272B2F"/>
+            <StackPanel Orientation="Horizontal"
+                        Background="White">
                 <TextBox Height="55"
-                         Width="350"
+                         Width="545"
                          VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Width="55"
+                <Button Width="75"
                         Content="Send"
-                        Command="{Binding SendMessageCommand}"/>
+                        FontSize="18"
+                        Command="{Binding SendMessageCommand}"
+                        Style="{StaticResource ButtonChat}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
