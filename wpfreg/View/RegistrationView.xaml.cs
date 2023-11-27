@@ -28,6 +28,11 @@ namespace wpfreg.View
         private readonly LoginView _loginView;
         private readonly MainWindow _mainwindow;
         private bool handle = true;
+        private string nickNamePlaceHolder = "NickName";
+        private string firstNamePlaceHolder = "FirstName";
+        private string lastNamePlaceHolder = "LastName";
+        //private string passwordPlaceHolder = "Password";
+        private string emailPlaceHolder = "Email";
         public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
         {
             InitializeComponent();
@@ -46,24 +51,33 @@ namespace wpfreg.View
 
         private void textBoxLastname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxLastname.Text = " ";
+            if (textBoxLastname.Text == lastNamePlaceHolder)
+            {
+                textBoxLastname.Text = "";
+            }
         }
 
 
 
         private void passwordBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            passwordBox.Password = " ";
+            passwordBox.Password = "";
         }
 
         private void textBoxEmailId_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxEmailId.Text = " ";
+            if (textBoxEmailId.Text == emailPlaceHolder)
+            {
+                textBoxEmailId.Text = "";
+            }
         }
 
         private void textBoxFirstName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxFirstname.Text = " ";
+            if (textBoxFirstname.Text == firstNamePlaceHolder)
+            {
+                textBoxFirstname.Text = "";
+            }
         }
 
         private void Login(object sender, RoutedEventArgs e)
@@ -81,7 +95,10 @@ namespace wpfreg.View
 
         private void textBoxNickName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxNickName.Text = "";
+            if (textBoxNickName.Text == nickNamePlaceHolder)
+            {
+                textBoxNickName.Text = "";
+            }
         }
         private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
