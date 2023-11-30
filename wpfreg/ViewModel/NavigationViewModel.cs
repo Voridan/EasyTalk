@@ -21,7 +21,6 @@ namespace wpfreg.ViewModel
         public ICommand HomeCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand testCommand { get; set; }
-
         public ICommand ProfileCommand { get; set; }
         public ICommand ChatCommand { get; set; }
 

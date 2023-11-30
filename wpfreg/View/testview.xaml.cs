@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using BLL.Services;
 using BLL.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
-
+using wpfreg.ViewModel;
 namespace wpfreg.View
 {
     /// <summary>
@@ -33,7 +33,6 @@ namespace wpfreg.View
             InitializeComponent();
             _userservice = App.AppHost.Services.GetRequiredService<UserService>();
             btnload.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-            //_userservice = userservice;
         }
 
         private async void btnLoadClick(object sender, RoutedEventArgs e)
@@ -56,6 +55,11 @@ namespace wpfreg.View
             curusers= curusers.Where(p=>p.NickName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             UsersList.ItemsSource = curusers; 
                 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
