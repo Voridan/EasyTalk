@@ -42,6 +42,8 @@ namespace wpfreg
                     services.AddSingleton<EasyTalkContext>();
                     services.AddSingleton<Server>();
                     services.AddSingleton<testview>();
+                    services.AddSingleton<ProfileView>();
+                    services.AddSingleton<ChatWindow>();
 
                 })
                 .Build();
@@ -51,6 +53,7 @@ namespace wpfreg
         {
             await AppHost.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<LoginView>();
+
             startupForm.Show();
             Server = new Server();
             base.OnStartup(e);

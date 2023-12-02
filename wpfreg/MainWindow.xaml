@@ -54,7 +54,8 @@
                     <!--// Customer //-->
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
-                              Command="{Binding ProfileCommand}">
+                              Command="{Binding ProfileCommand}"
+                              >
 
                         <Grid>
 
@@ -110,6 +111,9 @@
         <Button x:Name="CloseApp"
                 Style="{StaticResource ExitApp}"
                 Click="CloseApp_Click" />
+
+
+      
 
     </Grid>
 </Window>

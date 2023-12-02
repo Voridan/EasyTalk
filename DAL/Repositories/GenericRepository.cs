@@ -7,7 +7,7 @@ namespace DAL.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly EasyTalkContext _context;
+        protected readonly EasyTalkContext _context;
 
         protected readonly DbSet<T> _table;
 
@@ -71,6 +71,7 @@ namespace DAL.Repositories
             _table.Attach(obj);
             _context.Entry(obj).State = EntityState.Modified;
             await SaveAsync();
+          
         }
 
         public virtual async Task DeleteAsync(Guid id)

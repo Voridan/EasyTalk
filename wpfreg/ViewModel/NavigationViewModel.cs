@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using wpfreg.Utilities;
 
 namespace wpfreg.ViewModel
@@ -32,6 +33,7 @@ namespace wpfreg.ViewModel
             CurrentView = new ChatViewModel();
             string? username = App.CurrentUser?.NickName?? "tyler";
             if (username != null) App.Server.ConnectToServer(username);
+            
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
 

@@ -144,7 +144,8 @@ namespace BLL.Services.Implementations
                 LastName = user.LastName,
                 NickName = user.NickName,
                 Email = user.Email,
-                Password = user.Password
+                Password = user.Password,
+                Photo = user.Photo
             };
 
             //foreach (var property in typeof(UserModel).GetProperties())
@@ -165,7 +166,7 @@ namespace BLL.Services.Implementations
         {
             if (user != null)
             {
-                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
+                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password ,UserRole.User, user.Photo);
             }
 
             return null;

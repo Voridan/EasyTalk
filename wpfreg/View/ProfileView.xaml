@@ -9,9 +9,7 @@
     <UserControl.DataContext>
         <vm:ProfileViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <BitmapImage x:Key="DefaultImage" UriSource="Images/account.png"/>
-    </UserControl.Resources>
+  
 
     <Grid Background="#212529">
         <Grid.ColumnDefinitions>
@@ -31,7 +29,7 @@
                        Height="150"
                        Margin="0,40,0,0">
                 <Ellipse.Fill>
-                    <ImageBrush x:Name="UserImage" ImageSource="{Binding UserPhoto, FallbackValue={StaticResource DefaultImage}}"/>
+                    <ImageBrush x:Name="UserImage" ImageSource="{Binding UserPhoto}"/>
                 </Ellipse.Fill>
             </Ellipse>
             
@@ -105,7 +103,7 @@
         </StackPanel>
         
         
-
+       
 
 
 

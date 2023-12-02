@@ -15,4 +15,7 @@
     <DataTemplate DataType="{x:Type vm:ChatViewModel}">
         <view:ChatView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ChatWindowModel}">
+        <view:ChatWindow />
+    </DataTemplate>
 </ResourceDictionary>

@@ -16,12 +16,19 @@ using System.Windows.Shapes;
 using BLL.Models;
 using System.IO;
 using System.Data;
+using BLL.Services;
+using System.Configuration;
+using BLL.Services.Implementations;
+using Microsoft.Extensions.DependencyInjection;
+using BLL.Services.Interfaces;
 
 namespace wpfreg.View
 {
     public partial class ProfileView : UserControl
     {
-       
+       private UserService _userService;
+
+        UserModel curUser = App.CurrentUser;
         public ProfileView()
         {
             InitializeComponent();
@@ -31,16 +38,16 @@ namespace wpfreg.View
                 UserName = curUser.FirstName,
                 UserLastName = curUser.LastName,
                 UserEmail = curUser.Email,
-                UserPhoto = curUser.Photo
-            };
+                UserPhoto = LoadImageFromBytes(curUser.Photo)
+        };
+             _userService = App.AppHost.Services.GetRequiredService<UserService>();
 
-                
+
         }
             
-        
-        UserModel curUser = App.CurrentUser;
+      
 
-        private void UploadPhoto_Click(object sender, RoutedEventArgs e)
+        private async void UploadPhoto_Click(object sender, RoutedEventArgs e)
         {
             // Діалог вибору файлу для вибору фотографії
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -56,7 +63,7 @@ namespace wpfreg.View
                 curUser.Photo = File.ReadAllBytes(selectedImagePath);
                 App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
                 UserImage.ImageSource = LoadImageFromBytes((curUser.Photo));
-
+                 await _userService.UpdateUser(App.CurrentUser);
             }
         }
         private ImageSource LoadImageFromBytes(byte[] imageData)
@@ -78,7 +85,7 @@ namespace wpfreg.View
         public string UserLastName { get; set; }
         public string UserEmail { get; set; }
         public string UserNickname { get; set; }
-        public byte[] UserPhoto { get; set; }
+        public ImageSource UserPhoto { get; set; }
     }
 
 }
