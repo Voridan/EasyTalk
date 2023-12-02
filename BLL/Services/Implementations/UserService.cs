@@ -68,9 +68,10 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetAsync(filter, orderBy, includeProperties);
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id)
+        public async Task<UserModel?> GetUserByIdAsync(Guid id)
         {
-            return await _userRepo.GetByIdAsync(id);
+            User? dalUser = await _userRepo.GetByIdAsync(id);
+            return DALUserToBLLUser(dalUser);
         }
 
         public async Task UpdateUser(UserModel user)

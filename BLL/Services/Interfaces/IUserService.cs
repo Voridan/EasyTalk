@@ -14,7 +14,7 @@ namespace BLL.Services.Interfaces
             Func<IQueryable<User>, IOrderedQueryable<User>> orderBy,
             string includeProperties);
 
-        Task<User?> GetUserByIdAsync(Guid id);
+        Task<UserModel?> GetUserByIdAsync(Guid id);
 
         Task<Result<UserModel>> RegisterUserAsync(UserModel user);
         

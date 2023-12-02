@@ -32,18 +32,19 @@ namespace BLL.Services.Implementations
             return DalChatToBll(chat);
         }
 
-        public async Task<Result<ChatModel>> CreateChat(ChatModel chat, UserModel user1, UserModel user2)
+        public async Task<Result<ChatModel>> CreateChat(UserModel user1, UserModel user2)
         {
-            var dalChat = BllChatToDal(chat);
-            if (dalChat != null)
+            var chat = new Chat() { Name = $"Chat with {user2.NickName}", Description = "No description"};
+            chat.Users.Add(UserService.BLLUserToDALUser(user1));
+            chat.Users.Add(UserService.BLLUserToDALUser(user2));
+            try
             {
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user1));
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user2));
-                await chatRepository.AddAsync(dalChat);
+                await chatRepository.AddAsync(chat);
                 return new Result<ChatModel>(false, "Chat created seccessfully");
+            } catch (Exception ex)
+            {
+                return new Result<ChatModel>(true, "Chat creation failed");
             }
-
-            return new Result<ChatModel>(true, "Chat creation failed");
         }
 
         //public async Task DeleteChat(Chat chat)
@@ -91,6 +92,17 @@ namespace BLL.Services.Implementations
             }
 
             return null;
+        }
+
+        public async Task<bool> HasChat(Guid currentUserId, Guid selectedUserId)
+        {
+            Chat? chat = await chatRepository.GetByIdAsync(currentUserId);
+            if (chat != null)
+            {
+                return chat.Users.Any(u => u.Id == selectedUserId);
+            }
+
+            return false;
         }
     }
 }
