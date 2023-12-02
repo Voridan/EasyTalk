@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
+             xmlns:local="clr-namespace:wpfreg.Utilities"
              xmlns:vm="clr-namespace:wpfreg.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -71,7 +72,7 @@
                                    FontFamily="Montserrat"
                                     Margin="5"
                                    Text="{Binding FirstName}">
-                        </TextBlock>
+                            </TextBlock>
                             <TextBlock VerticalAlignment="Center"
                                         TextAlignment="center"
                                         HorizontalAlignment="center" 
@@ -84,8 +85,15 @@
                             </TextBlock>
 
                         </StackPanel>
-                        <Button Click="Button_Click_1"  Content="start chat" Width="70" HorizontalAlignment="Right" Grid.RowSpan="2"  Style="{StaticResource MyButtonStyle}"></Button>
+                        <RadioButton
+                            Content="Select"
+                            IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                            local:RadioButtonHelper.UniqueName="{Binding Id}" />
+                        
+
+                        <Button Click="ShowChat"  Content="start chat" Width="70" HorizontalAlignment="Right" Grid.RowSpan="2"  Style="{StaticResource MyButtonStyle}"></Button>
                     </Grid>
+                    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
