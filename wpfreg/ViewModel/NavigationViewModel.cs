@@ -21,24 +21,27 @@ namespace wpfreg.ViewModel
         public ICommand HomeCommand { get; set; }
       
         public ICommand ProfileCommand { get; set; }
+
         public ICommand ChatCommand { get; set; }
 
+        public ICommand SearchistCommand { get; set; }
+
         private void Home(object obj) => CurrentView = new HomeViewModel();
+              
         private void Chat(object obj)
         {
             CurrentView = new ChatViewModel();
-            string? username = App.CurrentUser?.NickName?? "tyler";
-            if (username != null) App.Server.ConnectToServer(username);
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
-
+        private void SearchList(object obj) => CurrentView = new SearchListViewModel();
         public NavigationViewModel()
         {
             HomeCommand = new RelayCommand(Home);
             ProfileCommand = new RelayCommand(Profile);
             ChatCommand = new RelayCommand(Chat);
-      
 
+            SearchistCommand = new RelayCommand(SearchList);
+           
             // Startup Page
             CurrentView = new HomeViewModel();
         }
