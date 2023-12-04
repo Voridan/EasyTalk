@@ -21,17 +21,17 @@
                 CornerRadius="20"/>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228"/>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition Width="622"/>
             </Grid.ColumnDefinitions>
 
             <Grid HorizontalAlignment="left"
-                  Width="228">
+                  Width="180">
                 <Border Background="#272B2F"
                         CornerRadius="20,0,0,20"/>
                 <TextBlock Text="EASYTALK" Foreground="White" FontSize="36" HorizontalAlignment="Center" Margin="0,25,0,0"/>
                 <StackPanel Height="400"
-                            Width="228">
+                            Width="180">
 
                     <!--// Home //-->
 
