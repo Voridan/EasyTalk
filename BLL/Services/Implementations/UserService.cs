@@ -122,8 +122,7 @@ namespace BLL.Services.Implementations
                 {
                     return new Result<UserModel>(true, "User doesn`t exist.");
                 }
-                var hashedPassword = PasswordUtil.HashPassword(user.Password);
-                bool res = PasswordUtil.IsValidPassword(password, hashedPassword);
+                bool res = PasswordUtil.IsValidPassword(password, existingUser.Password);
                 if (res)
                 {
                     var bllUser = DALUserToBLLUser(existingUser);

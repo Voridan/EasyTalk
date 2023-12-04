@@ -19,19 +19,18 @@ namespace wpfreg.ViewModel
         }
 
         public ICommand HomeCommand { get; set; }
-   
       
         public ICommand ProfileCommand { get; set; }
+
         public ICommand ChatCommand { get; set; }
+
         public ICommand SearchistCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeViewModel();
-        
-      
+              
         private void Chat(object obj)
         {
             CurrentView = new ChatViewModel();
-            
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
         private void SearchList(object obj) => CurrentView = new SearchListViewModel();

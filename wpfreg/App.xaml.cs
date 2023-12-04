@@ -33,8 +33,8 @@ namespace wpfreg
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
-                    services.AddSingleton<RegistrationView>();
-                    services.AddSingleton<LoginView>();
+                    services.AddTransient<RegistrationView>();
+                    services.AddTransient<LoginView>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
                     services.AddSingleton<ChatView>();

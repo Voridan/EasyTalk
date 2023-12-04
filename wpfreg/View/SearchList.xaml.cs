@@ -47,11 +47,9 @@ namespace wpfreg.View
 
         private async void Update_Users()
         {
-
             var curusers = await _userservice.GetAllUsersAsync();
             curusers = curusers.Where(p => p.NickName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             UsersList.ItemsSource = curusers;
-
         }
 
     }
