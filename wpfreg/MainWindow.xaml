@@ -81,15 +81,16 @@
                         </Grid>
 
                     </Menu:Btn>
+                    
                     <Menu:Btn Style="{StaticResource BtnStyle}"
-                              Command="{Binding testCommand}">
+                              Command="{Binding SearchistCommand}">
 
                         <Grid>
 
                             <Image Source="Images/img_order.png"
                                    Style="{StaticResource Image_Style}" />
 
-                            <TextBlock Text="Chat"
+                            <TextBlock Text="SearchList"
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>

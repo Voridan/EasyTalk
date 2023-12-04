@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpfreg.ViewModel
 {
-    internal class testviewmodel
+    internal class SearchListViewModel : Utilities.ViewModelBase
     {
     }
 }

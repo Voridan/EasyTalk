@@ -19,31 +19,30 @@ namespace wpfreg.ViewModel
         }
 
         public ICommand HomeCommand { get; set; }
-        public ICommand SearchCommand { get; set; }
-        public ICommand testCommand { get; set; }
-
+   
+      
         public ICommand ProfileCommand { get; set; }
         public ICommand ChatCommand { get; set; }
+        public ICommand SearchistCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeViewModel();
-        private void Search(object obj) => CurrentView = new SearchViewModel();
-        private void Test(object obj) => CurrentView = new testviewmodel();
+        
+      
         private void Chat(object obj)
         {
             CurrentView = new ChatViewModel();
-            string? username = App.CurrentUser?.NickName?? "tyler";
-            if (username != null) App.Server.ConnectToServer(username);
+            
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
-
+        private void SearchList(object obj) => CurrentView = new SearchListViewModel();
         public NavigationViewModel()
         {
             HomeCommand = new RelayCommand(Home);
             ProfileCommand = new RelayCommand(Profile);
             ChatCommand = new RelayCommand(Chat);
 
-            testCommand= new RelayCommand(Test);
-            SearchCommand = new RelayCommand(Search);
+            SearchistCommand = new RelayCommand(SearchList);
+           
             // Startup Page
             CurrentView = new HomeViewModel();
         }

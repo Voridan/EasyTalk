@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="wpfreg.View.SearchList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:wpfreg.View"
+             xmlns:vm="clr-namespace:wpfreg.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:SearchListViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="#212529">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <WrapPanel Margin="20" Background="#212529" Orientation="Horizontal" HorizontalAlignment="center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="White" 
+                       FontSize="18" 
+                       FontFamily="Montserrat"
+                       FontWeight="Light"
+                       Text ="Enter users`s nickname : "
+                       Width="250" 
+                      TextAlignment="Right"></TextBlock>
+                <TextBox  Background="#7F8B97" Width=" 220" Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"></TextBox>
+            </StackPanel>
+
+        </WrapPanel>
+        <ListView Background="#212529"  Grid.Row="1" Name="UsersList" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="#212529" Margin="0,10,0,0" Width="400">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="340"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>-->
+                        <StackPanel Orientation="Horizontal"  Grid.Row="0">
+                            <TextBlock VerticalAlignment="center"
+                                   TextAlignment="Center"                              
+                                   HorizontalAlignment="left" 
+                                   Foreground="White"
+                                    FontSize="22" 
+                                       FontWeight="Bold"
+                                    FontFamily="Montserrat"
+                                    Margin="5"
+                                   Text="{Binding NickName}">
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Grid.Row="1">
+                            <TextBlock VerticalAlignment="Center"
+                                   TextAlignment="center"
+                                   HorizontalAlignment="center" 
+                                   FontSize="16"
+                                   FontWeight="light"
+                                   Foreground="White"
+                                   FontFamily="Montserrat"
+                                    Margin="5"
+                                   Text="{Binding FirstName}">
+                            </TextBlock>
+                            <TextBlock VerticalAlignment="Center"
+                                        TextAlignment="center"
+                                        HorizontalAlignment="center" 
+                                        FontSize="16"
+                                        Foreground="White"
+                                        FontWeight="light"
+                                        FontFamily="Montserrat"
+                                         Margin="5"
+                                        Text="{Binding LastName}">
+                            </TextBlock>
+
+                        </StackPanel>
+
+
+
+                        <Button Command="{Binding Path=DataContext.ChatCommand, RelativeSource={RelativeSource AncestorType=Window}}" Content="start chat" Width="70" HorizontalAlignment="Right" Grid.RowSpan="2"  Style="{StaticResource MyButtonStyle}"></Button>
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Name="btnload" Content="Button"
+                Click="btnLoadClick"
+                Visibility="Hidden"
+                Margin="0,-40,0,0"></Button>
+    </Grid>
+</UserControl>
