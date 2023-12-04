@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfreg", "wpfreg\wpfreg.csproj", "{F115B566-33EF-4161-BB24-963B2DAF8A5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatServer", "ChatServer\ChatServer.csproj", "{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTalk.Tests", "EasyTalk.Tests\EasyTalk.Tests.csproj", "{A815037D-CB34-4B37-8326-766D49CBA91D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BF322B6-4FF3-474D-BF9E-ADBE0F4EB17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A815037D-CB34-4B37-8326-766D49CBA91D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A815037D-CB34-4B37-8326-766D49CBA91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A815037D-CB34-4B37-8326-766D49CBA91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A815037D-CB34-4B37-8326-766D49CBA91D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
