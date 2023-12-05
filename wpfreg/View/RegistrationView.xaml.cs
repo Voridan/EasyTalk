@@ -17,6 +17,7 @@ using DAL.Models;
 using BLL.Services.Implementations;
 using BLL.Models;
 using BLL.Utils;
+using wpfreg.ViewModel;
 
 namespace wpfreg.View
 {
@@ -27,13 +28,17 @@ namespace wpfreg.View
         private readonly LoginView _loginView;
         private readonly MainWindow _mainwindow;
         private bool handle = true;
+        private Industries SelectedIndustry { get; set; }
         public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
         {
             InitializeComponent();
             _userService = userservice;
             _loginView = loginView;
             _mainwindow = mainwindow;
-        }
+            var enumValues = Enum.GetValues(typeof(BLL.Models.Industries));
+            cmbSelect.ItemsSource = enumValues;
+
+    }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -91,6 +96,7 @@ namespace wpfreg.View
         {
             ComboBox cmb = sender as ComboBox;
             handle = !cmb.IsDropDownOpen;
+            ((RegistrationViewModel)DataContext).SelectedIndustry = (Industries)cmbSelect.SelectedItem;
             Handle();
         }
 
