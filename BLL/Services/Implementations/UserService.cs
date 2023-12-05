@@ -164,7 +164,7 @@ namespace BLL.Services.Implementations
         {
             if (user != null)
             {
-                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
+                return new UserModel(user.Id, user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
             }
 
             return null;
