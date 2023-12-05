@@ -17,9 +17,12 @@ namespace wpfreg.ViewModel
         public string Username { get; set; }
         
         public string Message { get; set; }
+        private string _userid;
+
         private Server _server;
-        public ChatViewModel()
+        public ChatViewModel(string userid = null)
         {
+            _userid = userid;
             Username = App.CurrentUser?.NickName??"tyler";
             Users = new ObservableCollection<UserModel>();
             Messages = new ObservableCollection<string>();

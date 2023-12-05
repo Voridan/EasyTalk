@@ -129,11 +129,12 @@ namespace wpfreg.View
             else
             {
                 string nickname = textBoxNickName.Text;
+                
                 string firstname = textBoxFirstname.Text;
                 string lastname = textBoxLastname.Text;
                 string email = textBoxEmailId.Text;
                 string password = passwordBox.Password;
-                UserModel user = new UserModel(nickname, firstname, lastname, email, password);
+                UserModel user = new UserModel(Guid.Empty,nickname, firstname, lastname, email, password);
                 if (passwordBox.Password.Length == 0)
                 {
                     errormessage.Text = "Enter password.";

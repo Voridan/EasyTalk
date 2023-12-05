@@ -83,8 +83,8 @@
 
                         </StackPanel>
 
-                        <Button Command="{Binding Path=DataContext.ChatCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                Content="start chat" Width="70" HorizontalAlignment="Right" Grid.RowSpan="2"  Style="{StaticResource MyButtonStyle}"></Button>
+                        <Button Command="{Binding Path=DataContext.ChatListCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                Content="start chat" CommandParameter="{Binding Id}"  Width="70" HorizontalAlignment="Right" Grid.RowSpan="2"  Style="{StaticResource MyButtonStyle}"></Button>
                     </Grid>
 
                 </DataTemplate>
