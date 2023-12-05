@@ -130,22 +130,23 @@
                 </Border>
 
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <PasswordBox FontFamily="Monserrat"
-                         FontWeight="Light" 
-                         Password="Password"
-                         Name="passwordBox"
-                         FontSize="20"
-                         PreviewMouseDown="passwordBox_PreviewMouseDown"
-                         HorizontalAlignment="Left"
-                         Foreground="White"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         Width="235"
-                         HorizontalContentAlignment="Left"
-                         Opacity="0.5"
-                         Height="25"
-                         Margin="74,0,0,0"
-                         />
+                    <TextBox FontFamily="Monserrat"
+                          FontWeight="Light" 
+                          Text="Password"
+                          PreviewMouseDown="textBoxPassword_PreviewMouseDown"
+                          Name="textBoxPassword"
+                          FontSize="20"
+                          HorizontalAlignment="Left"
+                          Foreground="White"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Width="235"
+                          HorizontalContentAlignment="Left"
+                          Opacity="0.5"
+                          Height="25"
+                          Margin="74,0,0,0">
+
+                    </TextBox>
 
                 </StackPanel>
                 <Border Width="250"

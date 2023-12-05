@@ -33,8 +33,8 @@ namespace wpfreg
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
-                    services.AddSingleton<RegistrationView>();
-                    services.AddSingleton<LoginView>();
+                    services.AddTransient<RegistrationView>();
+                    services.AddTransient<LoginView>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<UserService>();
                     services.AddSingleton<ChatView>();
@@ -49,7 +49,7 @@ namespace wpfreg
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost.StartAsync();
-            var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
+            var startupForm = AppHost.Services.GetRequiredService<LoginView>();
             startupForm.Show();
             Server = new Server();
             base.OnStartup(e);
