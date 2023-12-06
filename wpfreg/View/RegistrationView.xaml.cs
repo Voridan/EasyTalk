@@ -28,7 +28,13 @@ namespace wpfreg.View
         private readonly LoginView _loginView;
         private readonly MainWindow _mainwindow;
         private bool handle = true;
+        private string nickNamePlaceholder = "NickName";
+        private string firstNamePlaceholder = "FirstName";
+        private string lastNamePlaceholder = "LastName";
+        private string passwordPlaceholder = "Password";
+        private string emailPlaceholder = "Email";
         private Industries SelectedIndustry { get; set; }
+        
         public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
         {
             InitializeComponent();
@@ -50,24 +56,37 @@ namespace wpfreg.View
 
         private void textBoxLastname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxLastname.Text = " ";
+            if (textBoxLastname.Text == lastNamePlaceholder)
+            {
+                textBoxLastname.Text = "";
+            }
+            
         }
 
 
 
-        private void passwordBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void textBoxPassword_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            passwordBox.Password = " ";
+            if (textBoxPassword.Text == passwordPlaceholder)
+            {
+                textBoxPassword.Text = "";
+            }
         }
 
         private void textBoxEmailId_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxEmailId.Text = " ";
+            if (textBoxEmailId.Text == emailPlaceholder) 
+            {
+                textBoxEmailId.Text = "";
+            }
         }
 
         private void textBoxFirstName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxFirstname.Text = " ";
+            if (textBoxFirstname.Text == firstNamePlaceholder) 
+            {
+                textBoxFirstname.Text = "";
+            }
         }
 
         private void Login(object sender, RoutedEventArgs e)
@@ -84,7 +103,10 @@ namespace wpfreg.View
 
         private void textBoxNickName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxNickName.Text = " ";
+            if (textBoxNickName.Text == nickNamePlaceholder)
+            {
+                textBoxNickName.Text = "";
+            }
         }
         private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
@@ -133,12 +155,12 @@ namespace wpfreg.View
                 string firstname = textBoxFirstname.Text;
                 string lastname = textBoxLastname.Text;
                 string email = textBoxEmailId.Text;
-                string password = passwordBox.Password;
-                UserModel user = new UserModel(Guid.Empty,nickname, firstname, lastname, email, password);
-                if (passwordBox.Password.Length == 0)
+                string password = textBoxPassword.Text;
+                UserModel user = new UserModel(nickname, firstname, lastname, email, password);
+                if (textBoxPassword.Text.Length == 0)
                 {
                     errormessage.Text = "Enter password.";
-                    passwordBox.Focus();
+                    textBoxPassword.Focus();
                 }
                 //else if (passwordBoxConfirm.Password.Length == 0)
                 //{
