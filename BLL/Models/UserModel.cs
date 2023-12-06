@@ -23,8 +23,9 @@ namespace BLL.Models
         {
         }
 
-        public UserModel(string nickname, string firstName, string lastName, string email, string password, UserRole role = UserRole.User, byte[]? photo=null)
+        public UserModel(Guid id, string nickname, string firstName, string lastName, string email, string password, UserRole role = UserRole.User, byte[]? photo=null)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             NickName = nickname;
@@ -33,6 +34,5 @@ namespace BLL.Models
             Photo = photo;
             Role = role;
         }
-
     }
 }

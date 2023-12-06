@@ -41,6 +41,7 @@ namespace wpfreg
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<EasyTalkContext>();
                     services.AddSingleton<Server>();
+                    services.AddSingleton<SearchList>();
 
                 })
                 .Build();

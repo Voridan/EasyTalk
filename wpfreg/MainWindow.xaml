@@ -21,17 +21,17 @@
                 CornerRadius="20"/>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228"/>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition Width="622"/>
             </Grid.ColumnDefinitions>
 
             <Grid HorizontalAlignment="left"
-                  Width="228">
+                  Width="180">
                 <Border Background="#272B2F"
                         CornerRadius="20,0,0,20"/>
                 <TextBlock Text="EASYTALK" Foreground="White" FontSize="36" HorizontalAlignment="Center" Margin="0,25,0,0"/>
                 <StackPanel Height="400"
-                            Width="228">
+                            Width="180">
 
                     <!--// Home //-->
 
@@ -76,6 +76,21 @@
                                    Style="{StaticResource Image_Style}" />
 
                             <TextBlock Text="Chat"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+                    
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding SearchistCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_order.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="SearchList"
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>
