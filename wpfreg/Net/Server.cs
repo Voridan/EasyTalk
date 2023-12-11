@@ -53,7 +53,7 @@ namespace wpfreg.Net
                             connectedEvent?.Invoke();
                             break;
                         case 5:
-                            msgRecieveEvent.Invoke();
+                            msgRecieveEvent?.Invoke();
                             break;
                         case 10:
                             userDisconectEvent?.Invoke();

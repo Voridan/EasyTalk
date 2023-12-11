@@ -109,7 +109,7 @@ namespace BLL.Services.Implementations
                 return new Result<UserModel>(true, "User with provided nickname already exists");
             }
 
-            return new Result<UserModel>(passwordValidity && emailValidity && requiredFieldsPresent, message);
+            return new Result<UserModel>(!passwordValidity && !emailValidity && !requiredFieldsPresent, message);
         }
 
         private async Task<Result<UserModel>> IsValidLoginData(LoginUserModel user)
@@ -129,7 +129,7 @@ namespace BLL.Services.Implementations
                     return new Result<UserModel>(!res, "Login Success", bllUser);
                 }
 
-                return new Result<UserModel>(res, "Invalid Password");
+                return new Result<UserModel>(true, "Invalid Password");
             }
 
             return new Result<UserModel>(true, "Nickname and password field were not provided");
@@ -139,6 +139,7 @@ namespace BLL.Services.Implementations
         {
             var dalUser = new User()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 NickName = user.NickName,

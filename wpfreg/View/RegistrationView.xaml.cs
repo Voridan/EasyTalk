@@ -156,7 +156,7 @@ namespace wpfreg.View
                 string lastname = textBoxLastname.Text;
                 string email = textBoxEmailId.Text;
                 string password = textBoxPassword.Text;
-                UserModel user = new UserModel(nickname, firstname, lastname, email, password);
+                UserModel user = new UserModel(Guid.Empty, nickname, firstname, lastname, email, password);
                 if (textBoxPassword.Text.Length == 0)
                 {
                     errormessage.Text = "Enter password.";

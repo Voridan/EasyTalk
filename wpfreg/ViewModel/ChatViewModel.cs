@@ -1,4 +1,5 @@
 ﻿using BLL.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -17,10 +18,21 @@ namespace wpfreg.ViewModel
         public string Username { get; set; }
         
         public string Message { get; set; }
-        private string _userid;
+        private Guid _userid;
 
         private Server _server;
-        public ChatViewModel(string userid = null)
+        public ChatViewModel() 
+        {
+            Username = App.CurrentUser?.NickName ?? "tyler";
+            Users = new ObservableCollection<UserModel>();
+            Messages = new ObservableCollection<string>();
+            _server = App.Server;
+            _server.msgRecieveEvent += MessageRecieved;
+            _server.userDisconectEvent += RemoveUser;
+            _server.connectedEvent += UserConnected;
+            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
+        }
+        public ChatViewModel(Guid userid)
         {
             _userid = userid;
             Username = App.CurrentUser?.NickName??"tyler";

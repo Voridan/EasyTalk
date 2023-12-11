@@ -30,7 +30,7 @@ namespace wpfreg.ViewModel
 
         private void OpenChat(object parameter)
         {
-            if (parameter is string userId)
+            if (parameter is Guid userId)
             {
                 // Navigate to ChatView with the specified user ID
                 CurrentView = new ChatViewModel(userId);
@@ -41,7 +41,7 @@ namespace wpfreg.ViewModel
               
         private void Chat(object obj)
         {
-            CurrentView = new ChatViewModel();
+            CurrentView = new ChatViewModel(App.CurrentUser.Id);
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
         private void SearchList(object obj) => CurrentView = new SearchListViewModel();
