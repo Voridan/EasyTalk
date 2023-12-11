@@ -135,6 +135,12 @@ namespace BLL.Services.Implementations
             return new Result<UserModel>(true, "Nickname and password field were not provided");
         }
 
+        public async Task<bool> ChatExists(Guid user1, Guid user2)
+        {
+            var user1Dal = await _userRepo.GetByIdAsync(user1);
+            return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
+        }
+
         public static User BLLUserToDALUser(UserModel user)
         {
             var dalUser = new User()

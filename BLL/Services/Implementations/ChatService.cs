@@ -8,12 +8,14 @@ namespace BLL.Services.Implementations
     public class ChatService
     {
         private readonly ChatRepository chatRepository;
-        public ChatService(ChatRepository _repo)
+        private readonly UserRepository userRepository;
+        public ChatService(ChatRepository _repo, UserRepository _userRepo)
         {
             chatRepository = _repo;
+            userRepository = _userRepo;
         }
 
-        public async Task<IEnumerable<ChatModel>> GetChatsForUser(Guid userId)
+        public async Task<IEnumerable<ChatModel>?> GetChatsForUser(Guid userId)
         {
             var chats = await chatRepository.GetAsync(c => c.Users.Any(u => u.Id == userId));
             var bllChats = new List<ChatModel>();
@@ -32,18 +34,21 @@ namespace BLL.Services.Implementations
             return DalChatToBll(chat);
         }
 
-        public async Task<Result<ChatModel>> CreateChat(ChatModel chat, UserModel user1, UserModel user2)
+        public async Task<Result<ChatModel>> CreateChat(ChatModel chat, Guid user1Id, Guid user2Id)
         {
-            var dalChat = BllChatToDal(chat);
-            if (dalChat != null)
+            try
             {
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user1));
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user2));
-                await chatRepository.AddAsync(dalChat);
+                var user1 = await userRepository.GetByIdAsync(user1Id);
+                var user2= await userRepository.GetByIdAsync(user2Id);
+                var newChat = new Chat() { Name = chat.Name, Description = chat.Description };
+                newChat.Users.Add(user1);
+                newChat.Users.Add(user2);
+                await chatRepository.AddAsync(newChat);
                 return new Result<ChatModel>(false, "Chat created seccessfully");
+            } catch (Exception)
+            {
+                return new Result<ChatModel>(true, "Chat creation failed");
             }
-
-            return new Result<ChatModel>(true, "Chat creation failed");
         }
 
         //public async Task DeleteChat(Chat chat)
@@ -71,6 +76,11 @@ namespace BLL.Services.Implementations
             }
 
             return bllMessages;
+        }
+
+        private async Task<IEnumerable<Chat>?> GetChatsForUserDal(Guid userId)
+        {
+            return await chatRepository.GetAsync(c => c.Users.Any(u => u.Id == userId));
         }
 
         public static ChatModel? DalChatToBll(Chat chat)

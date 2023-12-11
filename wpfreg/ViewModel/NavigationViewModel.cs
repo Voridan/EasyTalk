@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BLL.Models;
+using BLL.Services.Implementations;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows.Input;
 using wpfreg.Utilities;
 
@@ -28,12 +27,23 @@ namespace wpfreg.ViewModel
         private ICommand _chatCommand;
         public ICommand ChatListCommand {  get; set; }
 
-        private void OpenChat(object parameter)
+        private async void OpenChat(object parameter)
         {
             if (parameter is Guid userId)
             {
-                // Navigate to ChatView with the specified user ID
-                CurrentView = new ChatViewModel(userId);
+                var usrService = App.AppHost.Services.GetRequiredService<UserService>();
+                var currUserId = App.CurrentUser.Id;
+                var chatExists = await usrService.ChatExists(currUserId, userId);
+                if (chatExists)
+                {
+                    CurrentView = new ChatViewModel(userId);
+                }
+                else
+                {
+                    var chatService = App.AppHost.Services.GetRequiredService<ChatService>();
+                    var untitledChat = new ChatModel() { Name = "untitled", Description = "None" };
+                    await chatService.CreateChat(untitledChat, currUserId, userId);
+                }
             }
         }
 
