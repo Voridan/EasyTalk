@@ -138,6 +138,9 @@ namespace BLL.Services.Implementations
         public async Task<bool> ChatExists(Guid user1, Guid user2)
         {
             var user1Dal = await _userRepo.GetByIdAsync(user1);
+            if(user1Dal.Chats == null) 
+                return false;
+
             return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
         }
 

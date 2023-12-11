@@ -12,6 +12,7 @@ namespace wpfreg.ViewModel
     {
 
         public ObservableCollection<UserModel> Users { get; set; }
+        public ObservableCollection<ChatModel> Chats { get; set; }
         public ObservableCollection<string> Messages { get; set; }
         
         public RelayCommand SendMessageCommand { get; set; }
@@ -25,6 +26,7 @@ namespace wpfreg.ViewModel
         {
             Username = App.CurrentUser?.NickName ?? "tyler";
             Users = new ObservableCollection<UserModel>();
+            Chats = new ObservableCollection<ChatModel>();
             Messages = new ObservableCollection<string>();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
@@ -37,6 +39,7 @@ namespace wpfreg.ViewModel
             _userid = userid;
             Username = App.CurrentUser?.NickName??"tyler";
             Users = new ObservableCollection<UserModel>();
+            Chats = new ObservableCollection<ChatModel>();
             Messages = new ObservableCollection<string>();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;

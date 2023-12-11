@@ -15,4 +15,7 @@
     <DataTemplate DataType="{x:Type vm:SearchListViewModel}">
         <view:SearchList />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ChatInfoViewModel}">
+        <view:ChatInfo />
+    </DataTemplate>
 </ResourceDictionary>

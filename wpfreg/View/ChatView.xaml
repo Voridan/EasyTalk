@@ -19,15 +19,21 @@
 
         <DockPanel>
            
-            <ListView  Background="#706C7D" Name="UserList" ItemsSource="{Binding Users}" >
+            <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding NickName}" FontSize="22" FontFamily="Montserrat" Foreground="white" HorizontalAlignment="left"/>
-                        
-                    </DataTemplate>
-                    
-                </ListView.ItemTemplate>
-                
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" Click="Button_Click" Content="info" Width="70" Height="20" HorizontalAlignment="left" Style="{StaticResource MyButtonStyle}"/>
+
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="22" FontFamily="Montserrat" Foreground="white" HorizontalAlignment="right"/>
+                    </Grid>
+                </DataTemplate>
+               </ListView.ItemTemplate>
             </ListView>
         </DockPanel>
         

@@ -18,6 +18,7 @@ namespace BLL.Services.Implementations
         public async Task<IEnumerable<ChatModel>?> GetChatsForUser(Guid userId)
         {
             var chats = await chatRepository.GetAsync(c => c.Users.Any(u => u.Id == userId));
+            var tempchat = await userRepository.GetByIdAsync(userId);
             var bllChats = new List<ChatModel>();
             foreach (var chat in chats)
             {
@@ -40,9 +41,8 @@ namespace BLL.Services.Implementations
             {
                 var user1 = await userRepository.GetByIdAsync(user1Id);
                 var user2= await userRepository.GetByIdAsync(user2Id);
-                var newChat = new Chat() { Name = chat.Name, Description = chat.Description };
-                newChat.Users.Add(user1);
-                newChat.Users.Add(user2);
+                List<User> users = new List<User>() { user1,user2};
+                var newChat = new Chat() { Name = chat.Name, Description = chat.Description, CreatedDate = DateTime.Now , Users = users, Messages = new List<Message>()};
                 await chatRepository.AddAsync(newChat);
                 return new Result<ChatModel>(false, "Chat created seccessfully");
             } catch (Exception)

@@ -25,21 +25,24 @@ namespace wpfreg.View
     
     {
         private UserService _userservice;
+        private ChatService _chatservice;
         public ChatView()
         {
             InitializeComponent();
             _userservice = App.AppHost.Services.GetRequiredService<UserService>();
-            //_chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+            _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
             btnload.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
         private async void btnLoadClick(object sender, RoutedEventArgs e)
         {
-
-            var users = await _userservice.GetAllUsersAsync();
-
-            UserList.ItemsSource = users;
+            var chats = await _chatservice.GetChatsForUser(App.CurrentUser.Id);
+            ChatList.ItemsSource = chats;
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ChatInfo chatInfo = new ChatInfo();
+            chatInfo.Show();
+        }
     }
 }

@@ -7,8 +7,8 @@ namespace DAL.Models
 
         public string? Description { get; set; }
 
-        public ICollection<Message> Messages { get; } = null!;
+        public ICollection<Message> Messages { get; set; } = null!;
 
-        public ICollection<User> Users { get; } = null!;
+        public ICollection<User> Users { get; set; } = null!;
     }
 }

@@ -43,6 +43,7 @@ namespace wpfreg.ViewModel
                     var chatService = App.AppHost.Services.GetRequiredService<ChatService>();
                     var untitledChat = new ChatModel() { Name = "untitled", Description = "None" };
                     await chatService.CreateChat(untitledChat, currUserId, userId);
+                    CurrentView = new ChatViewModel(userId);
                 }
             }
         }
