@@ -19,8 +19,9 @@ namespace BLL.Services.Interfaces
         Task<Result<UserModel>> RegisterUserAsync(UserModel user);
         
         Task<Result<UserModel>> LoginUserAsync(LoginUserModel user);
-        
+
         Task UpdateUser(UserModel user);
+
 
         Task DeleteUserAsync(Guid id);
 

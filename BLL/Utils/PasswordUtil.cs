@@ -3,7 +3,7 @@ using System.Text;
 
 namespace BLL.Utils
 {
-    internal static class PasswordUtil
+    public static class PasswordUtil
     {
         static private readonly int KEY_SIZE = 64;
         static private readonly int ITERATIONS = 100_000;

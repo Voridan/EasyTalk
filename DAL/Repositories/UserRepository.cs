@@ -5,8 +5,6 @@ namespace DAL.Repositories
 {
     public class UserRepository : GenericRepository<User>
     {
-        public UserRepository(EasyTalkContext _context) : base(_context)
-        {
-        }
+        public UserRepository(EasyTalkContext _context) : base(_context) {}
     }
 }
