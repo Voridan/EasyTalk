@@ -30,6 +30,43 @@ namespace EasyTalk.Tests.Services
         }
 
         [Fact]
+        public async Task ChatService_GetChatsForUser_ReturnsExpectedResult()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var userId2 = Guid.NewGuid();
+
+
+            // Mock data to be returned by GetAsync
+            var mockedChats = new List<Chat>
+            {
+                new Chat { Id = userId},
+                new Chat { Id = userId2}
+                // Add more mocked data as needed
+            };
+
+            _chatRepo.Setup(repo => repo.GetAsync(
+                    It.IsAny<Expression<Func<Chat, bool>>>(),
+                    It.IsAny<Func<IQueryable<Chat>, IOrderedQueryable<Chat>>>(),
+                    It.IsAny<string>())
+                    )
+                .ReturnsAsync(mockedChats);
+
+            // Act
+            var result = await _chatService.GetChatsForUser(userId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<ChatModel>>(result);
+            Assert.Equal(mockedChats.Count, result.Count());
+            _chatRepo.Verify(repo => repo.GetAsync(
+                It.IsAny<Expression<Func<Chat, bool>>>(),
+                It.IsAny<Func<IQueryable<Chat>, IOrderedQueryable<Chat>>>(),
+                It.IsAny<string>()
+                ), Times.Once);
+        }
+
+        [Fact]
         public async Task ChatService_GetChat_ReturnsChatModel()
         {
             // Arrange
@@ -95,6 +132,7 @@ namespace EasyTalk.Tests.Services
             _chatRepo.Verify(x => x.DeleteAsync(chatID), Times.Once);
         }
 
+        
         [Fact]
         public void ChatService_DalChatToBll_ReturnsChatModel()
         {
