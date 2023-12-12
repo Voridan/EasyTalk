@@ -1,0 +1,41 @@
+﻿<Window x:Class="wpfreg.View.ChatInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:wpfreg.ViewModel"
+        xmlns:local="clr-namespace:wpfreg.View"
+        xmlns:src="clr-namespace:wpfreg.Utilities.Converters"
+        mc:Ignorable="d"
+        Title="ChatInfo" Height="400" Width="400">
+    <!--<Window.Resources>
+        <src:BtnTextConverter x:Key="BtnTextConverter"/>
+    </Window.Resources>-->
+    <Window.DataContext>
+        <vm:ChatInfoViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+
+        </Grid.RowDefinitions>
+        <StackPanel ></StackPanel>
+        <TextBlock Text="CHAT INFO :" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+        <TextBlock Text="Title : " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" ></TextBlock>
+        <TextBlock Text="Description : " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
+
+        <TextBox Name="TBtitle" Text="{Binding Title}" IsReadOnly="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
+        <TextBox Name="TBdesc" Text="{Binding Description}" IsReadOnly="True" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
+
+        <Button Name="editTitle" Content="Edit" Click="editTitle_Click" Grid.Column="2" Grid.Row = "1" Width="40" Height="20" Style="{StaticResource chatInfoBtn}" ></Button>
+        <Button Name="editDesc" Content="Edit" Click="editDesc_Click"  Grid.Column="2" Grid.Row = "2" Width="40" Height="20" Style="{StaticResource chatInfoBtn}" ></Button>
+    </Grid>
+</Window>

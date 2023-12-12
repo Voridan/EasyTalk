@@ -2,20 +2,24 @@
 using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
+using Microsoft.VisualBasic;
 
 namespace BLL.Services.Implementations
 {
     public class ChatService
     {
         private readonly ChatRepository chatRepository;
-        public ChatService(ChatRepository _repo)
+        private readonly UserRepository userRepository;
+        public ChatService(ChatRepository _repo, UserRepository _userRepo)
         {
             chatRepository = _repo;
+            userRepository = _userRepo;
         }
 
-        public async Task<IEnumerable<ChatModel>> GetChatsForUser(Guid userId)
+        public async Task<IEnumerable<ChatModel>?> GetChatsForUser(Guid userId)
         {
             var chats = await chatRepository.GetAsync(c => c.Users.Any(u => u.Id == userId));
+            var tempchat = await userRepository.GetByIdAsync(userId);
             var bllChats = new List<ChatModel>();
             foreach (var chat in chats)
             {
@@ -32,18 +36,34 @@ namespace BLL.Services.Implementations
             return DalChatToBll(chat);
         }
 
-        public async Task<Result<ChatModel>> CreateChat(ChatModel chat, UserModel user1, UserModel user2)
+        public async Task<Result<ChatModel>> CreateChat(ChatModel chat, Guid user1Id, Guid user2Id)
         {
-            var dalChat = BllChatToDal(chat);
-            if (dalChat != null)
+            try
             {
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user1));
-                dalChat.Users.Add(UserService.BLLUserToDALUser(user2));
-                await chatRepository.AddAsync(dalChat);
+                var user1 = await userRepository.GetByIdAsync(user1Id);
+                var user2= await userRepository.GetByIdAsync(user2Id);
+                List<User> users = new List<User>() { user1,user2};
+                var newChat = new Chat() { Name = chat.Name, Description = chat.Description, CreatedDate = DateTime.Now , Users = users, Messages = new List<Message>()};
+                await chatRepository.AddAsync(newChat);
                 return new Result<ChatModel>(false, "Chat created seccessfully");
+            } catch (Exception)
+            {
+                return new Result<ChatModel>(true, "Chat creation failed");
             }
+        }
 
-            return new Result<ChatModel>(true, "Chat creation failed");
+        public async Task<Result<ChatModel>> UpdateChat(ChatModel chat)
+        {
+            var chatToUpdate = await chatRepository.GetByIdAsync(chat.Id);
+
+            if (chatToUpdate == null)
+                return new Result<ChatModel>(true, "Chat does not exists.");
+
+            chatToUpdate.Name = chat.Name;
+            chatToUpdate.Description = chat.Description;
+            await chatRepository.Update(chatToUpdate);
+            
+            return new Result<ChatModel>(false, "Updated successfuly.", chat);
         }
 
         //public async Task DeleteChat(Chat chat)

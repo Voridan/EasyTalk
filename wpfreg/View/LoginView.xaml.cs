@@ -26,6 +26,7 @@ namespace wpfreg.View
 
         private UserService _userService;
         private readonly MainWindow _mainwindow;
+        private string nickNamePlaceholder = "Nickname";
       
         public LoginView(UserService userservice, MainWindow mainwindow)
         {
@@ -44,11 +45,14 @@ namespace wpfreg.View
         }
         private void passwordBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            passwordBox.Password = " ";
+            passwordBox.Password = "";
         }
         private void textBoxNickName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            textBoxNickname.Text = " ";
+            if (textBoxNickname.Text == nickNamePlaceholder)
+            {
+                textBoxNickname.Text = "";
+            }
         }
         private async void Login(object sender, RoutedEventArgs e)
         {
@@ -69,6 +73,7 @@ namespace wpfreg.View
             if (!resLogin.IsError)
             {
                 App.CurrentUser = resLogin.Value;
+                if (App.CurrentUser?.NickName != null) App.Server.ConnectToServer(App.CurrentUser?.NickName);
                 this.Close();
                 _mainwindow.ShowDialog();
                 return;

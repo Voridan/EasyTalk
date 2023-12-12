@@ -2,6 +2,7 @@
 using System.Security;
 using System.Windows.Input;
 using BLL.Services.Implementations;
+using BLL.Models;
 using DAL.Models;
 namespace WPF.MVVM.ViewModel
 {
@@ -74,7 +75,7 @@ namespace WPF.MVVM.ViewModel
 
         private  async void ExecuteLoginCommand(object obj)
         {
-            LoginUser user = new LoginUser() { NickName = _username, Password = _password};
+            LoginUserModel user = new LoginUserModel( _username, _password);
             await _userService.LoginUserAsync(user);
         }
         private bool CanExecuteLoginCommand(object obj)

@@ -129,34 +129,52 @@ namespace BLL.Services.Implementations
                     return new Result<UserModel>(!res, "Login Success", bllUser);
                 }
 
-                return new Result<UserModel>(res, "Invalid Password");
+                return new Result<UserModel>(true, "Invalid Password");
             }
 
             return new Result<UserModel>(true, "Nickname and password field were not provided");
         }
 
-        public static User? BLLUserToDALUser(UserModel user) //ok
+        public async Task<bool> ChatExists(Guid user1, Guid user2)
         {
-            if (user != null)
-            {
-                return new User()
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    NickName = user.NickName,
-                    Email = user.Email,
-                    Password = user.Password
-                };
-            }
+            var user1Dal = await _userRepo.GetByIdAsync(user1);
+            if(user1Dal.Chats == null) 
+                return false;
 
-            return null;
+            return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
+        }
+        
+        public static User? BLLUserToDALUser(UserModel user)
+        {
+            var dalUser = new User()
+            {
+              Id = user.Id,
+              FirstName = user.FirstName,
+              LastName = user.LastName,
+              NickName = user.NickName,
+              Email = user.Email,
+              Password = user.Password
+            };
+
+            //foreach (var property in typeof(UserModel).GetProperties())
+            //{
+            //    if (property.Name == "Id") continue;
+
+            //    var value = property.GetValue(user);
+            //    if (value != null)
+            //    {
+            //        property.SetValue(dalUser, value);
+            //    }
+            //}
+
+            return dalUser;
         }
 
         public static UserModel? DALUserToBLLUser(User user) //ok
         {
             if (user != null)
             {
-                return new UserModel(user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
+                return new UserModel(user.Id, user.NickName, user.FirstName, user.LastName, user.Email, user.Password);
             }
 
             return null;

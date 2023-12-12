@@ -20,6 +20,8 @@ namespace DAL.Annotations
             ModelBuilder.HasMany(c => c.Messages)
                 .WithOne(m => m.Chat)
                 .HasForeignKey(m => m.ChatId);
+            ModelBuilder.HasMany(c => c.Users)
+               .WithMany(u => u.Chats);
         }
     }
 }

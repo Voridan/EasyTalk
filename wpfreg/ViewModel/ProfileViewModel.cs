@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 namespace wpfreg.ViewModel
 {
     internal class ProfileViewModel : Utilities.ViewModelBase
-      
     {
-       
-            
     }
 }

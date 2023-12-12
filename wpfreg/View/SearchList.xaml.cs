@@ -19,30 +19,36 @@ using System.Windows.Shapes;
 namespace wpfreg.View
 {
     /// <summary>
-    /// Interaction logic for Chat.xaml
+    /// Interaction logic for SearchList.xaml
     /// </summary>
-    public partial class ChatView : UserControl
-    
+    public partial class SearchList : UserControl
     {
         private UserService _userservice;
-        private ChatService _chatservice;
-        public ChatView()
+        public SearchList()
         {
             InitializeComponent();
             _userservice = App.AppHost.Services.GetRequiredService<UserService>();
-            _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
             btnload.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
         private async void btnLoadClick(object sender, RoutedEventArgs e)
         {
-            var chats = await _chatservice.GetChatsForUser(App.CurrentUser.Id);
-            ChatList.ItemsSource = chats;
+
+            var users = await _userservice.GetAllUsersAsync();
+
+            UsersList.ItemsSource = users;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ChatInfo chatInfo = new ChatInfo();
-            chatInfo.Show();
+            Update_Users();
         }
+
+        private async void Update_Users()
+        {
+            var curusers = await _userservice.GetAllUsersAsync();
+            curusers = curusers.Where(p => p.NickName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            UsersList.ItemsSource = curusers;
+        }
+
     }
 }

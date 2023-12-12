@@ -5,11 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfreg.View"
         mc:Ignorable="d"
+        xmlns:vm="clr-namespace:wpfreg.ViewModel"
+       xmlns:bll="clr-namespace:BLL.Models;assembly=BLL"
         Title="RegistrationView" Height="650" Width="400" AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown">
+    <Window.DataContext>
+        <vm:RegistrationViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ObjectDataProvider x:Key="enumDataProvider" MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="bll:Industries"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -130,22 +143,23 @@
                 </Border>
 
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <PasswordBox FontFamily="Monserrat"
-                         FontWeight="Light" 
-                         Password="Password"
-                         Name="passwordBox"
-                         FontSize="20"
-                         PreviewMouseDown="passwordBox_PreviewMouseDown"
-                         HorizontalAlignment="Left"
-                         Foreground="White"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         Width="235"
-                         HorizontalContentAlignment="Left"
-                         Opacity="0.5"
-                         Height="25"
-                         Margin="74,0,0,0"
-                         />
+                    <TextBox FontFamily="Monserrat"
+                          FontWeight="Light" 
+                          Text="Password"
+                          PreviewMouseDown="textBoxPassword_PreviewMouseDown"
+                          Name="textBoxPassword"
+                          FontSize="20"
+                          HorizontalAlignment="Left"
+                          Foreground="White"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Width="235"
+                          HorizontalContentAlignment="Left"
+                          Opacity="0.5"
+                          Height="25"
+                          Margin="74,0,0,0">
+
+                    </TextBox>
 
                 </StackPanel>
                 <Border Width="250"
@@ -208,9 +222,11 @@
                          Name="cmbSelect" 
                          Margin="74,10,0,0"
                          SelectionChanged="ComboBox_SelectionChanged" 
-                         DropDownClosed="ComboBox_DropDownClosed">
-                    <ComboBoxItem>Creative</ComboBoxItem>
-                    <ComboBoxItem>Education</ComboBoxItem>
+                         DropDownClosed="ComboBox_DropDownClosed"
+                         ItemsSource="{Binding Source={StaticResource enumDataProvider}}"
+                         SelectedItem="{Binding SelectedIndustry}">
+
+
 
                 </ComboBox>
                 <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
