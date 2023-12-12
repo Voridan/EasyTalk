@@ -12,7 +12,7 @@
             {
                 return $"Host=localhost;Port=5432;Username=postgres;Password=12345678;Database=EasyTalk";
             }
-
+          
             return ConnStr.Get();
         }
     }

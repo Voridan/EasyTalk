@@ -48,7 +48,7 @@ namespace BLL.Services.Implementations
             return loginResult;
         }
 
-        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserModel>> GetAllUsersAsync() //ok
         {
             var users = await _userRepo.GetAllAsync();
             var bllUsers = new List<UserModel>();
@@ -68,7 +68,7 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetAsync(filter, orderBy, includeProperties);
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id)
+        public async Task<User?> GetUserByIdAsync(Guid id) //ok
         {
             return await _userRepo.GetByIdAsync(id);
         }
@@ -78,7 +78,7 @@ namespace BLL.Services.Implementations
             var dalUser = BLLUserToDALUser(user);
             await _userRepo.Update(dalUser);
         }
-
+        
         public async Task DeleteUserAsync(Guid id)
         {
             await _userRepo.DeleteAsync(id);
@@ -109,7 +109,7 @@ namespace BLL.Services.Implementations
                 return new Result<UserModel>(true, "User with provided nickname already exists");
             }
 
-            return new Result<UserModel>(!passwordValidity && !emailValidity && !requiredFieldsPresent, message);
+            return new Result<UserModel>(!(passwordValidity && emailValidity && requiredFieldsPresent), message);
         }
 
         private async Task<Result<UserModel>> IsValidLoginData(LoginUserModel user)
@@ -143,17 +143,17 @@ namespace BLL.Services.Implementations
 
             return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
         }
-
-        public static User BLLUserToDALUser(UserModel user)
+        
+        public static User? BLLUserToDALUser(UserModel user)
         {
             var dalUser = new User()
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                NickName = user.NickName,
-                Email = user.Email,
-                Password = user.Password
+              Id = user.Id,
+              FirstName = user.FirstName,
+              LastName = user.LastName,
+              NickName = user.NickName,
+              Email = user.Email,
+              Password = user.Password
             };
 
             //foreach (var property in typeof(UserModel).GetProperties())
@@ -170,7 +170,7 @@ namespace BLL.Services.Implementations
             return dalUser;
         }
 
-        public static UserModel? DALUserToBLLUser(User user)
+        public static UserModel? DALUserToBLLUser(User user) //ok
         {
             if (user != null)
             {
@@ -182,15 +182,9 @@ namespace BLL.Services.Implementations
 
         private async Task<User?> UserExists(string nickname)
         {
-            try
-            {
-                var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == nickname);
-                return userData;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == nickname);
+            return userData;
+
         }
     }
 }
