@@ -15,7 +15,7 @@ namespace DAL.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured) { 
-                optionsBuilder.UseNpgsql(EnvUtils.GetConnectionString());
+                optionsBuilder.UseNpgsql(EnvUtils.GetConnectionString(false));
             }
         }
 
