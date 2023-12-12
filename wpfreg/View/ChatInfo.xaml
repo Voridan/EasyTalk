@@ -35,7 +35,7 @@
         <TextBox Name="TBtitle" Text="{Binding Title}" IsReadOnly="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
         <TextBox Name="TBdesc" Text="{Binding Description}" IsReadOnly="True" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
 
-        <Button Name="editTitle" Content="Edit" Click="editTitle_Click" Grid.Column="2" Grid.Row = "1" Width="40" Height="20" Style="{StaticResource chatInfoBtn}" ></Button>
-        <Button Name="editDesc" Content="Edit" Click="editDesc_Click"  Grid.Column="2" Grid.Row = "2" Width="40" Height="20" Style="{StaticResource chatInfoBtn}" ></Button>
+        <Button Name="editTitle" Content="Edit" Click="editTitle_Click" Grid.Column="2" Grid.Row = "1" Width="40" Height="20" Style="{StaticResource btnchat}" ></Button>
+        <Button Name="editDesc" Content="Edit" Click="editDesc_Click"  Grid.Column="2" Grid.Row = "2" Width="40" Height="20" Style="{StaticResource btnchat}" ></Button>
     </Grid>
 </Window>
