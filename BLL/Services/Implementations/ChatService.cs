@@ -2,6 +2,7 @@
 using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
+using Microsoft.VisualBasic;
 
 namespace BLL.Services.Implementations
 {
@@ -51,6 +52,20 @@ namespace BLL.Services.Implementations
             }
         }
 
+        public async Task<Result<ChatModel>> UpdateChat(ChatModel chat)
+        {
+            var chatToUpdate = await chatRepository.GetByIdAsync(chat.Id);
+
+            if (chatToUpdate == null)
+                return new Result<ChatModel>(true, "Chat does not exists.");
+
+            chatToUpdate.Name = chat.Name;
+            chatToUpdate.Description = chat.Description;
+            await chatRepository.Update(chatToUpdate);
+            
+            return new Result<ChatModel>(false, "Updated successfuly.", chat);
+        }
+
         //public async Task DeleteChat(Chat chat)
         //{
         //    await chatRepository.Delete(chat);
@@ -76,11 +91,6 @@ namespace BLL.Services.Implementations
             }
 
             return bllMessages;
-        }
-
-        private async Task<IEnumerable<Chat>?> GetChatsForUserDal(Guid userId)
-        {
-            return await chatRepository.GetAsync(c => c.Users.Any(u => u.Id == userId));
         }
 
         public static ChatModel? DalChatToBll(Chat chat)
