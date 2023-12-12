@@ -153,7 +153,8 @@ namespace BLL.Services.Implementations
                 LastName = user.LastName,
                 NickName = user.NickName,
                 Email = user.Email,
-                Password = user.Password
+                Password = user.Password,
+                Role = user.Role
             };
 
             //foreach (var property in typeof(UserModel).GetProperties())
