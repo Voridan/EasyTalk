@@ -1,5 +1,5 @@
 ﻿using BLL.Models;
-using BLL.Services.Implementations;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace wpfreg.ViewModel
 {
-    internal class ProfileViewModel : Utilities.ViewModelBase
+    internal class SearchProfileViewModel : Utilities.ViewModelBase
     {
         public Guid ProfileId { get; set; }
-        public UserModel curUser = App.CurrentUser;
+        public UserModel user = App.SelectedUser;
 
         private string _userNickname;
         public string UserNickname
@@ -84,22 +84,14 @@ namespace wpfreg.ViewModel
         }
 
 
-        public ProfileViewModel (UserModel user)
+     
+        public SearchProfileViewModel()
         {
             UserNickname = user.NickName;
             UserName = user.FirstName;
             UserLastName = user.LastName;
             UserEmail = user.Email;
             UserPhoto = user.Photo;
-
-        }
-        public ProfileViewModel()
-        {
-            UserNickname = curUser.NickName;
-            UserName = curUser.FirstName;
-            UserLastName = curUser.LastName;
-            UserEmail = curUser.Email;
-            UserPhoto = curUser.Photo;
         }
     }
 }

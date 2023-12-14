@@ -1,4 +1,5 @@
-﻿using BLL.Services.Implementations;
+﻿using BLL.Models;
+using BLL.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace wpfreg.View
     {
         private UserService _userservice;
         private ChatService _chatservice;
+        private ChatModel Chat { get; set; }
         public ChatView()
         {
             InitializeComponent();
@@ -39,10 +41,6 @@ namespace wpfreg.View
             ChatList.ItemsSource = chats;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ChatInfo chatInfo = new ChatInfo();
-            chatInfo.Show();
-        }
+      
     }
 }
