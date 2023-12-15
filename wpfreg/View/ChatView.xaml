@@ -19,7 +19,7 @@
 
         <DockPanel>
            
-            <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}" >
+            <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                     <Grid>
@@ -33,6 +33,11 @@
                         </Grid>
                 </DataTemplate>
                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </DockPanel>
         

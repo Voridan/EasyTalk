@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using wpfreg.Net;
 using wpfreg.Utilities;
 
@@ -10,18 +11,22 @@ namespace wpfreg.ViewModel
 {
     class ChatViewModel
     {
-
-        public ObservableCollection<UserModel> Users { get; set; }
-        public ObservableCollection<ChatModel> Chats { get; set; }
-        public ObservableCollection<string> Messages { get; set; }
-        
-        public RelayCommand SendMessageCommand { get; set; }
-        public string Username { get; set; }
-        
-        public string Message { get; set; }
         private Guid _userid;
 
         private Server _server;
+
+        public ObservableCollection<UserModel> Users { get; set; }
+        
+        public ObservableCollection<ChatModel> Chats { get; set; }
+        
+        public ObservableCollection<string> Messages { get; set; }
+        
+        public RelayCommand SendMessageCommand { get; set; }
+        
+        public string Username { get; set; }
+        
+        public string Message { get; set; }
+        
         public ChatViewModel() 
         {
             Username = App.CurrentUser?.NickName ?? "tyler";
@@ -65,6 +70,7 @@ namespace wpfreg.ViewModel
             var msg = _server.PacketReader.ReadMessage();
             Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));
         }
+        
         private void RemoveUser()
         {
             var uname = _server.PacketReader.ReadMessage();
