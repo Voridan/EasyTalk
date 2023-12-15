@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using wpfreg.ViewModel;
 
 
 namespace wpfreg.View
@@ -12,11 +13,13 @@ namespace wpfreg.View
     public partial class ChatView : UserControl
     {
         private ChatService _chatservice;
+        private NavigationViewModel _navViewModel;
         private ChatModel Chat { get; set; }
         public ChatView()
         {
             InitializeComponent();
             _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+            _navViewModel = App.AppHost.Services.GetRequiredService<NavigationViewModel>();
             btnload.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
         private async void btnLoadClick(object sender, RoutedEventArgs e)
@@ -30,7 +33,7 @@ namespace wpfreg.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                
+                _navViewModel.OpenChat(App.CurrentUser.Id);
             }
         }
     }

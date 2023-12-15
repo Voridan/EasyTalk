@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BLL.Models;
 using wpfreg.Net;
+using wpfreg.ViewModel;
 
 namespace wpfreg
 {
@@ -46,6 +47,7 @@ namespace wpfreg
                     services.AddSingleton<Server>();
                     services.AddSingleton<SearchList>();
                     services.AddSingleton<ChatService>();
+                    services.AddSingleton<NavigationViewModel>();
 
                 })
                 .Build();

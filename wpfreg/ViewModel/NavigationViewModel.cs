@@ -69,7 +69,7 @@ namespace wpfreg.ViewModel
 
             }
         }
-        private async void OpenChat(object parameter)
+        public async void OpenChat(object parameter)
         {
             if (parameter is Guid userId)
             {

@@ -63,11 +63,11 @@ namespace wpfreg.Net
             });
         }
 
-        public void SendMessageToServer(string message)
+        public void SendMessageToServer(MessageModel message)
         {
             var messagePacket = new PacketBuilder();
             messagePacket.WriteOpCode(5);
-            messagePacket.WriteString(message);
+            messagePacket.WriteString(MessageModel.Serialize(message));
             _client.Client.Send(messagePacket.GetPackageBytes());
         }
     }

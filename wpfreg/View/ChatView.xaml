@@ -30,6 +30,11 @@
                     <TextBlock Margin="5,0,0,0" Grid.Column="0" Text="{Binding Name}" FontSize="22" FontFamily="Montserrat" Foreground="white" HorizontalAlignment="left"/>
                             <Button Grid.Column="1"  Command="{Binding Path=DataContext.ChatInfoCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                CommandParameter="{Binding Id}" Content="info" Width="70" Height="20" HorizontalAlignment="right" Background="Transparent" FontFamily="Montserrat"/>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                         </Grid>
                 </DataTemplate>
                </ListView.ItemTemplate>
@@ -48,7 +53,7 @@
             <StackPanel Orientation="Horizontal"
                         >
                 <TextBox Height="55"
-                         Width="350"
+                         Width="275"
                          VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Width="75"
@@ -56,11 +61,17 @@
                         Content="Send"
                         Command="{Binding SendMessageCommand}"
                         Style="{StaticResource MyButtonChat}"/>
+                <Button Width="75"
+                        FontSize="18"
+                        Content="Save"
+                        Command="{Binding SaveMessagesCommand}"
+                        Style="{StaticResource MyButtonChat}"/>
             </StackPanel>
         </StackPanel>
         <Button Name="btnload" Content="Button"
                 Click="btnLoadClick"
                 Visibility="Hidden"
                 Margin="0,-40,0,0"></Button>
+
     </Grid>
 </UserControl>

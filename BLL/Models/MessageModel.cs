@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using Newtonsoft.Json;
 
 namespace BLL.Models
 {
@@ -16,5 +17,15 @@ namespace BLL.Models
 
         public DateTime? ModifiedDate { get; set; }
         //TODO relation with document
+        
+        public static string Serialize(MessageModel message)
+        {
+            return JsonConvert.SerializeObject(message);
+        }
+
+        public static MessageModel? Deserialize(string json)
+        {
+            return JsonConvert.DeserializeObject<MessageModel>(json);
+        }
     }
 }
