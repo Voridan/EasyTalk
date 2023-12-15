@@ -7,13 +7,14 @@
         xmlns:local="clr-namespace:wpfreg.View"
         xmlns:src="clr-namespace:wpfreg.Utilities.Converters"
         mc:Ignorable="d"
-        Title="ChatInfo" Height="400" Width="400">
+        Title="ChatInfo" Height="400" Width="400"
+        Background="#212529">
     <!--<Window.Resources>
         <src:BtnTextConverter x:Key="BtnTextConverter"/>
     </Window.Resources>-->
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:ChatInfoViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
@@ -28,14 +29,14 @@
 
         </Grid.RowDefinitions>
         <StackPanel ></StackPanel>
-        <TextBlock Text="CHAT INFO :" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
-        <TextBlock Text="Title : " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" ></TextBlock>
-        <TextBlock Text="Description : " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
+        <TextBlock Text="CHAT INFO :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+        <TextBlock Text="Title : " Foreground="White"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" ></TextBlock>
+        <TextBlock Text="Description : " Foreground="White"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
 
         <TextBox Name="TBtitle" Text="{Binding Title}" IsReadOnly="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
         <TextBox Name="TBdesc" Text="{Binding Description}" IsReadOnly="True" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="18" ></TextBox>
 
-        <Button Name="editTitle" Content="Edit" Click="editTitle_Click" Grid.Column="2" Grid.Row = "1" Width="40" Height="20" Style="{StaticResource btnchat}" ></Button>
-        <Button Name="editDesc" Content="Edit" Click="editDesc_Click"  Grid.Column="2" Grid.Row = "2" Width="40" Height="20" Style="{StaticResource btnchat}" ></Button>
+        <Button Name="editTitle" Content="Edit" Click="edit_Click" Grid.Column="1" Grid.Row = "3" Margin="30,0,0,0" HorizontalAlignment="left" Width="40" Height="20" Style="{StaticResource MyButton}" ></Button>
+        <Button Name="save" Content="Save" Click="save_Click"  Grid.Column="1" Grid.Row = "3" Margin="0,0,30,0" HorizontalAlignment="right" Width="40" Height="20" Style="{StaticResource MyButton}" ></Button>
     </Grid>
 </Window>

@@ -1,9 +1,11 @@
 ﻿using BLL.Models;
 using BLL.Services.Implementations;
+using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Input;
 using wpfreg.Utilities;
+using wpfreg.View;
 
 namespace wpfreg.ViewModel
 {
@@ -24,9 +26,49 @@ namespace wpfreg.ViewModel
         public ICommand ChatCommand { get; set; }
 
         public ICommand SearchistCommand { get; set; }
-        private ICommand _chatCommand;
+        
         public ICommand ChatListCommand {  get; set; }
 
+        public ICommand ChatInfoCommand { get; set; }
+
+        public ICommand SearchToProfileCommand { get; set; }
+
+
+        private async void EditChat(object parameter)
+        {
+            var _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+           
+            if (parameter is Guid id)
+            {
+                var chat =await _chatservice.GetChat(id);
+                App.SelectedChat = chat;
+                ChatInfoViewModel chatInfoViewModel = new ChatInfoViewModel();
+                ChatInfo chatInfoWindow = new ChatInfo();
+                chatInfoWindow.DataContext = chatInfoViewModel;
+
+                // Show the ChatInfo window
+                chatInfoWindow.Show();
+
+            }
+        }
+
+        private async void OpenProfile(object parameter)
+        {
+            if(parameter is Guid id)
+            {
+                var usrService = App.AppHost.Services.GetRequiredService<UserService>();
+                var user = await usrService.GetUserByIdAsync(id);
+                UserModel usr = UserService.DALUserToBLLUser(user);
+                App.SelectedUser = usr;
+                CurrentView = new SearchProfileViewModel();
+              
+              
+                
+                // Show or navigate to the SearchProfileView as needed
+
+
+            }
+        }
         private async void OpenChat(object parameter)
         {
             if (parameter is Guid userId)
@@ -63,7 +105,8 @@ namespace wpfreg.ViewModel
             ChatCommand = new RelayCommand(Chat);
             ChatListCommand = new RelayCommand(OpenChat);
             SearchistCommand = new RelayCommand(SearchList);
-           
+            ChatInfoCommand = new RelayCommand(EditChat);
+            SearchToProfileCommand = new RelayCommand(OpenProfile);
             // Startup Page
             CurrentView = new HomeViewModel();
         }

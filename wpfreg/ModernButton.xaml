@@ -97,7 +97,7 @@
         </Setter>
     </Style>
     <Style x:Key="editbtn" TargetType="{x:Type Button}" >
-        <Setter Property="Foreground" Value="#white"/>
+        <Setter Property="Foreground" Value="white"/>
         <Setter Property="FontFamily" Value="Monserrat"/>
         <Setter Property="FontWeight" Value="Light"/>
 

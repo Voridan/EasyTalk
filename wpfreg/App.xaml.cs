@@ -25,6 +25,8 @@ namespace wpfreg
 
     {
         public static UserModel CurrentUser { get; set; }
+        public static UserModel SelectedUser { get; set; } 
+        public static ChatModel SelectedChat { get; set; }
         public static Server Server { get; private set; }
         public static IHost? AppHost { get; private set; }
 

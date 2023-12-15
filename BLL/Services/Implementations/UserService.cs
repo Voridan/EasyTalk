@@ -25,7 +25,7 @@ namespace BLL.Services.Implementations
                 var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
 
-                var dalUser = BLLUserToDALUser(user);
+                var dalUser = await BLLUserToDALUserAsync(user);
 
                 await _userRepo.AddAsync(dalUser);
 
@@ -75,7 +75,7 @@ namespace BLL.Services.Implementations
 
         public async Task UpdateUser(UserModel user)
         {
-            var dalUser = BLLUserToDALUser(user);
+            var dalUser = await BLLUserToDALUserAsync(user);
             await _userRepo.Update(dalUser);
         }
         
@@ -86,7 +86,7 @@ namespace BLL.Services.Implementations
 
         public async Task DeleteUser(UserModel user)
         {
-            var dalUser = BLLUserToDALUser(user);
+            var dalUser = await BLLUserToDALUserAsync(user);
             await _userRepo.Delete(dalUser);
         }
 
@@ -144,30 +144,11 @@ namespace BLL.Services.Implementations
             return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
         }
         
-        public static User? BLLUserToDALUser(UserModel user)
+      
+        public  async Task<User?> BLLUserToDALUserAsync(UserModel user)
         {
-            var dalUser = new User()
-            {
-              Id = user.Id,
-              FirstName = user.FirstName,
-              LastName = user.LastName,
-              NickName = user.NickName,
-              Email = user.Email,
-              Password = user.Password
-            };
-
-            //foreach (var property in typeof(UserModel).GetProperties())
-            //{
-            //    if (property.Name == "Id") continue;
-
-            //    var value = property.GetValue(user);
-            //    if (value != null)
-            //    {
-            //        property.SetValue(dalUser, value);
-            //    }
-            //}
-
-            return dalUser;
+           
+            return await _userRepo.GetByIdAsync(user.Id);
         }
 
         public static UserModel? DALUserToBLLUser(User user) //ok

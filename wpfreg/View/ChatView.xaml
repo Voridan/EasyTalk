@@ -28,7 +28,8 @@
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                     <TextBlock Margin="5,0,0,0" Grid.Column="0" Text="{Binding Name}" FontSize="22" FontFamily="Montserrat" Foreground="white" HorizontalAlignment="left"/>
-                     <Button Grid.Column="1" Click="Button_Click" Content="info" Width="70" Height="20" HorizontalAlignment="right" Background="Transparent" FontFamily="Montserrat"/>
+                            <Button Grid.Column="1"  Command="{Binding Path=DataContext.ChatInfoCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                               CommandParameter="{Binding Id}" Content="info" Width="70" Height="20" HorizontalAlignment="right" Background="Transparent" FontFamily="Montserrat"/>
                         </Grid>
                 </DataTemplate>
                </ListView.ItemTemplate>
