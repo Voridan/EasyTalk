@@ -16,30 +16,22 @@ using System.Windows.Shapes;
 using BLL.Models;
 using System.IO;
 using System.Data;
+using wpfreg.ViewModel;
 
 namespace wpfreg.View
 {
     public partial class ProfileView : UserControl
     {
-       
+        public UserModel curUser = App.CurrentUser;
+      
+
         public ProfileView()
         {
+            DataContext = new ProfileViewModel();
             InitializeComponent();
-            DataContext = new UserProfile()
-            {
-                UserNickname = curUser.NickName,
-                UserName = curUser.FirstName,
-                UserLastName = curUser.LastName,
-                UserEmail = curUser.Email,
-                UserPhoto = curUser.Photo
-            };
-
-                
+           
         }
-            
-        
-        UserModel curUser = App.CurrentUser;
-
+     
         private void UploadPhoto_Click(object sender, RoutedEventArgs e)
         {
             // Діалог вибору файлу для вибору фотографії
@@ -72,13 +64,6 @@ namespace wpfreg.View
             return image;
         }
     }
-    public class UserProfile
-    {
-        public string UserName { get; set; }
-        public string UserLastName { get; set; }
-        public string UserEmail { get; set; }
-        public string UserNickname { get; set; }
-        public byte[] UserPhoto { get; set; }
-    }
+   
 
 }

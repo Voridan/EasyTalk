@@ -5,17 +5,20 @@ namespace DAL.Data
 {
     public class EasyTalkContext : DbContext
     {
-        public EasyTalkContext() { }
+        public EasyTalkContext(): base() { }
 
-        public EasyTalkContext(DbContextOptions options) : base(options) 
+        public EasyTalkContext(DbContextOptions options, bool isTesting = false) : base(options) 
         {
-            Database.Migrate();
+            if (!isTesting)
+            {
+                Database.Migrate();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured) { 
-                optionsBuilder.UseNpgsql(EnvUtils.GetConnectionString());
+                optionsBuilder.UseNpgsql(EnvUtils.GetConnectionString(false));
             }
         }
 

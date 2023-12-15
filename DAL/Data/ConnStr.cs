@@ -24,6 +24,7 @@ namespace DAL.Data
         private static string ReadConnStrFromFileAsync(string key)
         {
             string[] lines = File.ReadAllLines(@"../../../Data/secureData.txt");
+
             string connstr = "";
             foreach (var line in lines)
             {
@@ -31,7 +32,7 @@ namespace DAL.Data
                 {
                     connstr = line.Split("=")[1];
                     break;
-                }    
+                }
             }
 
             return connstr;

@@ -27,9 +27,9 @@ namespace DAL.Repositories
             return await _table.FindAsync(id);
         }
 
-        public virtual async Task<T> GetOneAsync(Expression<Func<T, bool>> filter)
+        public virtual async Task<T?> GetOneAsync(Expression<Func<T, bool>> filter)
         {
-            return await _table.FirstAsync(filter);
+            return await _table.FirstOrDefaultAsync(filter);
         }
 
         public virtual async Task<IEnumerable<T>> GetAsync(

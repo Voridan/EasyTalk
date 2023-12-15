@@ -25,7 +25,7 @@ namespace BLL.Services.Implementations
                 var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
 
-                var dalUser = BLLUserToDALUser(user);
+                var dalUser = await BLLUserToDALUserAsync(user);
 
                 await _userRepo.AddAsync(dalUser);
 
@@ -48,7 +48,7 @@ namespace BLL.Services.Implementations
             return loginResult;
         }
 
-        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserModel>> GetAllUsersAsync() //ok
         {
             var users = await _userRepo.GetAllAsync();
             var bllUsers = new List<UserModel>();
@@ -68,17 +68,17 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetAsync(filter, orderBy, includeProperties);
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id)
+        public async Task<User?> GetUserByIdAsync(Guid id) //ok
         {
             return await _userRepo.GetByIdAsync(id);
         }
 
         public async Task UpdateUser(UserModel user)
         {
-            var dalUser = BLLUserToDALUser(user);
+            var dalUser = await BLLUserToDALUserAsync(user);
             await _userRepo.Update(dalUser);
         }
-
+        
         public async Task DeleteUserAsync(Guid id)
         {
             await _userRepo.DeleteAsync(id);
@@ -86,7 +86,7 @@ namespace BLL.Services.Implementations
 
         public async Task DeleteUser(UserModel user)
         {
-            var dalUser = BLLUserToDALUser(user);
+            var dalUser = await BLLUserToDALUserAsync(user);
             await _userRepo.Delete(dalUser);
         }
 
@@ -109,7 +109,7 @@ namespace BLL.Services.Implementations
                 return new Result<UserModel>(true, "User with provided nickname already exists");
             }
 
-            return new Result<UserModel>(!passwordValidity && !emailValidity && !requiredFieldsPresent, message);
+            return new Result<UserModel>(!(passwordValidity && emailValidity && requiredFieldsPresent), message);
         }
 
         private async Task<Result<UserModel>> IsValidLoginData(LoginUserModel user)
@@ -143,35 +143,14 @@ namespace BLL.Services.Implementations
 
             return user1Dal.Chats.Any(chat => chat.Users.Any(user => user.Id == user2));
         }
-
-        public static User BLLUserToDALUser(UserModel user)
+        
+      
+        public async Task<User?> BLLUserToDALUserAsync(UserModel user)
         {
-            var dalUser = new User()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                NickName = user.NickName,
-                Email = user.Email,
-                Password = user.Password,
-                Role = user.Role
-            };
-
-            //foreach (var property in typeof(UserModel).GetProperties())
-            //{
-            //    if (property.Name == "Id") continue;
-
-            //    var value = property.GetValue(user);
-            //    if (value != null)
-            //    {
-            //        property.SetValue(dalUser, value);
-            //    }
-            //}
-
-            return dalUser;
+            return await _userRepo.GetByIdAsync(user.Id);
         }
 
-        public static UserModel? DALUserToBLLUser(User user)
+        public static UserModel? DALUserToBLLUser(User user) //ok
         {
             if (user != null)
             {
@@ -183,15 +162,9 @@ namespace BLL.Services.Implementations
 
         private async Task<User?> UserExists(string nickname)
         {
-            try
-            {
-                var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == nickname);
-                return userData;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            var userData = await _userRepo.GetOneAsync(filter: u => u.NickName == nickname);
+            return userData;
+
         }
     }
 }
