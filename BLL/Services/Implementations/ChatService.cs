@@ -42,7 +42,7 @@ namespace BLL.Services.Implementations
                 var user1 = await userRepository.GetByIdAsync(user1Id);
                 var user2 = await userRepository.GetByIdAsync(user2Id);
                 List<User> users = new List<User>() { user1, user2 };
-                var newChat = new Chat() { Name = chat.Name, Description = chat.Description, CreatedDate = DateTime.Now, Users = users, Messages = new List<Message>() };
+                var newChat = new Chat() { Name = chat.Name, Description = chat.Description, CreatedDate = DateTime.UtcNow, Users = users, Messages = new List<Message>() };
                 await chatRepository.AddAsync(newChat);
                 return new Result<ChatModel>(false, "Chat created seccessfully");
             }
@@ -66,12 +66,6 @@ namespace BLL.Services.Implementations
 
             return new Result<ChatModel>(false, "Updated successfuly.", chat);
         }
-
-        //public async Task DeleteChat(Chat chat)
-        //{
-        //    await chatRepository.Delete(chat);
-        //    await chatRepository.SaveAsync();
-        //}
 
         public async Task DeleteChatById(Guid chatId)
         {

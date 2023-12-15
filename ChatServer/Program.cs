@@ -17,7 +17,7 @@ namespace ChatServer
             while (true)
             {
                 var client = new Client(listener.AcceptTcpClient());
-                if(IsClientConnected(client.Username) == false)
+                if(IsClientConnected(client.User.NickName) == false)
                 {
                     clients.Add(client);
                 }
@@ -35,7 +35,7 @@ namespace ChatServer
                 {
                     var broadcastPacket = new PacketBuilder();
                     broadcastPacket.WriteOpCode((int)OpCode.BROADCAST);
-                    broadcastPacket.WriteMessage(client.Username);
+                    broadcastPacket.WriteMessage(client.User.NickName);
                     notifiedClient.ClientSocket.Client.Send(broadcastPacket.GetPackageBytes());
                 }
             }
@@ -54,7 +54,7 @@ namespace ChatServer
 
         public static void BroadcastDisconnect(string username)
         {
-            var client = clients.Where((client) => client.Username == username).FirstOrDefault();
+            var client = clients.Where((client) => client.User.NickName == username).FirstOrDefault();
             if (client != null)
             {
                 clients.Remove(client);
@@ -63,14 +63,14 @@ namespace ChatServer
                 {
                     var packet = new PacketBuilder();
                     packet.WriteOpCode(10);
-                    packet.WriteMessage(client.Username);
+                    packet.WriteMessage(client.User.NickName);
                     client.ClientSocket.Client.Send(packet.GetPackageBytes());
                 }
 
-                BroadcastMessage($"{client.Username} disconnected.");
+                BroadcastMessage($"{client.User.NickName} disconnected.");
             }
         }
 
-        static bool IsClientConnected(string username) => clients.Any(client => client.Username == username);
+        static bool IsClientConnected(string username) => clients.Any(client => client.User.NickName == username);
     }
 }

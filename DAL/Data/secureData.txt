@@ -1,1 +1,0 @@
-﻿CONN_STR=postgres://phofbbdo:kLOBWVRSPMpNaAj1tfqhhs9BTqvVMwQb@snuffleupagus.db.elephantsql.com/phofbbdo
