@@ -73,7 +73,7 @@ namespace wpfreg.View
             if (!resLogin.IsError)
             {
                 App.CurrentUser = resLogin.Value;
-                if (App.CurrentUser?.NickName != null) App.Server.ConnectToServer(App.CurrentUser?.NickName);
+                if (App.CurrentUser?.NickName != null) App.Server.ConnectToServer(App.CurrentUser);
                 this.Close();
                 _mainwindow.ShowDialog();
                 return;

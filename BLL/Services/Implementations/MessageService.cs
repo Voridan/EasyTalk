@@ -7,11 +7,35 @@ namespace BLL.Services.Implementations
     {
         public static MessageModel? DalMessageToBll(Message msg)
         {
-            if(msg != null)
+            if (msg != null)
             {
-                ChatModel? chatModel = ChatService.DalChatToBll(msg.Chat);
-                UserModel? userModel = UserService.DALUserToBLLUser(msg.Sender);
-                return new MessageModel { Id = msg.Id, Chat = chatModel!, Sender = userModel!, Text = msg.Text };
+                return new MessageModel
+                {
+                    Id = msg.Id,
+                    ChatId = msg.ChatId,
+                    SenderId = msg.Sender.Id,
+                    Text = msg.Text,
+                    CreatedDate = msg.CreatedDate,
+                    ModifiedDate = msg.ModifiedDate
+                };
+            }
+
+            return null;
+        }
+
+        public static Message? BllMessageToDal(MessageModel msg, User user)
+        {
+            if (msg != null)
+            {
+                return new Message
+                {
+                    Id = msg.Id,
+                    ChatId = msg.ChatId,
+                    Sender = user,
+                    Text = msg.Text,
+                    CreatedDate = msg.CreatedDate,
+                    ModifiedDate = msg.ModifiedDate
+                };
             }
 
             return null;

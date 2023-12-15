@@ -1,4 +1,6 @@
 ﻿using DAL.Models;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BLL.Models
 {
@@ -33,6 +35,16 @@ namespace BLL.Models
             Email = email;
             Photo = photo;
             Role = role;
+        }
+
+        public static string Serialize(UserModel user)
+        {
+            return JsonConvert.SerializeObject(user);
+        }
+
+        public static UserModel? Deserialize(string json)
+        {
+            return JsonConvert.DeserializeObject<UserModel>(json);
         }
     }
 }

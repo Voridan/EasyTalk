@@ -1,4 +1,5 @@
-﻿using ChatServer.Net.IO;
+﻿using BLL.Models;
+using ChatServer.Net.IO;
 using System.Net.Sockets;
 
 namespace ChatServer
@@ -7,7 +8,7 @@ namespace ChatServer
     {
         private PacketReader packetReader;
         
-        public string Username { get; set; }
+        public UserModel User { get; set; }
 
         public TcpClient ClientSocket { get; set; }
         
@@ -23,9 +24,10 @@ namespace ChatServer
                 client.Close();
                 return;
             }
-
-            Username = packetReader.ReadMessage();
-            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {Username}");
+            
+            string connUserStr = packetReader.ReadMessage();
+            User = UserModel.Deserialize(connUserStr);
+            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {User.NickName}");
 
             Task.Run(() => Procces());
         }
@@ -42,7 +44,7 @@ namespace ChatServer
                         case 5:
                             var msg = packetReader.ReadMessage();
                             Console.WriteLine($"[{DateTime.Now}] Message received. {msg}");
-                            Program.BroadcastMessage($"[{DateTime.Now}] {Username}: {msg}");
+                            Program.BroadcastMessage($"[{DateTime.Now}] {User.NickName}: {msg}");
                             break;
                         
                         default:
@@ -51,8 +53,8 @@ namespace ChatServer
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"{Username} disconnected");
-                    Program.BroadcastDisconnect(Username);
+                    Console.WriteLine($"{User.NickName} disconnected");
+                    Program.BroadcastDisconnect(User.NickName);
                     ClientSocket.Close();
                     break;
                 }

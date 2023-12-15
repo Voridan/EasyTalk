@@ -1,4 +1,10 @@
-﻿namespace DAL.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAL.Data
 {
     public static class ConnStr
     {
@@ -17,7 +23,8 @@
 
         private static string ReadConnStrFromFileAsync(string key)
         {
-            string[] lines = File.ReadAllLines(@"../../../../DAL/Data/secureData.txt");
+            string[] lines = File.ReadAllLines(@"../../../Data/secureData.txt");
+
             string connstr = "";
             foreach (var line in lines)
             {

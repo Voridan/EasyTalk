@@ -145,9 +145,8 @@ namespace BLL.Services.Implementations
         }
         
       
-        public  async Task<User?> BLLUserToDALUserAsync(UserModel user)
+        public async Task<User?> BLLUserToDALUserAsync(UserModel user)
         {
-           
             return await _userRepo.GetByIdAsync(user.Id);
         }
 

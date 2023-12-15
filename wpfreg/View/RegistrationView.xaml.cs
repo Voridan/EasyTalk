@@ -178,6 +178,7 @@ namespace wpfreg.View
                     if(!resRegister.IsError)
                     {
                         App.CurrentUser = resRegister.Value;
+                        App.Server.ConnectToServer(App.CurrentUser);
                         this.Close();
                         _mainwindow.ShowDialog();
                         return;
