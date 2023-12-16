@@ -24,7 +24,7 @@ namespace wpfreg.ViewModel
         
         public ObservableCollection<ChatModel> Chats { get; set; }
         
-        public ObservableCollection<MessageModel> Messages { get; set; }
+        public ObservableCollection<string> Messages { get; set; }
 
         public ObservableCollection<MessageModel> MessagesFromDB { get; set; }
 
@@ -45,7 +45,7 @@ namespace wpfreg.ViewModel
             Username = App.CurrentUser?.NickName;
             Users = new ObservableCollection<UserModel>();
             Chats = new ObservableCollection<ChatModel>();
-            Messages = new ObservableCollection<MessageModel>();
+            Messages = new ObservableCollection<string>();
             MessagesToSave = new();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
@@ -54,8 +54,18 @@ namespace wpfreg.ViewModel
             _chatService = App.AppHost.Services.GetRequiredService<ChatService>();
             SendMessageCommand = new RelayCommand(o =>
             {
-                var messagemodel = new MessageModel() { Text = Message, SenderId = App.CurrentUser.Id, ChatId = App.SelectedChat.Id};
-                _server.SendMessageToServer(messagemodel);
+                MessagesToSave.Add(
+                  new MessageModel()
+                  {
+                      Id = new Guid(),
+                      Text = Message,
+                      SenderId = App.CurrentUser.Id,
+                      ChatId = App.SelectedChat.Id,
+                      CreatedDate = DateTime.UtcNow,
+                      ModifiedDate = DateTime.UtcNow,
+                  }
+                );
+                _server.SendMessageToServer(Message);
             }, o => !string.IsNullOrEmpty(Message));
             SaveMessagesCommand = new RelayCommand(SaveMasseges);
 
@@ -63,11 +73,11 @@ namespace wpfreg.ViewModel
         public ChatViewModel(Guid userid)
         {
             _userid = userid;
-            Username = App.CurrentUser?.NickName??"tyler";
+            Username = App.CurrentUser?.NickName;
             Users = new ObservableCollection<UserModel>();
             Chats = new ObservableCollection<ChatModel>();
             MessagesToSave = new();
-            Messages = new ObservableCollection<MessageModel>();
+            Messages = new ObservableCollection<string>();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
             _server.userDisconectEvent += RemoveUser;
@@ -75,8 +85,18 @@ namespace wpfreg.ViewModel
             _chatService = App.AppHost.Services.GetRequiredService<ChatService>();
             SendMessageCommand = new RelayCommand(o =>
             {
-                var messagemodel = new MessageModel() { Text = Message, SenderId = App.CurrentUser.Id, ChatId = App.SelectedChat.Id };
-                _server.SendMessageToServer(messagemodel);
+                MessagesToSave.Add(
+                    new MessageModel()
+                    {
+                        Id = new Guid(),
+                        Text = Message,
+                        SenderId = App.CurrentUser.Id,
+                        ChatId = App.SelectedChat.Id,
+                        CreatedDate = DateTime.UtcNow,
+                        ModifiedDate = DateTime.UtcNow,
+                    }
+                );
+                _server.SendMessageToServer(Message);
             }, o => !string.IsNullOrEmpty(Message));
             SaveMessagesCommand = new RelayCommand(SaveMasseges);
         }
@@ -96,10 +116,7 @@ namespace wpfreg.ViewModel
         private void MessageRecieved()
         {
             var msg = _server.PacketReader.ReadMessage();
-            var msgContent = msg.Substring(msg.IndexOf("{"));
-            var messageModel = MessageModel.Deserialize(msgContent);
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(messageModel));
-            Application.Current.Dispatcher.Invoke(() => MessagesToSave.Add(messageModel));
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));
         }
 
         private void RemoveUser()
@@ -112,6 +129,7 @@ namespace wpfreg.ViewModel
         private void SaveMasseges(object obj)
         {
             Task.Run(async () => { await _chatService.SaveMessages(App.SelectedChat.Id, App.CurrentUser.Id, MessagesToSave); });
+            MessagesToSave.Clear();
         }
     }
 }

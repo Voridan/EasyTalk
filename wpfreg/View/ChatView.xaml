@@ -46,10 +46,11 @@
             </ListView>
         </DockPanel>
         
-        <StackPanel Grid.Column="1" >
+        <StackPanel Grid.Column="1">
             <ListView Height="545"
                       ItemsSource="{Binding Messages}"
-                      Background="#272B2F"/>
+                      Background="#272B2F"
+                      />
             <StackPanel Orientation="Horizontal"
                         >
                 <TextBox Height="55"
