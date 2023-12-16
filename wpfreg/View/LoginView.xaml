@@ -45,8 +45,8 @@
                            VerticalAlignment="Center"/>
                 <TextBlock Height="20" HorizontalAlignment="Left" Margin="67,0,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" />
 
-            
-               
+
+                <TextBlock Name="errorMes"  Foreground="Red" HorizontalAlignment="Center" Margin=" 0,20,0,0"/>
 
 
             </StackPanel>
