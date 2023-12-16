@@ -10,6 +10,7 @@ using DAL.Models;
 using Microsoft.Extensions.DependencyInjection;
 using wpfreg.Net;
 using wpfreg.Utilities;
+using System.Collections.Generic;
 
 namespace wpfreg.ViewModel
 {
@@ -27,7 +28,7 @@ namespace wpfreg.ViewModel
 
         public ObservableCollection<MessageModel> MessagesFromDB { get; set; }
 
-        public ObservableCollection<MessageModel> MessagesToSave { get; set; }
+        public List<MessageModel> MessagesToSave { get; set; }
 
         public RelayCommand SendMessageCommand { get; set; }
 
@@ -41,10 +42,11 @@ namespace wpfreg.ViewModel
         
         public ChatViewModel() 
         {
-            Username = App.CurrentUser?.NickName ?? "tyler";
+            Username = App.CurrentUser?.NickName;
             Users = new ObservableCollection<UserModel>();
             Chats = new ObservableCollection<ChatModel>();
             Messages = new ObservableCollection<MessageModel>();
+            MessagesToSave = new();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
             _server.userDisconectEvent += RemoveUser;
@@ -93,7 +95,8 @@ namespace wpfreg.ViewModel
         private void MessageRecieved()
         {
             var msg = _server.PacketReader.ReadMessage();
-            var messageModel = MessageModel.Deserialize(msg);
+            var msgContent = msg.Substring(msg.IndexOf("{"));
+            var messageModel = MessageModel.Deserialize(msgContent);
             Application.Current.Dispatcher.Invoke(() => Messages.Add(messageModel));
             Application.Current.Dispatcher.Invoke(() => MessagesToSave.Add(messageModel));
         }

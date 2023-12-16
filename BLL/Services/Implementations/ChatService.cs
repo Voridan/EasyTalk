@@ -28,6 +28,18 @@ namespace BLL.Services.Implementations
             return bllChats;
         }
 
+        public async Task<IEnumerable<UserModel>?> GetUsersForChat(Guid chatId)
+        {
+            var chat = await chatRepository.GetByIdAsync(chatId);
+            List<UserModel> users = new();
+            foreach (var item in chat.Users)
+            {
+                users.Add(UserService.DALUserToBLLUser(item));
+            }
+
+            return users;
+        }
+
         public async Task<ChatModel?> GetChat(Guid chatId)
         {
             var chat = await chatRepository.GetByIdAsync(chatId);

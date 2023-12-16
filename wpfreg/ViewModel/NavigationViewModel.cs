@@ -61,14 +61,12 @@ namespace wpfreg.ViewModel
                 UserModel usr = UserService.DALUserToBLLUser(user);
                 App.SelectedUser = usr;
                 CurrentView = new SearchProfileViewModel();
-              
-              
-                
                 // Show or navigate to the SearchProfileView as needed
 
 
             }
         }
+
         public async void OpenChat(object parameter)
         {
             if (parameter is Guid userId)
