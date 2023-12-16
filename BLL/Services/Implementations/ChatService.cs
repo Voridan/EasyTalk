@@ -2,6 +2,8 @@
 using BLL.Utils;
 using DAL.Models;
 using DAL.Repositories;
+using System;
+using System.Linq;
 
 namespace BLL.Services.Implementations
 {
@@ -30,7 +32,8 @@ namespace BLL.Services.Implementations
 
         public async Task<IEnumerable<UserModel>?> GetUsersForChat(Guid chatId)
         {
-            var chat = await chatRepository.GetByIdAsync(chatId);
+            var chat = await chatRepository.GetChatWithUsers(chatId);
+            
             List<UserModel> users = new();
             foreach (var item in chat.Users)
             {

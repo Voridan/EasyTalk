@@ -1,5 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -7,6 +8,12 @@ namespace DAL.Repositories
     {
         public ChatRepository(EasyTalkContext _context) : base(_context)
         {
+        }
+
+        public async Task<Chat?> GetChatWithUsers(Guid chatId)
+        {
+            var chats = await _table.Include(c => c.Users).ToListAsync();
+            return chats.FirstOrDefault(c => c.Id == chatId);
         }
     }
 }

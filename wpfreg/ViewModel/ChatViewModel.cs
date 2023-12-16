@@ -66,6 +66,7 @@ namespace wpfreg.ViewModel
             Username = App.CurrentUser?.NickName??"tyler";
             Users = new ObservableCollection<UserModel>();
             Chats = new ObservableCollection<ChatModel>();
+            MessagesToSave = new();
             Messages = new ObservableCollection<MessageModel>();
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
