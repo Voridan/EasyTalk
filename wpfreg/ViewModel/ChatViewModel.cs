@@ -48,9 +48,9 @@ namespace wpfreg.ViewModel
             MessagesToSave = new();
 
             _server = App.Server;
-            _server.msgRecieveEvent += MessageRecieved;
-            _server.userDisconectEvent += RemoveUser;
-            _server.connectedEvent += UserConnected;
+            //_server.msgRecieveEvent += MessageRecieved;
+            //_server.userDisconectEvent += RemoveUser;
+            //_server.connectedEvent += UserConnected;
             _chatService = App.AppHost.Services.GetRequiredService<ChatService>();
 
             SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
@@ -112,7 +112,7 @@ namespace wpfreg.ViewModel
                     }
                 );
 
-            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));
+            /*Application.Current.Dispatcher.Invoke(() =>*/ Messages.Add(msg);
         }
 
         private void RemoveUser()

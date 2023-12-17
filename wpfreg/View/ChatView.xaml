@@ -53,7 +53,9 @@
                       />
             <StackPanel Orientation="Horizontal"
                         >
-                <TextBox Height="55"
+                <TextBox Name="MsgInput"
+                         IsReadOnly="True"
+                         Height="55"
                          Width="197"
                          VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>

@@ -40,7 +40,13 @@ namespace wpfreg.View
                 IEnumerable<UserModel> users = await _chatservice.GetUsersForChat(App.SelectedChat.Id);
                 Guid otherUserId = users.Where(u => u.Id != App.CurrentUser.Id).FirstOrDefault().Id;
                 _navViewModel.OpenChat(otherUserId);
+                MsgInput.IsReadOnly = false;
             }
+        }
+
+        private void SendClick(object sender, RoutedEventArgs e)
+        {
+            MsgInput.Text = string.Empty;
         }
     }
 }

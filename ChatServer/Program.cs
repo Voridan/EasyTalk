@@ -22,7 +22,6 @@ namespace ChatServer
                     clients.Add(client);
                 }
 
-                /* connect users */
                 BroadcastConnection();
             }
         }
@@ -47,7 +46,7 @@ namespace ChatServer
             {
                 var packet = new PacketBuilder();
                 packet.WriteOpCode(5);
-                packet.WriteMessage(message);
+                packet.WriteMessage(message + "  " + Guid.NewGuid().ToString());
                 client.ClientSocket.Client.Send(packet.GetPackageBytes());
             }
         }
