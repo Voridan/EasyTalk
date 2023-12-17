@@ -17,15 +17,15 @@ namespace wpfreg.ViewModel
 
         private Server _server;
 
-        public ObservableCollection<UserModel> Users { get; set; }
+        public ObservableCollection<UserModel> Users { get; set; } = new();
 
-        public ObservableCollection<ChatModel> Chats { get; set; }
+        public ObservableCollection<ChatModel> Chats { get; set; } = new();
 
-        public ObservableCollection<string> Messages { get; set; }
+        public ObservableCollection<string> Messages { get; set; } = new();
 
         public ObservableCollection<MessageModel> MessagesFromDB { get; set; }
 
-        public List<MessageModel> MessagesToSave { get; set; }
+        public List<MessageModel> MessagesToSave { get; set; } = new ();
 
         public RelayCommand SendMessageCommand { get; set; }
 
@@ -42,31 +42,6 @@ namespace wpfreg.ViewModel
         public ChatViewModel()
         {
             Username = App.CurrentUser.NickName;
-            Users = new ObservableCollection<UserModel>();
-            Chats = new ObservableCollection<ChatModel>();
-            Messages = new ObservableCollection<string>();
-            MessagesToSave = new();
-
-            _server = App.Server;
-            //_server.msgRecieveEvent += MessageRecieved;
-            //_server.userDisconectEvent += RemoveUser;
-            //_server.connectedEvent += UserConnected;
-            _chatService = App.AppHost.Services.GetRequiredService<ChatService>();
-
-            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
-            SaveMessagesCommand = new RelayCommand(SaveMasseges);
-            FetchMessagesCommand = new RelayCommand(FetchMasseges);
-        }
-        public ChatViewModel(Guid userid)
-        {
-            _userid = userid;
-            Username = App.CurrentUser.NickName;
-            Users = new ObservableCollection<UserModel>();
-            Chats = new ObservableCollection<ChatModel>();
-
-            MessagesToSave = new();
-            Messages = new ObservableCollection<string>();
-
             _server = App.Server;
             _server.msgRecieveEvent += MessageRecieved;
             _server.userDisconectEvent += RemoveUser;
@@ -77,6 +52,7 @@ namespace wpfreg.ViewModel
             SaveMessagesCommand = new RelayCommand(SaveMasseges);
             FetchMessagesCommand = new RelayCommand(FetchMasseges);
         }
+        public ChatViewModel(Guid userid) {}
 
         private void UserConnected()
         {
@@ -112,7 +88,7 @@ namespace wpfreg.ViewModel
                     }
                 );
 
-            /*Application.Current.Dispatcher.Invoke(() =>*/ Messages.Add(msg);
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(msg));
         }
 
         private void RemoveUser()

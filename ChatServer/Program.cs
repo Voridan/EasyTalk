@@ -46,7 +46,7 @@ namespace ChatServer
             {
                 var packet = new PacketBuilder();
                 packet.WriteOpCode(5);
-                packet.WriteMessage(message + "  " + Guid.NewGuid().ToString());
+                packet.WriteMessage(message);
                 client.ClientSocket.Client.Send(packet.GetPackageBytes());
             }
         }
