@@ -22,7 +22,6 @@ namespace ChatServer
                     clients.Add(client);
                 }
 
-                /* connect users */
                 BroadcastConnection();
             }
         }

@@ -25,7 +25,17 @@ namespace BLL.Services.Implementations
                 var hashedPassword = PasswordUtil.HashPassword(user.Password!);
                 user.Password = hashedPassword;
 
-                var dalUser = await BLLUserToDALUserAsync(user);
+                var dalUser = new User()
+                {
+                    NickName = user.NickName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    Role = UserRole.User
+                };
 
                 await _userRepo.AddAsync(dalUser);
 
@@ -48,7 +58,7 @@ namespace BLL.Services.Implementations
             return loginResult;
         }
 
-        public async Task<IEnumerable<UserModel>> GetAllUsersAsync() //ok
+        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
         {
             var users = await _userRepo.GetAllAsync();
             var bllUsers = new List<UserModel>();
@@ -68,7 +78,7 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetAsync(filter, orderBy, includeProperties);
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id) //ok
+        public async Task<User?> GetUserByIdAsync(Guid id)
         {
             return await _userRepo.GetByIdAsync(id);
         }
@@ -150,7 +160,7 @@ namespace BLL.Services.Implementations
             return await _userRepo.GetByIdAsync(user.Id);
         }
 
-        public static UserModel? DALUserToBLLUser(User user) //ok
+        public static UserModel? DALUserToBLLUser(User user)
         {
             if (user != null)
             {

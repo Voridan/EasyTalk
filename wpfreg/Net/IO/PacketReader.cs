@@ -18,7 +18,7 @@ namespace wpfreg.Net.IO
             var length = ReadInt32();
             byte[] msgBuffer = new byte[length];
             stream.Read(msgBuffer, 0, length);
-            var msg = Encoding.ASCII.GetString(msgBuffer);
+            var msg = Encoding.UTF8.GetString(msgBuffer);
 
             return msg;
         }

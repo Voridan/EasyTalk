@@ -9,5 +9,15 @@ namespace DAL.Repositories
         public MessageRepository(EasyTalkContext _context) : base(_context)
         {
         }
+
+        public async Task SaveMessages(ICollection<Message> msgs)
+        {
+            foreach (var msg in msgs)
+            {
+                _table.Add(msg);
+            }
+
+            await SaveAsync();
+        }
     }
 }

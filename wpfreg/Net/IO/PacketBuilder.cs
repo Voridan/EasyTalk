@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace wpfreg.Net.IO
 {
@@ -23,7 +20,7 @@ namespace wpfreg.Net.IO
         {
             var msgLength = msg.Length;
             _ms.Write(BitConverter.GetBytes(msgLength));
-            _ms.Write(Encoding.ASCII.GetBytes(msg));
+            _ms.Write(Encoding.UTF8.GetBytes(msg));
         }
         public byte[] GetPackageBytes()
         {

@@ -19,7 +19,7 @@
 
         <DockPanel>
            
-            <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}" >
+            <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                     <Grid>
@@ -30,20 +30,33 @@
                     <TextBlock Margin="5,0,0,0" Grid.Column="0" Text="{Binding Name}" FontSize="22" FontFamily="Montserrat" Foreground="white" HorizontalAlignment="left"/>
                             <Button Grid.Column="1"  Command="{Binding Path=DataContext.ChatInfoCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                CommandParameter="{Binding Id}" Content="info" Width="70" Height="20" HorizontalAlignment="right" Background="Transparent" FontFamily="Montserrat"/>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                         </Grid>
                 </DataTemplate>
                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </DockPanel>
         
-        <StackPanel Grid.Column="1" >
+        <StackPanel Grid.Column="1">
             <ListView Height="545"
                       ItemsSource="{Binding Messages}"
-                      Background="#272B2F"/>
+                      Background="#272B2F"
+                      />
             <StackPanel Orientation="Horizontal"
                         >
-                <TextBox Height="55"
-                         Width="350"
+                <TextBox Name="MsgInput"
+                         IsReadOnly="True"
+                         Height="55"
+                         Width="197"
                          VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Width="75"
@@ -51,11 +64,22 @@
                         Content="Send"
                         Command="{Binding SendMessageCommand}"
                         Style="{StaticResource MyButtonChat}"/>
+                <Button Width="75"
+                        FontSize="18"
+                        Content="Save"
+                        Command="{Binding SaveMessagesCommand}"
+                        Style="{StaticResource MyButtonChat}"/>
+                <Button Width="75"
+                        FontSize="18"
+                        Content="Fetch"
+                        Command="{Binding FetchMessagesCommand}"
+                        Style="{StaticResource MyButtonChat}"/>
             </StackPanel>
         </StackPanel>
         <Button Name="btnload" Content="Button"
                 Click="btnLoadClick"
                 Visibility="Hidden"
                 Margin="0,-40,0,0"></Button>
+
     </Grid>
 </UserControl>
