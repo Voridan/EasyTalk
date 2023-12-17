@@ -27,7 +27,7 @@ namespace ChatServer
             
             string connUserStr = packetReader.ReadMessage();
             User = UserModel.Deserialize(connUserStr);
-            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {User.NickName}");
+            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {User.NickName}:");
 
             Task.Run(() => Procces());
         }

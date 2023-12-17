@@ -54,7 +54,7 @@
             <StackPanel Orientation="Horizontal"
                         >
                 <TextBox Height="55"
-                         Width="275"
+                         Width="197"
                          VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Width="75"
@@ -66,6 +66,11 @@
                         FontSize="18"
                         Content="Save"
                         Command="{Binding SaveMessagesCommand}"
+                        Style="{StaticResource MyButtonChat}"/>
+                <Button Width="75"
+                        FontSize="18"
+                        Content="Fetch"
+                        Command="{Binding FetchMessagesCommand}"
                         Style="{StaticResource MyButtonChat}"/>
             </StackPanel>
         </StackPanel>

@@ -43,6 +43,7 @@ namespace wpfreg
                     services.AddSingleton<ChatView>();
                     services.AddSingleton<UserRepository>();
                     services.AddSingleton<ChatRepository>();
+                    services.AddSingleton<MessageRepository>();
                     services.AddSingleton<EasyTalkContext>();
                     services.AddSingleton<Server>();
                     services.AddSingleton<SearchList>();

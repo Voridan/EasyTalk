@@ -12,7 +12,19 @@ namespace DAL.Repositories
 
         public async Task<Chat?> GetChatWithUsers(Guid chatId)
         {
-            var chats = await _table.Include(c => c.Users).ToListAsync();
+            var chats = await _table
+                .Include(c => c.Users)
+                .ToListAsync();
+
+            return chats.FirstOrDefault(c => c.Id == chatId);
+        }
+
+        public async Task<Chat?> GetChatWithMessages(Guid chatId)
+        {
+            var chats = await _table
+                .Include(c => c.Messages)
+                .ToListAsync();
+
             return chats.FirstOrDefault(c => c.Id == chatId);
         }
     }

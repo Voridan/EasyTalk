@@ -11,10 +11,12 @@ namespace BLL.Services.Implementations
     {
         private readonly ChatRepository chatRepository;
         private readonly UserRepository userRepository;
-        public ChatService(ChatRepository _repo, UserRepository _userRepo)
+        private readonly MessageRepository msgRepository;
+        public ChatService(ChatRepository _repo, UserRepository _userRepo, MessageRepository _msgRepo)
         {
             chatRepository = _repo;
             userRepository = _userRepo;
+            msgRepository = _msgRepo;
         }
 
         public async Task<IEnumerable<ChatModel>?> GetChatsForUser(Guid userId)
@@ -28,6 +30,18 @@ namespace BLL.Services.Implementations
             }
 
             return bllChats;
+        }
+
+        public async Task<ICollection<MessageModel>> GetMessages(Guid chatId)
+        {
+            var chat = await chatRepository.GetChatWithMessages(chatId);
+            var bllMessages = new List<MessageModel>();
+            foreach (var message in chat.Messages)
+            {
+                bllMessages.Add(MessageService.DalMessageToBll(message));
+            }
+
+            return bllMessages;
         }
 
         public async Task<IEnumerable<UserModel>?> GetUsersForChat(Guid chatId)
@@ -88,21 +102,6 @@ namespace BLL.Services.Implementations
             await chatRepository.SaveAsync();
         }
 
-        public async Task<ICollection<MessageModel>> GetMessages(Guid chatId)
-        {
-            var chat = await chatRepository.GetOneAsync(c => c.Id == chatId);
-            var messages = chat.Messages;
-            var bllMessages = new List<MessageModel>();
-            foreach (var message in messages)
-            {
-                var bllMessage = MessageService.DalMessageToBll(message);
-                if (bllMessage != null)
-                    bllMessages.Add(bllMessage);
-            }
-
-            return bllMessages;
-        }
-
         public async Task SaveMessages(Guid chatId, Guid sendrId, ICollection<MessageModel> messages)
         {
             var chat = await chatRepository.GetByIdAsync(chatId);
@@ -116,6 +115,8 @@ namespace BLL.Services.Implementations
                     dalMessages.Add(dalMessage);
             }
 
+            await msgRepository.SaveMessages(dalMessages);
+            
             if (chat.Messages == null)
             {
                 chat.Messages = dalMessages;
