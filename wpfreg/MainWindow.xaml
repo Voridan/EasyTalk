@@ -42,7 +42,7 @@
 
                         <Grid>
 
-                            <Image Source="Images/img_home.png"
+                            <Image Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\img_home.png"
                                    Style="{StaticResource Image_Style}" />
 
                             <TextBlock Text="My projects"
@@ -59,7 +59,7 @@
 
                         <Grid>
 
-                            <Image Source="Images/img_customer.png"
+                            <Image Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\img_customer.png"
                                    Style="{StaticResource Image_Style}" />
 
                             <TextBlock Text="My profile"
@@ -73,7 +73,7 @@
 
                         <Grid>
 
-                            <Image Source="Images/img_order.png"
+                            <Image Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\img_order.png"
                                    Style="{StaticResource Image_Style}" />
 
                             <TextBlock Text="Chat"
@@ -88,7 +88,7 @@
 
                         <Grid>
 
-                            <Image Source="Images/img_order.png"
+                            <Image Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\img_product.png"
                                    Style="{StaticResource Image_Style}" />
 
                             <TextBlock Text="SearchList"
@@ -111,7 +111,9 @@
 
         <Button x:Name="CloseApp"
                 Style="{StaticResource ExitApp}"
-                Click="CloseApp_Click" />
+                Click="CloseApp_Click" 
+                Width="20"
+                Height="20"/>
 
     </Grid>
 </Window>

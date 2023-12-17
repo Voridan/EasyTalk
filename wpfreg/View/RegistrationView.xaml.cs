@@ -53,6 +53,11 @@ namespace wpfreg.View
                 DragMove();
             }
         }
+        private void CloseApp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
 
         private void textBoxLastname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -139,15 +144,10 @@ namespace wpfreg.View
         {
             if (textBoxEmailId.Text.Length == 0)
             {
-                errormessage.Text = "Enter an email.";
+               
                 textBoxEmailId.Focus();
             }
-            //else if (!Regex.IsMatch(textBoxEmailId.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
-            //{
-            //    errormessage.Text = "Enter a valid email.";
-            //    textBoxEmailId.Select(0, textBoxEmailId.Text.Length);
-            //    textBoxEmailId.Focus();
-            //}
+           
             else
             {
                 string nickname = textBoxNickName.Text;
@@ -159,23 +159,15 @@ namespace wpfreg.View
                 UserModel user = new UserModel(Guid.Empty, nickname, firstname, lastname, email, password);
                 if (textBoxPassword.Text.Length == 0)
                 {
-                    errormessage.Text = "Enter password.";
+                   
                     textBoxPassword.Focus();
                 }
-                //else if (passwordBoxConfirm.Password.Length == 0)
-                //{
-                //    errormessage.Text = "Enter Confirm password.";
-                //    passwordBoxConfirm.Focus();
-                //}
-                //else if (passwordBox1.Password != passwordBoxConfirm.Password)
-                //{
-                //    errormessage.Text = "Confirm password must be same as password.";
-                //    passwordBoxConfirm.Focus();
-                //}
+               
                 else
                 {
                     Result<UserModel> resRegister = await _userService.RegisterUserAsync(user);
-                    if(!resRegister.IsError)
+                    errorMes.Text = resRegister.Message;
+                    if (!resRegister.IsError)
                     {
                         App.CurrentUser = resRegister.Value;
                         App.Server.ConnectToServer(App.CurrentUser);

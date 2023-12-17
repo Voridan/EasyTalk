@@ -9,9 +9,7 @@
     <UserControl.DataContext>
         <vm:ProfileViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <BitmapImage x:Key="DefaultImage" UriSource="\Images\account.png"/>
-    </UserControl.Resources>
+
 
     <Grid Background="#212529">
         <Grid.ColumnDefinitions>
@@ -28,7 +26,7 @@
 
         <StackPanel Grid.Column="1" HorizontalAlignment="Center">
             <Image x:Name="UserImage"
-                   Source="{Binding UserPhoto, FallbackValue={StaticResource DefaultImage}}" 
+                   Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\account.png" 
                    
                    Width="200" 
                    Height="150"

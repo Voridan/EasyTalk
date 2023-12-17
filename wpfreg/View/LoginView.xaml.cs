@@ -27,6 +27,7 @@ namespace wpfreg.View
         private UserService _userService;
         private readonly MainWindow _mainwindow;
         private string nickNamePlaceholder = "Nickname";
+        
       
         public LoginView(UserService userservice, MainWindow mainwindow)
         {
@@ -35,6 +36,12 @@ namespace wpfreg.View
             _mainwindow = mainwindow;
             
         }
+        private void CloseApp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+
+        }
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -58,18 +65,23 @@ namespace wpfreg.View
         {
             string password = passwordBox.Password;
             string nickname = textBoxNickname.Text;
+           
             if (nickname == "")
             {
-                errormessage.Text = "Enter a nickname.";
+                
                 textBoxNickname.Focus();
             }
             else if (password == "")
             {
-                errormessage.Text = "Enter a password.";
+                
                 passwordBox.Focus();
             }
             LoginUserModel userLogin = new LoginUserModel(nickname, password);
+
             Result<UserModel> resLogin = await _userService.LoginUserAsync(userLogin);
+
+            errorMes.Text = resLogin.Message;
+            
             if (!resLogin.IsError)
             {
                 App.CurrentUser = resLogin.Value;
