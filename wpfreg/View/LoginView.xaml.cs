@@ -36,6 +36,12 @@ namespace wpfreg.View
             _mainwindow = mainwindow;
             
         }
+        private void CloseApp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+
+        }
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

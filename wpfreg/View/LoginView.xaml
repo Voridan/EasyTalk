@@ -24,6 +24,11 @@
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
+            <Button x:Name="CloseApp"
+                Style="{StaticResource ExitApp}"
+                Click="CloseApp_Click" 
+                Width="20"
+                Height="20"/>
             <StackPanel>
                 <TextBlock Text="Welcome!" 
                            Margin="0,150,0,0" 
