@@ -26,7 +26,7 @@
 
         <StackPanel Grid.Column="1" HorizontalAlignment="Center">
             <Image x:Name="UserImage"
-                   Source="C:\Users\WellDone\source\repos\EasyTalk\wpfreg\Images\account.png" 
+                   Source="/Images\account.png" 
                    
                    Width="200" 
                    Height="150"
