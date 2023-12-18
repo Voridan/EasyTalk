@@ -16,6 +16,8 @@ using Microsoft.Extensions.Hosting;
 using BLL.Models;
 using wpfreg.Net;
 using wpfreg.ViewModel;
+using Serilog;
+using System.IO;
 
 namespace wpfreg
 {
@@ -33,7 +35,19 @@ namespace wpfreg
 
         public App()
         {
+            string logsDirectory = Path.Combine(Environment.CurrentDirectory, "logs");
+
             AppHost = Host.CreateDefaultBuilder()
+                .UseSerilog((host, loggerConfiguration) =>
+                {
+                    loggerConfiguration
+                    .WriteTo.File(Path.Combine(logsDirectory, "TestRegistrationLogic.txt"), rollingInterval: RollingInterval.Day)
+                    .MinimumLevel.Information();
+                })
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.AddSerilog();
+                })
                 .ConfigureServices((HostBuilderContext, services) =>
                 {
                     services.AddTransient<RegistrationView>();

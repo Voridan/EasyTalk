@@ -92,7 +92,7 @@ namespace wpfreg.ViewModel
               
         private void Chat(object obj)
         {
-            CurrentView = new ChatViewModel(App.CurrentUser.Id);
+            OpenChat(App.CurrentUser.Id);
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
         private void SearchList(object obj) => CurrentView = new SearchListViewModel();
