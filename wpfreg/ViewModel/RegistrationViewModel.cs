@@ -22,8 +22,6 @@ namespace wpfreg.ViewModel
                 {
                     _selectedIndustry = value;
                     OnPropertyChanged(nameof(SelectedIndustry));
-                    // Assuming App.CurrentUser is a property or method that returns the current user
-
                 }
             }
         }

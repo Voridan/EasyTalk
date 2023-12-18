@@ -1,5 +1,4 @@
-﻿using BLL.Services.Implementations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DAL.Models;
 using BLL.Services.Implementations;
-using BLL.Utils;
 using BLL.Models;
+using BLL.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace wpfreg.View

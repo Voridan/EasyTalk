@@ -27,7 +27,7 @@ namespace wpfreg.View
         }
         private async void btnLoadClick(object sender, RoutedEventArgs e)
         {
-            var chats = await _chatservice.GetChatsForUser(App.CurrentUser.Id);
+            var chats = await _chatservice.GetChatsForUser(App.CurrentUser!.Id);
             ChatList.ItemsSource = chats;
         }
 
@@ -37,8 +37,8 @@ namespace wpfreg.View
             if (item != null && item.IsSelected)
             {
                 App.SelectedChat = item.Content as ChatModel;
-                IEnumerable<UserModel> users = await _chatservice.GetUsersForChat(App.SelectedChat.Id);
-                Guid otherUserId = users.Where(u => u.Id != App.CurrentUser.Id).FirstOrDefault().Id;
+                IEnumerable<UserModel> users = await _chatservice.GetUsersForChat(App.SelectedChat!.Id);
+                Guid otherUserId = users!.Where(u => u.Id != App.CurrentUser.Id).FirstOrDefault().Id;
                 _navViewModel.OpenChat(otherUserId);
                 MsgInput.IsReadOnly = false;
             }

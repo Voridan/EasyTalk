@@ -36,7 +36,7 @@ namespace wpfreg.ViewModel
 
         private async void EditChat(object parameter)
         {
-            var _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+            var _chatservice = App.AppHost!.Services.GetRequiredService<ChatService>();
            
             if (parameter is Guid id)
             {
@@ -56,14 +56,11 @@ namespace wpfreg.ViewModel
         {
             if(parameter is Guid id)
             {
-                var usrService = App.AppHost.Services.GetRequiredService<UserService>();
+                var usrService = App.AppHost!.Services.GetRequiredService<UserService>();
                 var user = await usrService.GetUserByIdAsync(id);
-                UserModel usr = UserService.DALUserToBLLUser(user);
+                UserModel usr = UserService.DALUserToBLLUser(user!);
                 App.SelectedUser = usr;
                 CurrentView = new SearchProfileViewModel();
-                // Show or navigate to the SearchProfileView as needed
-
-
             }
         }
 
@@ -71,8 +68,8 @@ namespace wpfreg.ViewModel
         {
             if (parameter is Guid userId)
             {
-                var usrService = App.AppHost.Services.GetRequiredService<UserService>();
-                var currUserId = App.CurrentUser.Id;
+                var usrService = App.AppHost!.Services.GetRequiredService<UserService>();
+                var currUserId = App.CurrentUser!.Id;
                 var chatExists = await usrService.ChatExists(currUserId, userId);
                 if (chatExists)
                 {
@@ -92,7 +89,7 @@ namespace wpfreg.ViewModel
               
         private void Chat(object obj)
         {
-            CurrentView = new ChatViewModel(App.CurrentUser.Id);
+            CurrentView = new ChatViewModel(App.CurrentUser!.Id!);
         }
         private void Profile(object obj) => CurrentView = new ProfileViewModel();
         private void SearchList(object obj) => CurrentView = new SearchListViewModel();

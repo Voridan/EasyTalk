@@ -29,7 +29,7 @@ namespace wpfreg.View
         {
            
             InitializeComponent();
-            _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+            _chatservice = App.AppHost!.Services.GetRequiredService<ChatService>();
             _chatinfoviewModel = new ChatInfoViewModel();
         }
 
@@ -42,7 +42,7 @@ namespace wpfreg.View
 
         private async void save_Click(object sender, RoutedEventArgs e)
         {
-            await _chatservice.UpdateChat(App.SelectedChat);
+            await _chatservice.UpdateChat(App.SelectedChat!);
             this.Close();
         }
     }

@@ -1,5 +1,5 @@
-﻿using DAL.Models;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using DAL.Models;
 
 namespace BLL.Services.Interfaces
 {

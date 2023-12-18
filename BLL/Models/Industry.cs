@@ -4,6 +4,6 @@
     {
         public Guid Id { get; set; }
 
-        public Industries Name { get; set; } = Industries.None ;
+        public Industries Name { get; set; } = Industries.None;
     }
 }

@@ -13,7 +13,7 @@ namespace wpfreg.View
 {
     public partial class ProfileView : UserControl
     {
-        public UserModel curUser = App.CurrentUser;
+        public UserModel curUser = App.CurrentUser!;
 
         public Image accImage = new Image();
 

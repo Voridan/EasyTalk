@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace wpfreg.View
 {
-    /// <summary>
-    /// Interaction logic for SearchList.xaml
-    /// </summary>
     public partial class SearchList : UserControl
     {
         private UserService _userservice;

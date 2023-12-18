@@ -41,14 +41,14 @@ namespace wpfreg.ViewModel
 
         public ChatViewModel()
         {
-            Username = App.CurrentUser.NickName;
-            _server = App.Server;
+            Username = App.CurrentUser!.NickName!;
+            _server = App.Server!;
             _server.msgRecieveEvent += MessageRecieved;
             _server.userDisconectEvent += RemoveUser;
             _server.connectedEvent += UserConnected;
-            _chatService = App.AppHost.Services.GetRequiredService<ChatService>();
+            _chatService = App.AppHost!.Services.GetRequiredService<ChatService>();
 
-            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
+            SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message!), o => !string.IsNullOrEmpty(Message));
             SaveMessagesCommand = new RelayCommand(SaveMasseges);
             FetchMessagesCommand = new RelayCommand(FetchMasseges);
         }
@@ -81,8 +81,8 @@ namespace wpfreg.ViewModel
                     {
                         Id = Guid.NewGuid(),
                         Text = msg,
-                        SenderId = App.CurrentUser.Id,
-                        ChatId = App.SelectedChat.Id,
+                        SenderId = App.CurrentUser!.Id!,
+                        ChatId = App.SelectedChat!.Id!,
                         CreatedDate = DateTime.UtcNow,
                         ModifiedDate = DateTime.UtcNow,
                     }
@@ -95,21 +95,21 @@ namespace wpfreg.ViewModel
         {
             var uname = _server.PacketReader.ReadMessage();
             var user = Users.Where(x => x.NickName == uname).FirstOrDefault();
-            Application.Current.Dispatcher.Invoke(() => Users.Remove(user));
+            Application.Current.Dispatcher.Invoke(() => Users.Remove(user!));
         }
 
         private async void SaveMasseges(object obj)
         {
-            await _chatService.SaveMessages(App.SelectedChat.Id, App.CurrentUser.Id, MessagesToSave);
+            await _chatService.SaveMessages(App.SelectedChat!.Id, App.CurrentUser!.Id, MessagesToSave);
             MessagesToSave.Clear();
         }
 
         private async void FetchMasseges(object obj)
         {
-            var msgs = await _chatService.GetMessages(App.SelectedChat.Id);
+            var msgs = await _chatService.GetMessages(App.SelectedChat!.Id!);
             foreach (var msg in msgs)
             {
-                Messages.Add(msg.Text);
+                Messages.Add(msg.Text!);
             }
         }
     }

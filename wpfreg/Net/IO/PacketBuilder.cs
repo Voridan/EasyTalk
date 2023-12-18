@@ -6,11 +6,13 @@ namespace wpfreg.Net.IO
 {
      public class PacketBuilder
     {
-        MemoryStream _ms;
+        private readonly MemoryStream _ms;
+
         public PacketBuilder()
         {
             _ms = new MemoryStream();
         }
+
         public void WriteOpCode(byte opcode)
         {
             _ms.WriteByte(opcode);
@@ -22,6 +24,7 @@ namespace wpfreg.Net.IO
             _ms.Write(BitConverter.GetBytes(msgLength));
             _ms.Write(Encoding.UTF8.GetBytes(msg));
         }
+
         public byte[] GetPackageBytes()
         {
             return _ms.ToArray();

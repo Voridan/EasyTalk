@@ -6,7 +6,7 @@ namespace wpfreg.ViewModel
     internal class ProfileViewModel : Utilities.ViewModelBase
     {
         public Guid ProfileId { get; set; }
-        public UserModel curUser = App.CurrentUser;
+        public UserModel curUser = App.CurrentUser!;
 
         private string _userNickname;
         public string UserNickname
@@ -98,20 +98,20 @@ namespace wpfreg.ViewModel
 
         public ProfileViewModel(UserModel user)
         {
-            UserNickname = user.NickName;
-            UserName = user.FirstName;
-            UserLastName = user.LastName;
-            UserEmail = user.Email;
-            UserPhoto = user.Photo;
+            UserNickname = user.NickName!;
+            UserName = user.FirstName!;
+            UserLastName = user.LastName!;
+            UserEmail = user.Email!;
+            UserPhoto = user.Photo!;
 
         }
         public ProfileViewModel()
         {
-            UserNickname = curUser.NickName;
-            UserName = curUser.FirstName;
-            UserLastName = curUser.LastName;
-            UserEmail = curUser.Email;
-            UserPhoto = curUser.Photo;
+            UserNickname = curUser.NickName!;
+            UserName = curUser.FirstName!;
+            UserLastName = curUser.LastName!;
+            UserEmail = curUser.Email!;
+            UserPhoto = curUser.Photo!;
         }
     }
 }
