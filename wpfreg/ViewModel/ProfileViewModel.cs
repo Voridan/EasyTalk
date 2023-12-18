@@ -1,10 +1,5 @@
 ﻿using BLL.Models;
-using BLL.Services.Implementations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace wpfreg.ViewModel
 {
@@ -25,6 +20,22 @@ namespace wpfreg.ViewModel
                     OnPropertyChanged();
                 }
             }
+        }
+
+        private bool _hasPhoto = false;
+
+        public bool HasPhoto
+        {
+            get { return _hasPhoto; }
+            set
+            {
+                if (_hasPhoto != value)
+                {
+                    _hasPhoto = value;
+                    OnPropertyChanged(nameof(HasPhoto));
+                }
+            }
+
         }
 
         private string _userName;
@@ -79,12 +90,13 @@ namespace wpfreg.ViewModel
                 {
                     _userPhoto = value;
                     OnPropertyChanged();
+                    HasPhoto = (_userPhoto != null);
                 }
             }
         }
 
 
-        public ProfileViewModel (UserModel user)
+        public ProfileViewModel(UserModel user)
         {
             UserNickname = user.NickName;
             UserName = user.FirstName;
