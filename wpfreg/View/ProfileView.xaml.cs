@@ -1,4 +1,6 @@
 ﻿using BLL.Models;
+using BLL.Services.Implementations;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -14,45 +16,53 @@ namespace wpfreg.View
         public UserModel curUser = App.CurrentUser;
 
         public Image accImage = new Image();
+
+        private UserService _userservice;
         public ProfileView()
         {
             DataContext = new ProfileViewModel();
             InitializeComponent();
-           
+            _userservice = App.AppHost.Services.GetRequiredService<UserService>();
+
         }
 
-    private void UploadPhoto_Click(object sender, RoutedEventArgs e)
-    {
-        // Діалог вибору файлу для вибору фотографії
-        OpenFileDialog openFileDialog = new OpenFileDialog
+        private void UploadPhoto_Click(object sender, RoutedEventArgs e)
         {
-            Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif|All Files|*.*",
-            Title = "Виберіть фотографію користувача"
-        };
+            // Діалог вибору файлу для вибору фотографії
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif|All Files|*.*",
+                Title = "Виберіть фотографію користувача"
+            };
 
-        if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Отримання вибраного файлу та оновлення фотографії користувача
+                string selectedImagePath = openFileDialog.FileName;
+                curUser.Photo = File.ReadAllBytes(selectedImagePath);
+                App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
+                UserImage.Source = LoadImageFromBytes((curUser.Photo));
+
+            }
+        }
+        private ImageSource LoadImageFromBytes(byte[] imageData)
         {
-            // Отримання вибраного файлу та оновлення фотографії користувача
-            string selectedImagePath = openFileDialog.FileName;
-            curUser.Photo = File.ReadAllBytes(selectedImagePath);
-            App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
-            UserImage.Source = LoadImageFromBytes((curUser.Photo));
+            BitmapImage image = new BitmapImage();
+            using (MemoryStream stream = new MemoryStream(imageData))
+            {
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = stream;
+                image.EndInit();
+            }
+            return image;
+        }
 
+        private async void SaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            await _userservice.UpdateUser(curUser);
         }
     }
-    private ImageSource LoadImageFromBytes(byte[] imageData)
-    {
-        BitmapImage image = new BitmapImage();
-        using (MemoryStream stream = new MemoryStream(imageData))
-        {
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.StreamSource = stream;
-            image.EndInit();
-        }
-        return image;
-    }
-}
-   
+
 
 }

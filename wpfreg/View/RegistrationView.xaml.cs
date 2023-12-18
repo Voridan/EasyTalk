@@ -65,7 +65,22 @@ namespace wpfreg.View
             {
                 textBoxLastname.Text = "";
             }
-            
+            if (textBoxNickName.Text == "")
+            {
+                textBoxNickName.Text = nickNamePlaceholder;
+            }
+            if (textBoxPassword.Text == "")
+            {
+                textBoxPassword.Text = passwordPlaceholder;
+            }
+            if (textBoxFirstname.Text == "")
+            {
+                textBoxFirstname.Text = firstNamePlaceholder;
+            }
+            if (textBoxEmailId.Text == "")
+            {
+                textBoxEmailId.Text = emailPlaceholder;
+            }
         }
 
 
@@ -76,21 +91,69 @@ namespace wpfreg.View
             {
                 textBoxPassword.Text = "";
             }
+            if (textBoxNickName.Text == "")
+            {
+                textBoxNickName.Text = nickNamePlaceholder;
+            }
+            if (textBoxLastname.Text == "")
+            {
+                textBoxLastname.Text = lastNamePlaceholder;
+            }
+            if (textBoxFirstname.Text == "")
+            {
+                textBoxFirstname.Text = firstNamePlaceholder;
+            }
+            if (textBoxEmailId.Text == "")
+            {
+                textBoxEmailId.Text = emailPlaceholder;
+            }
         }
 
         private void textBoxEmailId_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (textBoxEmailId.Text == emailPlaceholder) 
+            if (textBoxEmailId.Text == emailPlaceholder)
             {
                 textBoxEmailId.Text = "";
+            }
+            if (textBoxNickName.Text == "")
+            {
+                textBoxNickName.Text = nickNamePlaceholder;
+            }
+            if (textBoxPassword.Text == "")
+            {
+                textBoxPassword.Text = passwordPlaceholder;
+            }
+            if (textBoxFirstname.Text == "")
+            {
+                textBoxFirstname.Text = firstNamePlaceholder;
+            }
+            if (textBoxLastname.Text == "")
+            {
+                textBoxLastname.Text = lastNamePlaceholder;
             }
         }
 
         private void textBoxFirstName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (textBoxFirstname.Text == firstNamePlaceholder) 
+            if (textBoxFirstname.Text == firstNamePlaceholder)
             {
                 textBoxFirstname.Text = "";
+            }
+            if (textBoxLastname.Text == "")
+            {
+                textBoxLastname.Text = lastNamePlaceholder;
+            }
+            if (textBoxNickName.Text == "")
+            {
+                textBoxNickName.Text = nickNamePlaceholder;
+            }
+            if (textBoxPassword.Text == "")
+            {
+                textBoxPassword.Text = passwordPlaceholder;
+            }
+            if (textBoxEmailId.Text == "")
+            {
+                textBoxEmailId.Text = emailPlaceholder;
             }
         }
 
@@ -98,7 +161,7 @@ namespace wpfreg.View
         {
             this.Close();
             _loginView.ShowDialog();
-                
+
         }
 
         private void Register(object sender, RoutedEventArgs e)
@@ -112,7 +175,25 @@ namespace wpfreg.View
             {
                 textBoxNickName.Text = "";
             }
+            if (textBoxLastname.Text == "")
+            {
+                textBoxLastname.Text = lastNamePlaceholder;
+            }
+            if (textBoxPassword.Text == "")
+            {
+                textBoxPassword.Text = passwordPlaceholder;
+            }
+            if (textBoxFirstname.Text == "")
+            {
+                textBoxFirstname.Text = firstNamePlaceholder;
+            }
+            if (textBoxEmailId.Text == "")
+            {
+                textBoxEmailId.Text = emailPlaceholder;
+            }
         }
+
+        
         private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
             if (handle) Handle();
@@ -176,6 +257,86 @@ namespace wpfreg.View
                         return;
                     }
                 }
+            }
+        }
+
+        private void textBoxFirstname_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxFirstname.Text == firstNamePlaceholder)
+            {
+                textBoxFirstname.Text = "";
+            }
+        }
+
+        private void textBoxFirstname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxFirstname.Text == "")
+            {
+                textBoxFirstname.Text = firstNamePlaceholder;
+            }
+        }
+
+        private void textBoxNickName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxNickName.Text == nickNamePlaceholder)
+            {
+                textBoxNickName.Text = "";
+            }
+        }
+
+        private void textBoxNickName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxNickName.Text == "")
+            {
+                textBoxNickName.Text = nickNamePlaceholder;
+            }
+        }
+
+        private void textBoxLastname_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxLastname.Text == lastNamePlaceholder)
+            {
+                textBoxLastname.Text = "";
+            }
+        }
+
+        private void textBoxLastname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxLastname.Text == "")
+            {
+                textBoxLastname.Text = lastNamePlaceholder;
+            }
+        }
+
+        private void textBoxPassword_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxPassword.Text == passwordPlaceholder)
+            {
+                textBoxPassword.Text = "";
+            }
+        }
+
+        private void textBoxPassword_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxPassword.Text == "")
+            {
+                textBoxPassword.Text = passwordPlaceholder;
+            }
+        }
+
+        private void textBoxEmailId_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxEmailId.Text == emailPlaceholder)
+            {
+                textBoxEmailId.Text = "";
+            }
+        }
+
+        private void textBoxEmailId_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxEmailId.Text == "")
+            {
+                textBoxEmailId.Text = emailPlaceholder;
             }
         }
     }
