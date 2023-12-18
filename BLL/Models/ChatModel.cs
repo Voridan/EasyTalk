@@ -8,5 +8,7 @@ namespace BLL.Models
         public string? Name { get; set; } = "0";
 
         public string? Description { get; set; } = "0";
+
+        public ICollection<UserModel>? Users {get; set;}
     }
 }

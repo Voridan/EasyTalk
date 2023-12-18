@@ -2,6 +2,7 @@
 using BLL.Services.Implementations;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Windows.Input;
 using wpfreg.Utilities;
@@ -12,7 +13,9 @@ namespace wpfreg.ViewModel
     internal class NavigationViewModel : ViewModelBase
     {
         private object _currentView;
-        
+        private readonly ILogger<NavigationViewModel> _logger;
+
+
         public object CurrentView
         {
             get { return _currentView; }
@@ -48,7 +51,7 @@ namespace wpfreg.ViewModel
 
                 // Show the ChatInfo window
                 chatInfoWindow.Show();
-
+                _logger.LogInformation("User open ChatInfo window.");
             }
         }
 
@@ -62,8 +65,7 @@ namespace wpfreg.ViewModel
                 App.SelectedUser = usr;
                 CurrentView = new SearchProfileViewModel();
                 // Show or navigate to the SearchProfileView as needed
-
-
+                _logger.LogInformation("User open ChatInfo window.");
             }
         }
 
@@ -77,6 +79,7 @@ namespace wpfreg.ViewModel
                 if (chatExists)
                 {
                     CurrentView = new ChatViewModel(userId);
+                    _logger.LogInformation("User open existed chat.");
                 }
                 else
                 {
@@ -84,18 +87,35 @@ namespace wpfreg.ViewModel
                     var untitledChat = new ChatModel() { Name = "untitled", Description = "None" };
                     await chatService.CreateChat(untitledChat, currUserId, userId);
                     CurrentView = new ChatViewModel(userId);
+                    _logger.LogInformation("User create new chat.");
                 }
             }
         }
 
-        private void Home(object obj) => CurrentView = new HomeViewModel();
-              
+        private void Home(object obj)
+        {
+            CurrentView = new HomeViewModel();
+            _logger.LogInformation("User open home window.");
+        }
+
         private void Chat(object obj)
         {
-            CurrentView = new ChatViewModel(App.CurrentUser.Id);
+            OpenChat(App.CurrentUser.Id);
+            _logger.LogInformation("User open chat window.");
         }
-        private void Profile(object obj) => CurrentView = new ProfileViewModel();
-        private void SearchList(object obj) => CurrentView = new SearchListViewModel();
+
+        private void Profile(object obj)
+        {
+            CurrentView = new ProfileViewModel();
+            _logger.LogInformation("User open profile window.");
+        }
+
+        private void SearchList(object obj)
+        {
+            CurrentView = new SearchListViewModel();
+            _logger.LogInformation("User open SearchList window.");
+        }
+
         public NavigationViewModel()
         {
             HomeCommand = new RelayCommand(Home);
@@ -107,6 +127,7 @@ namespace wpfreg.ViewModel
             SearchToProfileCommand = new RelayCommand(OpenProfile);
             // Startup Page
             CurrentView = new HomeViewModel();
+            _logger = App.AppHost.Services.GetRequiredService<ILogger<NavigationViewModel>>();
         }
     }
 }
