@@ -108,7 +108,7 @@ namespace wpfreg.View
             }
             else
             {
-                _logger.LogInformation("User logination was failed.");
+                _logger.LogInformation($"User logination was failed: {resLogin.Message}.");
             }
         }
 

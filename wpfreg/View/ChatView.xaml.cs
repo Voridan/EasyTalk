@@ -1,6 +1,7 @@
 ﻿using BLL.Models;
 using BLL.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,15 @@ namespace wpfreg.View
         private ChatService _chatservice;
         private NavigationViewModel _navViewModel;
         private ChatModel Chat { get; set; }
+        private readonly ILogger<ChatView> _logger;
+
         public ChatView()
         {
             InitializeComponent();
             _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
             _navViewModel = App.AppHost.Services.GetRequiredService<NavigationViewModel>();
             btnload.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            _logger = App.AppHost.Services.GetRequiredService<ILogger<ChatView>>();
         }
         private async void btnLoadClick(object sender, RoutedEventArgs e)
         {
@@ -41,6 +45,7 @@ namespace wpfreg.View
                 Guid otherUserId = users.Where(u => u.Id != App.CurrentUser.Id).FirstOrDefault().Id;
                 _navViewModel.OpenChat(otherUserId);
                 MsgInput.IsReadOnly = false;
+                _logger.LogInformation($"User select {App.SelectedChat.Name} chat.");
             }
         }
 

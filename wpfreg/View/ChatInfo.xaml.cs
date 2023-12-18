@@ -1,6 +1,7 @@
 ﻿using BLL.Models;
 using BLL.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +24,15 @@ namespace wpfreg.View
        
         
         private ChatService _chatservice;
-
+        private readonly ILogger<ChatInfo> _logger;
         private ChatInfoViewModel _chatinfoviewModel;
+
         public ChatInfo()
         {
-           
             InitializeComponent();
             _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
             _chatinfoviewModel = new ChatInfoViewModel();
+            _logger = App.AppHost.Services.GetRequiredService<ILogger<ChatInfo>>();
         }
 
         private void edit_Click(object sender, RoutedEventArgs e)
@@ -44,6 +46,7 @@ namespace wpfreg.View
         {
             await _chatservice.UpdateChat(App.SelectedChat);
             this.Close();
+            _logger.LogInformation("User edit chat information.");
         }
     }
 }

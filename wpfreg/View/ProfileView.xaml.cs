@@ -1,6 +1,7 @@
 ﻿using BLL.Models;
 using BLL.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -14,16 +15,16 @@ namespace wpfreg.View
     public partial class ProfileView : UserControl
     {
         public UserModel curUser = App.CurrentUser;
-
         public Image accImage = new Image();
-
         private UserService _userservice;
+        private readonly ILogger<ProfileView> _logger;
+
         public ProfileView()
         {
             DataContext = new ProfileViewModel();
             InitializeComponent();
             _userservice = App.AppHost.Services.GetRequiredService<UserService>();
-
+            _logger = App.AppHost.Services.GetRequiredService<ILogger<ProfileView>>();
         }
 
         private void UploadPhoto_Click(object sender, RoutedEventArgs e)
@@ -42,7 +43,7 @@ namespace wpfreg.View
                 curUser.Photo = File.ReadAllBytes(selectedImagePath);
                 App.CurrentUser.Photo = File.ReadAllBytes(selectedImagePath);
                 UserImage.Source = LoadImageFromBytes((curUser.Photo));
-
+                _logger.LogInformation("User upload photo.");
             }
         }
         private ImageSource LoadImageFromBytes(byte[] imageData)
