@@ -39,8 +39,8 @@ namespace EasyTalk.Tests.Services
             result.Should().BeOfType<MessageModel>();
 
             result.Id.Should().Be(message.Id);
-            result.Chat.Should().BeOfType<ChatModel>();
-            result.Sender.Should().BeOfType<UserModel>();
+            result.ChatId.Should().Be(message.ChatId);
+            result.SenderId.Should().Be(message.SenderId);
             result.Text.Should().Be(message.Text);
         }
 
@@ -56,5 +56,52 @@ namespace EasyTalk.Tests.Services
             // Assert
             result.Should().BeNull();
         }
+
+        [Fact]
+        public void BllMessageToDal_ReturnsDalMessageWhenMessageModelIsNotNull()
+        {
+            // Arrange
+            var messageId = Guid.NewGuid();
+            var chatId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var messageModel = new MessageModel
+            {
+                Id = messageId,
+                ChatId = chatId,
+                Text = "Test message",
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
+            };
+
+            var user = new User { Id = userId };
+
+            // Act
+            var result = MessageService.BllMessageToDal(messageModel, user);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Message>(result);
+            Assert.Equal(messageId, result.Id);
+            Assert.Equal(chatId, result.ChatId);
+            Assert.Equal(user, result.Sender);
+            Assert.Equal("Test message", result.Text);
+            Assert.Equal(messageModel.CreatedDate, result.CreatedDate);
+            Assert.Equal(messageModel.ModifiedDate, result.ModifiedDate);
+        }
+
+        [Fact]
+        public void BllMessageToDal_ReturnsNullWhenMessageModelIsNull()
+        {
+            // Arrange
+            MessageModel messageModel = null;
+            var user = new User { Id = Guid.NewGuid() };
+
+            // Act
+            var result = MessageService.BllMessageToDal(messageModel, user);
+
+            // Assert
+            Assert.Null(result);
+        }
+
     }
 }

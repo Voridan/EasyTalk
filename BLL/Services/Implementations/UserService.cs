@@ -123,6 +123,11 @@ namespace BLL.Services.Implementations
 
         public async Task<User?> BLLUserToDALUserAsync(UserModel user)
         {
+            if (user == null)
+            {
+                return null;
+            }
+
             return await _userRepo.GetByIdAsync(user.Id);
         }
 

@@ -17,7 +17,7 @@ namespace DAL.Models
         
         public ICollection<Message> Messages { get; } = null!;
 
-        public ICollection<Chat> Chats { get; } = null!;
+        public ICollection<Chat> Chats { get; set; } = null!;
 
         public ICollection<Project> Projects { get; } = null!;
     }

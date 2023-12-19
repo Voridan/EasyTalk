@@ -13,8 +13,6 @@ namespace wpfreg.ViewModel
 {
     class ChatViewModel
     {
-        private Guid _userid;
-
         private Server _server;
 
         public ObservableCollection<UserModel> Users { get; set; } = new();
