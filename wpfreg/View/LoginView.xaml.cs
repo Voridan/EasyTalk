@@ -16,6 +16,7 @@ using BLL.Services.Implementations;
 using BLL.Models;
 using BLL.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace wpfreg.View
 {
@@ -27,14 +28,16 @@ namespace wpfreg.View
         private readonly MainWindow _mainwindow;
         private string nickNamePlaceholder = "Nickname";
         private string passwordPlaceholder = "Password";
-        
-      
-        public LoginView(UserService userservice, MainWindow mainwindow)
+        private readonly ILogger<LoginView> _logger;
+
+
+
+        public LoginView(UserService userservice, MainWindow mainwindow, ILogger<LoginView> logger)
         {
             InitializeComponent();
             _userService = userservice;
             _mainwindow = mainwindow;
-            
+            _logger = logger;
         }
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
@@ -97,14 +100,20 @@ namespace wpfreg.View
             {
                 App.CurrentUser = resLogin.Value;
                 if (App.CurrentUser?.NickName != null) App.Server.ConnectToServer(App.CurrentUser);
+                _logger.LogInformation("User logination was successful.");
                 this.Close();
                 _mainwindow.ShowDialog();
                 return;
+            }
+            else
+            {
+                _logger.LogInformation($"User logination was failed: {resLogin.Message}.");
             }
         }
 
         private void Signup_btn(object sender, RoutedEventArgs e)
         {
+            _logger.LogInformation("User switched from login window to register.");
             this.Close();
             var registerForm = App.AppHost.Services.GetRequiredService<RegistrationView>();
              registerForm.ShowDialog();

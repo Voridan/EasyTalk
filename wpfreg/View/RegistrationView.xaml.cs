@@ -7,6 +7,7 @@ using BLL.Models;
 using BLL.Services.Implementations;
 using BLL.Utils;
 using wpfreg.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace wpfreg.View
 {
@@ -21,8 +22,12 @@ namespace wpfreg.View
         private string lastNamePlaceholder = "LastName";
         private string passwordPlaceholder = "Password";
         private string emailPlaceholder = "Email";
+        
+        private Industries SelectedIndustry { get; set; }
+        private readonly ILogger<RegistrationView> _logger;
 
-        public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow)
+
+        public RegistrationView(UserService userservice, LoginView loginView, MainWindow mainwindow, ILogger<RegistrationView> logger)
         {
             InitializeComponent();
             _userService = userservice;
@@ -30,9 +35,8 @@ namespace wpfreg.View
             _mainwindow = mainwindow;
             var enumValues = Enum.GetValues(typeof(BLL.Models.Industries));
             cmbSelect.ItemsSource = enumValues;
+            _logger = logger;
         }
-
-        private Industries SelectedIndustry { get; set; }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -161,8 +165,13 @@ namespace wpfreg.View
 
         private void Login(object sender, RoutedEventArgs e)
         {
+            _logger.LogInformation("User switched from register window to login.");
             this.Close();
             _loginView.ShowDialog();
+        }
+
+        private void Register(object sender, RoutedEventArgs e)
+        {
         }
 
         private void textBoxNickName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -249,9 +258,14 @@ namespace wpfreg.View
                     {
                         App.CurrentUser = resRegister.Value!;
                         App.Server.ConnectToServer(App.CurrentUser);
+                        _logger.LogInformation("User registration was successful.");
                         this.Close();
                         _mainwindow.ShowDialog();
                         return;
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"User registration was failed: {resRegister.Message}.");
                     }
                 }
             }

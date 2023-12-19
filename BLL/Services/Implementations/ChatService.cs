@@ -25,6 +25,7 @@ namespace BLL.Services.Implementations
             var bllChats = new List<ChatModel>();
             foreach (var chat in chats)
             {
+               var chatWithUsers =  await chatRepository.GetChatWithUsers(chat.Id);
                 bllChats.Add(DalChatToBll(chat)!);
             }
 
@@ -138,7 +139,13 @@ namespace BLL.Services.Implementations
         {
             if (chat != null)
             {
-                return new ChatModel() { Id = chat.Id, Name = chat.Name, Description = chat.Description };
+                List<UserModel> bllModels = new List<UserModel>();
+                foreach (var dalUser in chat.Users)
+                {
+                    bllModels.Add(UserService.DALUserToBLLUser(dalUser));
+                }
+
+                return new ChatModel() { Id = chat.Id, Name = chat.Name, Description = chat.Description, Users = bllModels };
             }
 
             return null;
