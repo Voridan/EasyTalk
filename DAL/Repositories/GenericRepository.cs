@@ -9,7 +9,7 @@ namespace DAL.Repositories
     {
         private readonly EasyTalkContext _context;
 
-        protected readonly DbSet<T> _table;
+        public DbSet<T> _table { get;  }
 
         public GenericRepository(EasyTalkContext _context)
         {

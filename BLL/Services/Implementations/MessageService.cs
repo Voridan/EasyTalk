@@ -13,7 +13,7 @@ namespace BLL.Services.Implementations
                 {
                     Id = msg.Id,
                     ChatId = msg.ChatId,
-                    SenderId = msg.Sender.Id,
+                    SenderId = msg.SenderId,
                     Text = msg.Text,
                     CreatedDate = msg.CreatedDate,
                     ModifiedDate = msg.ModifiedDate,

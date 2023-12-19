@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ChatRepository : GenericRepository<Chat>
+    public class ChatRepository : GenericRepository<Chat>, IChatRepository
     {
         public ChatRepository(EasyTalkContext _context) : base(_context)
         {

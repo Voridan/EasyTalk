@@ -142,7 +142,7 @@ namespace BLL.Services.Implementations
                 List<UserModel> bllModels = new List<UserModel>();
                 foreach (var dalUser in chat.Users)
                 {
-                    bllModels.Add(UserService.DALUserToBLLUser(dalUser));
+                    bllModels.Add(UserService.DALUserToBLLUser(dalUser)!);
                 }
 
                 return new ChatModel() { Id = chat.Id, Name = chat.Name, Description = chat.Description, Users = bllModels };

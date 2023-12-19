@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -143,6 +144,40 @@ namespace EasyTalk.Tests.Services
 
             // Assert
             _projectRepo.Verify(x => x.Update(project), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetProjectAsync_ReturnsFilteredProjects()
+        {
+            // Arrange
+            var projectId = Guid.NewGuid();
+            var projectName = "TestProject";
+            var filteredProjects = new List<Project>
+            {
+                new Project { Id = projectId, Name = projectName, /* other properties */ },
+                // Add more mocked projects as needed
+            };
+
+            // Mock the project repository
+            _projectRepo.Setup(repo => repo.GetAsync(
+                    It.IsAny<Expression<Func<Project, bool>>>(),
+                    It.IsAny<Func<IQueryable<Project>, IOrderedQueryable<Project>>>(),
+                    It.IsAny<string>())
+                )
+                .ReturnsAsync(filteredProjects);
+
+            // Define a filter
+            Expression<Func<Project, bool>> filter = p => p.Id == projectId;
+
+            // Act
+            var result = await _projectService.GetProjectAsync(filter, null, "");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<Project>>(result);
+            Assert.Single(result); // Ensure that only one project is returned based on the filter
+            Assert.Equal(projectId, result.First().Id); // Ensure the correct project is returned
+            // Add more assertions as needed
         }
     }
 }
