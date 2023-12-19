@@ -7,6 +7,7 @@ namespace wpfreg.Net.IO
     public class PacketReader : BinaryReader
     {
         private NetworkStream stream;
+
         public PacketReader(NetworkStream ns)
             : base(ns)
         {

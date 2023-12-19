@@ -16,7 +16,7 @@ namespace BLL.Services.Implementations
                     SenderId = msg.Sender.Id,
                     Text = msg.Text,
                     CreatedDate = msg.CreatedDate,
-                    ModifiedDate = msg.ModifiedDate
+                    ModifiedDate = msg.ModifiedDate,
                 };
             }
 
@@ -34,7 +34,7 @@ namespace BLL.Services.Implementations
                     Sender = user,
                     Text = msg.Text,
                     CreatedDate = msg.CreatedDate,
-                    ModifiedDate = msg.ModifiedDate
+                    ModifiedDate = msg.ModifiedDate,
                 };
             }
 

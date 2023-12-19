@@ -11,7 +11,7 @@ namespace wpfreg.ViewModel
     internal class SearchProfileViewModel : Utilities.ViewModelBase
     {
         public Guid ProfileId { get; set; }
-        public UserModel user = App.SelectedUser;
+        public UserModel user = App.SelectedUser!;
 
         private string _userNickname;
         public string UserNickname
@@ -87,11 +87,11 @@ namespace wpfreg.ViewModel
      
         public SearchProfileViewModel()
         {
-            UserNickname = user.NickName;
-            UserName = user.FirstName;
-            UserLastName = user.LastName;
-            UserEmail = user.Email;
-            UserPhoto = user.Photo;
+            UserNickname = user.NickName!;
+            UserName = user.FirstName!;
+            UserLastName = user.LastName!;
+            UserEmail = user.Email!;
+            UserPhoto = user.Photo!;
         }
     }
 }

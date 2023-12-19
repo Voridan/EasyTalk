@@ -1,7 +1,7 @@
-﻿using BLL.Utils;
+﻿using System.Linq.Expressions;
 using BLL.Models;
+using BLL.Utils;
 using DAL.Models;
-using System.Linq.Expressions;
 
 namespace BLL.Services.Interfaces
 {
@@ -17,11 +17,10 @@ namespace BLL.Services.Interfaces
         Task<User?> GetUserByIdAsync(Guid id);
 
         Task<Result<UserModel>> RegisterUserAsync(UserModel user);
-        
+
         Task<Result<UserModel>> LoginUserAsync(LoginUserModel user);
 
         Task UpdateUser(UserModel user);
-
 
         Task DeleteUserAsync(Guid id);
 

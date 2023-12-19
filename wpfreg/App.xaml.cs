@@ -1,38 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using wpfreg.View;
-using DAL.Models;
-using System.Collections;
+﻿using System.Windows;
+using BLL.Models;
 using BLL.Services.Implementations;
 using DAL.Data;
 using DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BLL.Models;
 using wpfreg.Net;
+using wpfreg.View;
 using wpfreg.ViewModel;
 using Serilog;
 using System.IO;
 
 namespace wpfreg
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
-
     {
-        public static UserModel CurrentUser { get; set; }
-        public static UserModel SelectedUser { get; set; } 
-        public static ChatModel SelectedChat { get; set; }
-        public static Server Server { get; private set; }
-        public static IHost? AppHost { get; private set; }
-
         public App()
         {
             string logsDirectory = Path.Combine(Environment.CurrentDirectory, "logs");
@@ -63,14 +45,23 @@ namespace wpfreg
                     services.AddSingleton<SearchList>();
                     services.AddSingleton<ChatService>();
                     services.AddSingleton<NavigationViewModel>();
-
                 })
                 .Build();
         }
 
+        public static UserModel? CurrentUser { get; set; }
+
+        public static UserModel? SelectedUser { get; set; }
+
+        public static ChatModel? SelectedChat { get; set; }
+
+        public static Server? Server { get; private set; }
+
+        public static IHost? AppHost { get; private set; }
+
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await AppHost.StartAsync();
+            await AppHost!.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<LoginView>();
             startupForm.Show();
             Server = new Server();

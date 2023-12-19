@@ -30,7 +30,7 @@ namespace wpfreg.View
         public ChatInfo()
         {
             InitializeComponent();
-            _chatservice = App.AppHost.Services.GetRequiredService<ChatService>();
+            _chatservice = App.AppHost!.Services.GetRequiredService<ChatService>();
             _chatinfoviewModel = new ChatInfoViewModel();
             _logger = App.AppHost.Services.GetRequiredService<ILogger<ChatInfo>>();
         }
@@ -44,7 +44,7 @@ namespace wpfreg.View
 
         private async void save_Click(object sender, RoutedEventArgs e)
         {
-            await _chatservice.UpdateChat(App.SelectedChat);
+            await _chatservice.UpdateChat(App.SelectedChat!);
             this.Close();
             _logger.LogInformation("User edit chat information.");
         }

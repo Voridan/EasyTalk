@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace wpfreg.Utilities.Converters
 {
-    [ValueConversion(typeof(bool), typeof(String))]
+    [ValueConversion(typeof(bool), typeof(string))]
     internal class BtnTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

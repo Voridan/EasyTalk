@@ -6,7 +6,8 @@ namespace BLL.Utils
     {
         public static Dictionary<FileExtension, string> GetExtensions()
         {
-            return new Dictionary<FileExtension, string> {
+            return new Dictionary<FileExtension, string>
+            {
                 { FileExtension.DOCX, ".docx" },
                 { FileExtension.PDF, ".pdf" },
                 { FileExtension.TXT, ".txt" },

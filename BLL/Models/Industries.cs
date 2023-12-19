@@ -69,6 +69,6 @@
         VideoGame,
         Water,
         Wholesale,
-        Woo
+        Woo,
     }
 }

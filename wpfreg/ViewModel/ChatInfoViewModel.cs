@@ -41,9 +41,9 @@ namespace wpfreg.ViewModel
         
         public ChatInfoViewModel()
         {
-            Chat =App.SelectedChat;
-            Title = App.SelectedChat.Name;
-            Description = App.SelectedChat.Description;
+            Chat =App.SelectedChat!;
+            Title = App.SelectedChat.Name!;
+            Description = App.SelectedChat.Description!;
 
         }
   

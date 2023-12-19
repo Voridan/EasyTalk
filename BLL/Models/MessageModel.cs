@@ -16,8 +16,7 @@ namespace BLL.Models
         public DateTime CreatedDate { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
-        //TODO relation with document
-        
+
         public static string Serialize(MessageModel message)
         {
             return JsonConvert.SerializeObject(message);
