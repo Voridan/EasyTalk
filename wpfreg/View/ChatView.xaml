@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel>
-           
+
             <ListView  Background="#706C7D" Name="ChatList" ItemsSource="{Binding Chats}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -50,6 +50,7 @@
             <ListView Height="545"
                       ItemsSource="{Binding Messages}"
                       Background="#272B2F"
+                      Foreground="White"
                       />
             <StackPanel Orientation="Horizontal"
                         >
