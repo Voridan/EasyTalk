@@ -30,7 +30,6 @@ namespace EasyTalk.Tests.Services
 
         public ChatServiceTests()
         {
-            //_dbContext = Mock.Of<EasyTalkContext>();
             _dbContext = new Mock<EasyTalkContext>();
             _chatRepo = new Mock<ChatRepository>(_dbContext.Object);
             _userRepo = new Mock<UserRepository>(_dbContext.Object);
@@ -194,8 +193,6 @@ namespace EasyTalk.Tests.Services
             _chatRepo.Verify(repo => repo.Update(It.IsAny<Chat>()), Times.Never);
         }
 
-
-
         [Fact]
         public async Task ChatService_GetChatsForUser_ReturnsExpectedResult()
         {
@@ -244,10 +241,6 @@ namespace EasyTalk.Tests.Services
                 It.IsAny<string>()
             ), Times.Once);
         }
-
-
-        
-
 
         [Fact]
         public async Task ChatService_GetChat_ReturnsChatModel()
@@ -365,7 +358,5 @@ namespace EasyTalk.Tests.Services
             // Assert
             result.Should().BeNull();
         }
-
-
     }
 }
